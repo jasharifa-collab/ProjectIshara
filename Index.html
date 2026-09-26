@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#020617">
+  <title>إشارة — MVP تفاعلي للطوارئ البصرية V4</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg:#020617; --panel:#0f172a; --panel2:#111c30; --line:#24324a;
+      --text:#f8fafc; --muted:#94a3b8; --sky:#38bdf8; --green:#34d399;
+      --red:#ef4444; --orange:#f97316; --blue:#3b82f6; --violet:#8b5cf6; --amber:#f59e0b;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;font-family:'Cairo',sans-serif;background:#08101f;color:var(--text)}
+    body{display:flex;align-items:center;justify-content:center;padding:24px;overflow-x:hidden}
+    button,input,select,textarea{font:inherit}
+    button{touch-action:manipulation}
+    button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid rgba(56,189,248,.55);outline-offset:2px}
+    .shell{width:min(100%,1180px);display:grid;grid-template-columns:minmax(620px,720px) 390px;gap:30px;align-items:center;justify-content:center}
+    .showcase h1{font-size:38px;line-height:1.2;margin:12px 0 10px}.showcase p{color:#aebdd0;line-height:1.9;margin:0 0 18px}.showcase .points{display:grid;gap:10px}.showcase .point{display:flex;align-items:center;gap:10px;color:#d9e4f0;font-size:14px}.showcase .dot{width:9px;height:9px;border-radius:999px;background:var(--sky);box-shadow:0 0 18px rgba(56,189,248,.45)}
+    .demo-tag{display:inline-flex;gap:8px;align-items:center;border:1px solid #1d4f6b;background:#082f49;color:#7dd3fc;padding:7px 11px;border-radius:999px;font-size:12px;font-weight:800}
+    .phone{width:390px;height:min(820px,calc(100vh - 36px));min-height:690px;background:var(--bg);border:10px solid #1e293b;border-radius:44px;position:relative;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.58),0 0 0 1px rgba(148,163,184,.08),0 0 50px rgba(56,189,248,.10);justify-self:center}
+    .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:136px;height:27px;background:#1e293b;border-radius:0 0 16px 16px;z-index:60;display:flex;align-items:center;justify-content:center;gap:10px}.speaker{width:38px;height:4px;border-radius:4px;background:#475569}.lens{width:9px;height:9px;border-radius:50%;background:#030712;box-shadow:inset 0 0 0 2px #111827}
+    .statusbar{height:38px;padding:7px 13px 0;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;font-size:10px;color:#94a3b8;font-weight:800;position:relative;z-index:45;pointer-events:auto}.status-icons{display:flex;gap:7px;align-items:center;justify-self:start}.history-controls{display:flex;gap:5px;justify-self:end}.history-btn{width:27px;height:27px;border-radius:9px;border:1px solid #26364d;background:#0b1424;color:#cbd5e1;display:grid;place-items:center;font-size:9px;transition:.16s}.history-btn:disabled{opacity:.25;cursor:not-allowed}.history-btn:not(:disabled):active{transform:scale(.94);background:#132238}.clock{justify-self:center}
+    .app{position:absolute;inset:38px 0 70px;overflow:hidden}.screen{position:absolute;inset:0;padding:14px 14px 22px;overflow-y:auto;display:flex;flex-direction:column;background:var(--bg);opacity:0;visibility:hidden;pointer-events:none;transform:translateX(-12px) scale(.994);transition:opacity .2s ease,visibility .2s ease,transform .2s ease}.screen.active{opacity:1;visibility:visible;pointer-events:auto;transform:none;z-index:2}.screen.enter-forward{animation:screenForward .34s cubic-bezier(.22,.8,.3,1)}.screen.enter-back{animation:screenBack .34s cubic-bezier(.22,.8,.3,1)}.screen.enter-fade{animation:screenFade .25s ease}.screen::-webkit-scrollbar{width:3px}.screen::-webkit-scrollbar-thumb{background:#334155;border-radius:99px}@keyframes screenForward{from{opacity:0;transform:translateX(-22px) scale(.985)}to{opacity:1;transform:none}}@keyframes screenBack{from{opacity:0;transform:translateX(22px) scale(.985)}to{opacity:1;transform:none}}@keyframes screenFade{from{opacity:0;transform:scale(.99)}to{opacity:1;transform:none}}
+    .bottom-nav{position:absolute;bottom:0;left:0;right:0;height:70px;background:rgba(15,23,42,.94);backdrop-filter:blur(18px);border-top:1px solid #233044;display:grid;grid-template-columns:repeat(4,1fr);z-index:48;padding:6px 4px max(7px,env(safe-area-inset-bottom))}.nav-btn{position:relative;border:0;background:transparent;color:#718096;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:9px;font-weight:800;min-height:54px;border-radius:14px;transition:color .22s ease,background .22s ease,transform .18s ease;overflow:hidden}.nav-btn i{font-size:18px;transition:transform .28s cubic-bezier(.22,.8,.3,1)}.nav-btn::after{content:'';position:absolute;bottom:4px;width:4px;height:4px;border-radius:50%;background:#7dd3fc;opacity:0;transform:scale(0);transition:.24s}.nav-btn.active{color:#7dd3fc;background:rgba(14,165,233,.065)}.nav-btn.active i{transform:translateY(-2px) scale(1.07)}.nav-btn.active::after{opacity:1;transform:scale(1)}.nav-btn:active{transform:scale(.96)}
+    .card{background:linear-gradient(180deg,rgba(15,23,42,.96),rgba(10,18,32,.96));border:1px solid var(--line);border-radius:20px}.soft{background:#0b1424;border:1px solid #203049;border-radius:16px}.muted{color:var(--muted)}
+    .topbar{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}.brand{display:flex;align-items:center;gap:9px}.brand-mark{width:42px;height:42px;border-radius:15px;background:linear-gradient(145deg,#0ea5e9,#0369a1);display:grid;place-items:center;font-size:21px;box-shadow:0 10px 30px rgba(14,165,233,.22)}.brand h2{font-size:19px;margin:0}.brand small{font-size:10px;color:#67e8f9;font-weight:800}
+    .tiny-pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:5px 8px;font-size:9px;font-weight:900;border:1px solid #334155;background:#0f172a;color:#cbd5e1}.tiny-pill.success{border-color:#14532d;color:#86efac;background:#052e16}.tiny-pill.warn{border-color:#78350f;color:#fcd34d;background:#451a03}.tiny-pill.danger{border-color:#7f1d1d;color:#fecaca;background:#450a0a}
+    .status-strip{padding:11px 12px;margin-bottom:12px}.status-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.status-item{display:flex;align-items:center;gap:8px;min-height:45px}.status-icon{width:32px;height:32px;border-radius:10px;background:#132238;display:grid;place-items:center;color:#7dd3fc}.status-item b{display:block;font-size:10px}.status-item span{display:block;font-size:9px;color:#94a3b8;margin-top:1px}
+    .emergency-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.emg{position:relative;text-align:right;border:1px solid rgba(255,255,255,.11);border-radius:20px;min-height:126px;padding:14px;color:#fff;overflow:hidden;transition:.17s transform,.17s filter;box-shadow:0 14px 35px rgba(0,0,0,.18)}.emg:active{transform:scale(.975)}.emg::after{content:"";position:absolute;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.08);left:-22px;bottom:-34px}.emg .icon{width:39px;height:39px;border-radius:13px;background:rgba(255,255,255,.14);display:grid;place-items:center;font-size:20px;margin-bottom:15px}.emg b{display:block;font-size:16px}.emg span{display:block;font-size:10px;color:rgba(255,255,255,.79);margin-top:3px}.emg.med{background:#991b1b}.emg.fire{background:#9a3412}.emg.police{background:#1e40af}.emg.crash{background:#5b21b6}.emg.other{background:#334155;grid-column:1/-1;min-height:78px;display:flex;align-items:center;gap:12px}.emg.other .icon{margin:0}.emg.other::after{bottom:-48px;left:20px}
+    .section-label{font-size:10px;font-weight:900;color:#94a3b8;margin:2px 0 7px}.sos-area{margin-top:14px;text-align:center}.sos-hint{font-size:9px;color:#94a3b8;margin-bottom:8px}.sos-wrap{--p:0deg;width:142px;height:142px;margin:auto;border-radius:50%;padding:6px;background:conic-gradient(#fb7185 var(--p),#37111a var(--p));position:relative;transition:.08s}.sos-wrap::before{content:"";position:absolute;inset:7px;border-radius:50%;background:#200a11}.sos{position:relative;z-index:2;width:100%;height:100%;border:0;border-radius:50%;background:#dc2626;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 16px 35px rgba(220,38,38,.33),inset 0 0 0 2px rgba(255,255,255,.15)}.sos strong{font-size:24px;line-height:1}.sos span{font-size:9px;margin-top:4px}.sos .pct{font-size:8px;color:#fecaca;margin-top:4px}.sos-wrap.holding{animation:sosPulse .8s infinite alternate}@keyframes sosPulse{to{transform:scale(1.025);filter:brightness(1.08)}}
+    .ghost-btn,.primary-btn,.danger-btn,.outline-btn{min-height:45px;border-radius:14px;border:1px solid transparent;font-weight:900;font-size:11px;display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 13px}.primary-btn{background:#0284c7;color:white}.danger-btn{background:#b91c1c;color:white}.ghost-btn{background:#111c2f;border-color:#273750;color:#e2e8f0}.outline-btn{background:transparent;border-color:#334155;color:#cbd5e1}.wide{width:100%}
+    .empty-state{margin:auto 0;text-align:center;padding:28px 18px}.empty-icon{width:72px;height:72px;border-radius:24px;margin:0 auto 14px;background:#0b1a2b;border:1px solid #22324a;display:grid;place-items:center;color:#64748b;font-size:27px}.empty-state h3{font-size:15px;margin:0 0 7px}.empty-state p{font-size:10px;line-height:1.8;color:#94a3b8;margin:0}
+    .alert-hero{text-align:center;padding:13px;border-radius:20px;background:linear-gradient(180deg,rgba(69,10,10,.7),rgba(31,7,12,.55));border:1px solid #7f1d1d;margin-bottom:10px}.alert-hero .live{font-size:9px;color:#fca5a5;font-weight:900}.alert-hero h3{font-size:18px;margin:3px 0 1px}.alert-hero .eta{font-size:10px;color:#cbd5e1}.alert-hero .eta strong{color:#7dd3fc;font-size:14px}
+    .timeline{padding:13px;margin-bottom:10px}.timeline-row{display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:9px;position:relative;padding:4px 0 9px}.timeline-row:not(:last-child)::after{content:"";position:absolute;right:13px;top:28px;width:2px;height:14px;background:#293851}.step-dot{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:#172033;color:#64748b;border:1px solid #334155;font-size:10px}.timeline-row.done .step-dot{background:#064e3b;color:#6ee7b7;border-color:#065f46}.timeline-row.active .step-dot{background:#075985;color:#7dd3fc;border-color:#0c4a6e;animation:blink 1.3s infinite}.timeline-row b{font-size:10px}.timeline-row small{font-size:8px;color:#64748b}@keyframes blink{50%{box-shadow:0 0 0 7px rgba(14,165,233,.08)}}
+    .map{height:142px;position:relative;overflow:hidden;margin-bottom:10px;background:#091421;background-image:linear-gradient(rgba(56,189,248,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,.06) 1px,transparent 1px);background-size:22px 22px}.route{position:absolute;right:21%;top:54%;width:56%;height:3px;background:#38bdf8;transform:rotate(-17deg);transform-origin:right center;border-radius:9px;box-shadow:0 0 10px rgba(56,189,248,.45)}.route::after{content:"";position:absolute;left:10%;top:-2px;width:7px;height:7px;border-radius:50%;background:#bae6fd}.map-pin,.unit-pin{position:absolute;display:grid;place-items:center;border-radius:50%;box-shadow:0 8px 18px rgba(0,0,0,.35)}.map-pin{right:17%;top:54%;width:34px;height:34px;background:#991b1b;color:#fecaca}.unit-pin{left:17%;top:26%;width:36px;height:36px;background:#075985;color:#bae6fd}.map-label{position:absolute;right:10px;bottom:9px;left:10px;display:flex;justify-content:space-between;font-size:8px;color:#cbd5e1}.map-label span{background:rgba(2,6,23,.82);border:1px solid #22324a;border-radius:99px;padding:4px 7px}
+    .quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.quick-grid button{min-height:60px;flex-direction:column;gap:5px}.quick-grid i{font-size:18px;color:#7dd3fc}
+    .banner{padding:11px 12px;border-radius:15px;font-size:10px;line-height:1.65;display:flex;align-items:flex-start;gap:9px;margin-bottom:10px}.banner i{margin-top:2px}.banner.info{background:#082f49;border:1px solid #0c4a6e;color:#bae6fd}.banner.warn{background:#3d2506;border:1px solid #78350f;color:#fde68a}.banner.good{background:#052e16;border:1px solid #14532d;color:#bbf7d0}.banner.danger{background:#450a0a;border:1px solid #7f1d1d;color:#fecaca}
+    .detail-chips{display:grid;grid-template-columns:1fr 1fr;gap:8px}.chip{min-height:48px;text-align:right;border-radius:14px;background:#0d1727;border:1px solid #2b3b52;color:#dbeafe;padding:9px 10px;font-size:10px;font-weight:800}.chip.selected{border-color:#0ea5e9;background:#082f49;color:#e0f2fe}.chip i{color:#7dd3fc;margin-left:6px}
+    .page-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.page-head h2{font-size:16px;margin:0}.page-head p{font-size:9px;color:#94a3b8;margin:3px 0 0}.circle-btn{width:36px;height:36px;border-radius:12px;background:#111c2f;border:1px solid #293851;color:#cbd5e1;display:grid;place-items:center}
+    .profile-row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #1e293b}.profile-row:last-child{border-bottom:0}.profile-row span{font-size:9px;color:#94a3b8}.profile-row b{font-size:10px;text-align:left}.switch{width:45px;height:25px;background:#334155;border-radius:999px;border:0;padding:3px;transition:.2s}.switch::after{content:"";display:block;width:19px;height:19px;border-radius:50%;background:#fff;transition:.2s;transform:translateX(0)}.switch.on{background:#0284c7}.switch.on::after{transform:translateX(-20px)}
+    .contact{display:flex;align-items:center;justify-content:space-between;padding:10px 11px;border-bottom:1px solid #1d293a}.contact:last-child{border-bottom:0}.contact .who{display:flex;align-items:center;gap:9px}.avatar{width:33px;height:33px;border-radius:11px;background:#132238;display:grid;place-items:center;color:#7dd3fc;font-size:11px;font-weight:900}.contact b{display:block;font-size:10px}.contact span{display:block;font-size:8px;color:#94a3b8}.contact-actions{display:flex;gap:5px}.mini-icon{width:29px;height:29px;border-radius:9px;background:#111c2f;border:1px solid #293851;color:#94a3b8;display:grid;place-items:center;font-size:10px}
+    .sim-controls{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.sim-btn{padding:8px 5px;border-radius:11px;border:1px solid #334155;background:#0b1424;color:#94a3b8;font-size:8px;font-weight:900}.sim-btn.active{color:#e0f2fe;border-color:#0284c7;background:#082f49}
+    .interpreter-video{position:relative;height:325px;background:#0f172a;border:1px solid #26354c;border-radius:22px;overflow:hidden}.video-remote{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 25%,#17304d,#0b1220 55%,#060a12)}.video-avatar{width:98px;height:98px;border-radius:50%;border:2px solid #38bdf8;background:#0c4a6e;display:grid;place-items:center;font-size:38px;color:#bae6fd;box-shadow:0 0 45px rgba(56,189,248,.12)}.self-preview{position:absolute;left:11px;top:11px;width:91px;height:120px;border:2px solid #475569;border-radius:14px;background:#020617;display:grid;place-items:center;color:#475569}.transcript{position:absolute;right:10px;left:10px;bottom:10px;padding:9px 10px;border-radius:13px;background:rgba(2,6,23,.9);border:1px solid #24324a;text-align:center;font-size:10px}.quality{position:absolute;right:10px;top:10px}.interpreter-state{text-align:center;padding-top:20px}.interpreter-state .state-icon{width:80px;height:80px;border-radius:28px;background:#082f49;border:1px solid #0c4a6e;margin:0 auto 14px;display:grid;place-items:center;color:#7dd3fc;font-size:28px}.interpreter-state h3{font-size:15px;margin:0 0 7px}.interpreter-state p{font-size:10px;color:#94a3b8;line-height:1.8;margin:0 0 14px}
+    .device-hero{text-align:center;padding:18px}.device-icon{width:88px;height:88px;border-radius:30px;background:#0b2a3f;border:1px solid #0c4a6e;margin:0 auto 12px;display:grid;place-items:center;font-size:35px;color:#7dd3fc;box-shadow:0 15px 36px rgba(0,0,0,.2)}
+    .modal-layer,.onboard-layer,.flash-layer,.dispatch-layer{position:absolute;inset:0;z-index:100;display:none}.modal-layer.show,.onboard-layer.show,.dispatch-layer.show{display:flex}.modal-layer{background:rgba(2,6,23,.78);align-items:flex-end;padding:12px}.sheet{width:100%;max-height:86%;overflow-y:auto;background:#0b1424;border:1px solid #2c3d56;border-radius:23px;padding:15px;box-shadow:0 -20px 60px rgba(0,0,0,.35)}.sheet h3{margin:0 0 5px;font-size:15px}.sheet>p{margin:0 0 12px;color:#94a3b8;font-size:9px;line-height:1.7}.modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+    .field{margin-bottom:12px}.field label{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:10px;color:#b8c5d6;font-weight:800;margin-bottom:6px}.field .optional{font-size:8px;color:#64748b;font-weight:700}.field input,.field select,.field textarea{width:100%;min-height:48px;background:#07101d;border:1px solid #2b3b53;color:#f8fafc;border-radius:14px;padding:11px 13px;font-size:12px;transition:border-color .16s,box-shadow .16s,background .16s}.field input::placeholder,.field textarea::placeholder{color:#53637a}.field input:focus,.field select:focus,.field textarea:focus{border-color:#0ea5e9;background:#081321;box-shadow:0 0 0 3px rgba(14,165,233,.12);outline:none}.field textarea{min-height:82px;resize:vertical}.field.invalid input,.field.invalid select{border-color:#ef4444;box-shadow:0 0 0 3px rgba(239,68,68,.09)}.field-error{display:none;color:#fca5a5;font-size:8px;margin-top:5px;font-weight:700}.field.invalid .field-error{display:block}.select-wrap{position:relative}.select-wrap select{appearance:none;-webkit-appearance:none;padding-left:35px;cursor:pointer}.select-wrap::after{content:'▼';position:absolute;left:13px;top:50%;transform:translateY(-50%);color:#7dd3fc;font-size:8px;pointer-events:none}.form-card{padding:14px;margin-bottom:10px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.form-hint{font-size:8px;color:#728197;line-height:1.7;margin-top:3px}.required{color:#fca5a5}.form-section-title{font-size:11px;font-weight:900;color:#e6eef8;margin:1px 0 11px;display:flex;align-items:center;gap:7px}.form-section-title i{color:#7dd3fc}.input-prefix{position:relative}.input-prefix i{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#64748b;font-size:11px}.input-prefix input{padding-right:34px!important}.onboard-form{width:100%;margin:14px 0 0;text-align:right}.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.choice{border:1px solid #2a3b53;background:#091321;color:#d5deea;border-radius:15px;padding:11px 10px;font-size:10px;font-weight:900;text-align:center;min-height:52px;transition:.16s}.choice i{font-size:14px;display:block;margin-bottom:5px;color:#7c8da5}.choice.selected{border-color:#0ea5e9;background:#082f49;color:#e0f2fe;box-shadow:inset 0 0 0 1px rgba(56,189,248,.16)}.choice.selected i{color:#7dd3fc}.setup-summary{display:grid;gap:7px;margin-top:12px}.setup-summary div{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 10px;border:1px solid #1f2d41;background:#09111f;border-radius:12px;font-size:9px}.setup-summary span{color:#94a3b8}.setup-summary b{color:#e2e8f0}.onboard-card{background:#08111f;border:1px solid #203048;border-radius:18px;padding:13px}.onboard-note{display:flex;gap:8px;align-items:flex-start;padding:10px 11px;border-radius:13px;background:#071624;border:1px solid #18344a;color:#9fb3c8;font-size:8px;line-height:1.7}.onboard-note i{color:#7dd3fc;margin-top:2px}.permission-list{display:grid;gap:8px}.permission-card{width:100%;display:grid;grid-template-columns:38px 1fr auto;align-items:center;gap:10px;text-align:right;border:1px solid #263750;background:#091321;color:#e2e8f0;border-radius:16px;padding:11px}.permission-card .p-icon{width:38px;height:38px;border-radius:12px;background:#111e31;display:grid;place-items:center;color:#7dd3fc}.permission-card b{display:block;font-size:10px}.permission-card small{display:block;font-size:8px;color:#8190a5;margin-top:2px}.state-chip{border:1px solid #334155;border-radius:999px;padding:4px 7px;font-size:8px;color:#94a3b8}.permission-card.active{border-color:#0c4a6e;background:#082033}.permission-card.active .state-chip{border-color:#14532d;background:#052e16;color:#86efac}
+    .onboard-layer{background:#020617;flex-direction:column;padding:15px 16px 15px;overflow:hidden}.onboard-top{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding-bottom:11px;border-bottom:1px solid #172235}.onboard-step-copy b{display:block;font-size:10px;color:#dce7f4}.onboard-step-copy span{display:block;font-size:8px;color:#6f8198;margin-top:2px}.onboard-progress{height:4px;background:#172235;border-radius:999px;overflow:hidden;margin-top:8px}.onboard-progress-bar{height:100%;background:#38bdf8;border-radius:999px;transition:width .2s ease}.skip{border:0;background:transparent;color:#8ea0b6;font-size:9px;font-weight:800;padding:8px}.onboard-content{flex:1;min-height:0;overflow-y:auto;padding:16px 2px 12px;text-align:right}.onboard-content::-webkit-scrollbar{width:3px}.onboard-content::-webkit-scrollbar-thumb{background:#334155;border-radius:99px}.onboard-heading{display:flex;align-items:center;gap:11px;margin-bottom:8px}.onboard-visual{flex:0 0 auto;width:58px;height:58px;border-radius:18px;background:#082f49;border:1px solid #075985;display:grid;place-items:center;font-size:23px;color:#bae6fd}.onboard-title-group{min-width:0}.onboard-content h2{font-size:18px;line-height:1.35;margin:0 0 3px}.onboard-content p{font-size:9px;color:#91a0b4;line-height:1.75;margin:0}.onboard-welcome{text-align:center;padding:42px 8px 8px}.onboard-welcome .onboard-visual{width:88px;height:88px;border-radius:28px;font-size:34px;margin:0 auto 18px}.onboard-welcome h2{font-size:24px;margin-bottom:8px}.onboard-welcome p{font-size:10px;max-width:280px;margin:auto}.onboard-actions{display:flex;gap:8px;padding-top:11px;border-top:1px solid #172235;background:#020617}.onboard-actions .primary-btn,.onboard-actions .ghost-btn{min-height:48px;font-size:11px}.onboard-actions .primary-btn{box-shadow:0 8px 25px rgba(2,132,199,.16)}
+    .flash-layer{pointer-events:none;background:white;opacity:0}.flash-layer.go{display:block;animation:flash .55s ease}@keyframes flash{0%{opacity:0}35%{opacity:.42}100%{opacity:0}}
+    .dispatch-layer{background:rgba(2,6,23,.96);align-items:center;justify-content:center;text-align:center;padding:20px;flex-direction:column;top:38px}.dispatch-check{width:90px;height:90px;border-radius:50%;background:#052e16;border:1px solid #166534;display:grid;place-items:center;font-size:36px;color:#86efac;animation:pop .42s ease}.dispatch-layer h2{font-size:19px;margin:17px 0 5px}.dispatch-layer p{font-size:10px;color:#94a3b8;line-height:1.8;margin:0}.dispatch-meta{display:grid;gap:6px;margin-top:14px;width:100%;max-width:250px;text-align:right}.dispatch-meta span{padding:8px 10px;border-radius:11px;background:#0f172a;border:1px solid #1e293b;font-size:9px;color:#cbd5e1}.dispatch-back-note{margin-top:12px!important;color:#64748b!important;font-size:8px!important}@keyframes pop{0%{transform:scale(.5);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1)}}
+    .toast{position:absolute;z-index:120;right:12px;left:12px;top:45px;transform:translateY(-130px);transition:.28s;padding:10px 11px;background:#0b1424;border:1px solid #334155;border-radius:14px;display:flex;gap:9px;align-items:center;box-shadow:0 15px 35px rgba(0,0,0,.32);font-size:10px}.toast.show{transform:translateY(0)}.toast i{color:#7dd3fc}
+    .demo-indicator{position:absolute;bottom:74px;left:9px;z-index:46;font-size:7px;font-weight:900;color:#64748b;background:#07101c;border:1px solid #1e293b;padding:4px 7px;border-radius:999px;pointer-events:none}
+    @media(max-width:860px){body{padding:0;background:#020617}.shell{display:block;width:100%;height:100vh}.showcase{display:none}.phone{width:100%;height:100dvh;min-height:100vh;border:0;border-radius:0;box-shadow:none}.notch{display:none}.statusbar{height:30px;padding-top:max(7px,env(safe-area-inset-top))}.app{inset:30px 0 70px}.dispatch-layer{top:30px}.screen{padding-left:16px;padding-right:16px}.bottom-nav{height:70px}}
+    @media(max-width:360px){.emergency-grid{gap:8px}.emg{min-height:115px;padding:12px}.sos-wrap{width:128px;height:128px}.form-grid{grid-template-columns:1fr}.choice-grid{grid-template-columns:1fr 1fr}}
+    /* Product-level motion & tactile feedback */
+    button{position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent;transition:transform .16s ease,filter .18s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease}
+    button:not(:disabled):active{transform:scale(.975)}
+    .tap-ripple{position:absolute;border-radius:999px;background:rgba(255,255,255,.18);pointer-events:none;transform:translate(-50%,-50%) scale(0);animation:ripple .5s ease-out forwards;z-index:12}
+    @keyframes ripple{to{transform:translate(-50%,-50%) scale(1);opacity:0}}
+    .card,.soft,.banner,.status-strip{animation:surfaceIn .32s ease both}
+    @keyframes surfaceIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+    .emg{transition:transform .22s cubic-bezier(.22,.8,.3,1),filter .22s,box-shadow .22s}.emg:hover{filter:brightness(1.06)}.emg:active{transform:scale(.965)}
+    .emg .icon{transition:transform .22s ease}.emg:active .icon{transform:scale(.9) rotate(-4deg)}
+    .status-icon{position:relative}.status-icon::after{content:'';position:absolute;inset:-3px;border-radius:13px;border:1px solid rgba(125,211,252,.16);animation:statusBreath 2.6s ease-in-out infinite}@keyframes statusBreath{50%{transform:scale(1.12);opacity:.25}}
+    .sos{transition:transform .14s ease,filter .18s ease,box-shadow .18s ease}.sos-wrap:not(.holding) .sos{animation:sosIdle 3.2s ease-in-out infinite}@keyframes sosIdle{50%{box-shadow:0 18px 44px rgba(220,38,38,.43),inset 0 0 0 2px rgba(255,255,255,.18)}}
+    .timeline-row{animation:timelineReveal .34s ease both}.timeline-row.done .step-dot{animation:stepDone .34s cubic-bezier(.22,.8,.3,1)}@keyframes timelineReveal{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}@keyframes stepDone{0%{transform:scale(.75)}70%{transform:scale(1.12)}100%{transform:scale(1)}}
+    .map{background-position:0 0;animation:mapDrift 12s linear infinite}@keyframes mapDrift{to{background-position:22px 22px}}
+    .route{overflow:visible}.route::before{content:'';position:absolute;inset:-1px 0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.9),transparent);width:34%;animation:routeFlow 1.8s linear infinite}@keyframes routeFlow{from{left:75%}to{left:-18%}}
+    .unit-pin{transition:left .9s cubic-bezier(.22,.8,.3,1),top .9s cubic-bezier(.22,.8,.3,1),transform .25s ease;animation:unitPulse 1.7s ease-in-out infinite}.unit-pin::after{content:'';position:absolute;inset:-5px;border:1px solid rgba(125,211,252,.35);border-radius:50%;animation:unitRing 1.7s ease-out infinite}@keyframes unitRing{to{transform:scale(1.5);opacity:0}}@keyframes unitPulse{50%{transform:scale(1.05)}}
+    .map-pin::after{content:'';position:absolute;inset:-5px;border:1px solid rgba(248,113,113,.35);border-radius:50%;animation:unitRing 2.2s ease-out infinite}
+    .eta-change{animation:etaTick .45s cubic-bezier(.22,.8,.3,1)}@keyframes etaTick{0%{transform:translateY(7px);opacity:.25}100%{transform:none;opacity:1}}
+    .live i.fa-circle{animation:liveDot 1.2s ease-in-out infinite}@keyframes liveDot{50%{opacity:.35;transform:scale(.75)}}
+    .modal-layer{opacity:0;transition:opacity .22s ease}.modal-layer.show{opacity:1}.modal-layer .sheet{transform:translateY(26px) scale(.985);opacity:0;transition:transform .3s cubic-bezier(.22,.8,.3,1),opacity .24s ease}.modal-layer.show .sheet{transform:none;opacity:1}
+    .dispatch-layer{opacity:0;transition:opacity .22s ease}.dispatch-layer.show{opacity:1}.dispatch-layer.show .dispatch-check{animation:dispatchPop .5s cubic-bezier(.2,.9,.25,1.2)}.dispatch-layer.show .dispatch-meta span{animation:dispatchItem .35s ease both}.dispatch-layer.show .dispatch-meta span:nth-child(1){animation-delay:.12s}.dispatch-layer.show .dispatch-meta span:nth-child(2){animation-delay:.2s}.dispatch-layer.show .dispatch-meta span:nth-child(3){animation-delay:.28s}@keyframes dispatchPop{0%{transform:scale(.45);opacity:0}65%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}@keyframes dispatchItem{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+    .onboard-content{animation:onboardStep .34s cubic-bezier(.22,.8,.3,1)}.onboard-heading,.onboard-welcome{animation:onboardHero .38s ease both}.onboard-form>*{animation:formRise .34s ease both}.onboard-form>*:nth-child(2){animation-delay:.04s}.onboard-form>*:nth-child(3){animation-delay:.08s}.onboard-form>*:nth-child(4){animation-delay:.12s}@keyframes onboardStep{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:none}}@keyframes onboardHero{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}@keyframes formRise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    .onboard-progress-bar{position:relative;overflow:hidden}.onboard-progress-bar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);transform:translateX(100%);animation:progressSheen 2.4s ease-in-out infinite}@keyframes progressSheen{55%,100%{transform:translateX(-140%)}}
+    .choice{transition:transform .16s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease}.choice.selected{animation:choiceSelect .28s cubic-bezier(.22,.8,.3,1)}@keyframes choiceSelect{0%{transform:scale(.97)}70%{transform:scale(1.025)}100%{transform:scale(1)}}
+    .permission-card{transition:transform .18s ease,border-color .22s ease,background .22s ease}.permission-card.active{animation:choiceSelect .28s ease}
+    .field input,.field select,.field textarea{transition:border-color .18s ease,box-shadow .18s ease,background .18s ease,transform .14s ease}.field input:focus,.field select:focus,.field textarea:focus{transform:translateY(-1px)}
+    .loading-dots{display:inline-flex;gap:3px;margin-right:4px;vertical-align:middle}.loading-dots i{width:4px;height:4px;border-radius:50%;background:currentColor;animation:dotBounce 1s infinite ease-in-out}.loading-dots i:nth-child(2){animation-delay:.12s}.loading-dots i:nth-child(3){animation-delay:.24s}@keyframes dotBounce{0%,60%,100%{transform:translateY(0);opacity:.35}30%{transform:translateY(-4px);opacity:1}}
+    .interpreter-state .state-icon{position:relative;transition:.25s}.interpreter-state .state-icon::before,.interpreter-state .state-icon::after{content:'';position:absolute;border-radius:28px;border:1px solid rgba(56,189,248,.24);inset:-7px;animation:connectRing 1.8s ease-out infinite}.interpreter-state .state-icon::after{animation-delay:.7s}@keyframes connectRing{to{inset:-24px;opacity:0;border-radius:40px}}
+    .interpreter-video{animation:videoReveal .42s ease both}.video-avatar{animation:videoAvatar 3s ease-in-out infinite}.quality{animation:qualityIn .35s ease both}.transcript{animation:transcriptIn .4s ease .18s both}@keyframes videoReveal{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:none}}@keyframes videoAvatar{50%{transform:scale(1.025);box-shadow:0 0 54px rgba(56,189,248,.2)}}@keyframes qualityIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}@keyframes transcriptIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+    .toast.show{animation:toastPop .34s cubic-bezier(.22,.8,.3,1)}@keyframes toastPop{0%{transform:translateY(-130px) scale(.96)}100%{transform:translateY(0) scale(1)}}
+    .showcase #showcase-context,.showcase #showcase-title,.showcase #showcase-desc,.showcase #showcase-points{transition:opacity .16s ease,transform .2s ease}.showcase.updating #showcase-context,.showcase.updating #showcase-title,.showcase.updating #showcase-desc,.showcase.updating #showcase-points{opacity:.25;transform:translateY(4px)}
+    .phone::after{content:'';position:absolute;inset:0;border-radius:34px;pointer-events:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.035),inset 0 0 0 1px rgba(255,255,255,.025);z-index:130}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}}
+  
+
+
+    /* ===== LIVE EXPLAINER SLIDE ===== */
+    .showcase{position:relative;height:min(820px,calc(100vh - 36px));min-height:690px;display:flex;align-items:stretch;width:100%}
+    .explainer-slide{width:100%;aspect-ratio:16/9;min-height:470px;position:relative;overflow:hidden;border:1px solid rgba(125,211,252,.13);border-radius:30px;padding:34px 38px 30px;background:
+      radial-gradient(circle at 84% 14%,rgba(14,165,233,.12),transparent 28%),
+      linear-gradient(145deg,rgba(15,23,42,.82),rgba(5,12,25,.92));
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 28px 70px rgba(0,0,0,.18)}
+    .explainer-slide::before{content:'';position:absolute;inset:0;opacity:.16;pointer-events:none;background-image:linear-gradient(rgba(148,163,184,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.08) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,black,transparent 78%)}
+    .slide-top{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .slide-brand{display:flex;align-items:center;gap:10px;color:#dbeafe;font-weight:900;font-size:15px;letter-spacing:.02em}.slide-brand-mark{width:31px;height:31px;border-radius:10px;display:grid;place-items:center;background:#0c4a6e;color:#7dd3fc;border:1px solid #075985}
+    .slide-number{font-size:14px;font-weight:900;color:#64748b;letter-spacing:.13em}.slide-number strong{color:#7dd3fc;font-size:25px;letter-spacing:0;margin-left:5px}
+    .slide-rule{position:relative;z-index:2;height:1px;background:linear-gradient(90deg,transparent,#203149 24%,#203149 76%,transparent);margin:16px 0 22px}
+    .slide-body{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(155px,.55fr);gap:28px;align-items:start}
+    .slide-kicker{display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:900;color:#7dd3fc;margin-bottom:9px;text-transform:uppercase}.slide-kicker::before{content:'';width:22px;height:2px;border-radius:9px;background:#38bdf8}.slide-title-wrap{display:flex;align-items:flex-start;gap:14px}.slide-title-badge{flex:0 0 auto;width:46px;height:46px;border-radius:15px;border:1px solid rgba(56,189,248,.28);background:linear-gradient(180deg,rgba(14,165,233,.18),rgba(8,22,38,.92));display:grid;place-items:center;color:#7dd3fc;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 8px 26px rgba(2,8,23,.22)}.slide-title-badge i{font-size:18px}.section-label{display:flex;align-items:center;gap:7px}.section-label i,.page-head h2 i,.profile-row span i,.incident-meta-item span i,.card-head b i{color:#7dd3fc}.page-head h2{display:flex;align-items:center;gap:7px}.profile-row span,.incident-meta-item span{display:flex;align-items:center;gap:6px}.card-head{padding:11px 12px 7px;display:flex;align-items:center;justify-content:space-between}.card-head b{display:flex;align-items:center;gap:6px;font-size:11px}.ui-icon-chip{width:28px;height:28px;border-radius:9px;display:inline-grid;place-items:center;background:#0b2034;border:1px solid #183750;color:#7dd3fc;flex:0 0 auto}.ui-icon-chip.sm{width:24px;height:24px;border-radius:8px;font-size:10px}.ui-label{display:flex;align-items:center;gap:7px}.ui-label i{color:#7dd3fc}.slide-feature-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.feature-icon{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:#0b2034;border:1px solid #183750;color:#7dd3fc;font-size:11px}.smart-status .mini-status i,.banner i,.quick-grid button i,.primary-btn i,.ghost-btn i,.outline-btn i,.nav-btn i,.tiny-pill i,.profile-row i,.form-section-title i{filter:drop-shadow(0 0 8px rgba(56,189,248,.08))}.emg .icon{box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),0 6px 18px rgba(0,0,0,.18)}.icon-row{display:flex;align-items:center;gap:7px}.metric-panel .metric-icon{box-shadow:0 8px 22px rgba(14,165,233,.13)}
+    .explainer-slide h1{font-size:34px;line-height:1.28;margin:0 0 13px;max-width:530px;letter-spacing:-.02em}.explainer-slide h1 span{color:#7dd3fc!important}
+    .explainer-slide #showcase-desc{font-size:13px;line-height:1.9;color:#aebdd0;max-width:540px;margin:0}
+    .metric-panel{min-height:158px;border-radius:22px;border:1px solid #1d344d;background:rgba(7,17,31,.72);padding:18px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}.metric-panel::after{content:'';position:absolute;width:100px;height:100px;border-radius:50%;background:rgba(56,189,248,.07);left:-28px;bottom:-42px}.metric-icon{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;background:#082f49;color:#7dd3fc;border:1px solid #0c4a6e;font-size:16px}.metric-value{font-size:30px;font-weight:900;color:#f8fafc;line-height:1}.metric-label{font-size:9px;color:#94a3b8;font-weight:800;margin-top:5px}
+    .slide-features{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:20px}.slide-feature{min-height:86px;border:1px solid #1c2c42;background:rgba(8,17,31,.7);border-radius:15px;padding:12px;display:flex;flex-direction:column;gap:8px}.feature-index{width:23px;height:23px;border-radius:8px;display:grid;place-items:center;background:#0c243a;color:#7dd3fc;font-size:8px;font-weight:900}.slide-feature p{font-size:9px!important;line-height:1.65!important;color:#d5deea!important;margin:0!important}
+    .slide-footer{position:absolute;right:38px;left:38px;bottom:18px;z-index:2;display:flex;align-items:center;justify-content:space-between;color:#52647a;font-size:8px;font-weight:800}.slide-progress{height:3px;width:112px;border-radius:99px;background:#172238;overflow:hidden}.slide-progress span{display:block;height:100%;background:#38bdf8;border-radius:99px;transition:width .35s ease}
+    .showcase.updating .explainer-slide{transform:translateY(4px);filter:saturate(.8)}.explainer-slide{transition:transform .22s ease,filter .22s ease}
+    .showcase #showcase-context{display:none}
+
+    /* ===== LIVE PRESENTATION MOTION ===== */
+    .explainer-slide{isolation:isolate}
+    .explainer-slide::before{animation:gridDrift 18s linear infinite}
+    .live-orb{position:absolute;border-radius:50%;filter:blur(2px);pointer-events:none;z-index:0;opacity:.42}
+    .orb-a{width:230px;height:230px;right:-95px;top:-85px;background:radial-gradient(circle,rgba(56,189,248,.22),rgba(56,189,248,0) 68%);animation:orbFloatA 7s ease-in-out infinite alternate}
+    .orb-b{width:190px;height:190px;left:-70px;bottom:-90px;background:radial-gradient(circle,rgba(99,102,241,.15),rgba(99,102,241,0) 70%);animation:orbFloatB 9s ease-in-out infinite alternate}
+    .motion-sweep{position:absolute;z-index:1;top:-30%;bottom:-30%;width:90px;right:-130px;transform:rotate(16deg);background:linear-gradient(90deg,transparent,rgba(125,211,252,.055),transparent);animation:slideSweep 7.5s ease-in-out infinite;pointer-events:none}
+    .slide-live-badge{position:absolute;z-index:4;left:38px;top:29px;display:flex;align-items:center;gap:7px;font-size:10px;font-weight:900;letter-spacing:.1em;color:#7c8da4}
+    .slide-live-badge span{width:6px;height:6px;border-radius:50%;background:#34d399;box-shadow:0 0 0 0 rgba(52,211,153,.4);animation:liveBadgePulse 1.8s ease-out infinite}
+    .slide-kicker,.explainer-slide h1,.explainer-slide #showcase-desc,.metric-panel,.slide-feature,.slide-rule{will-change:transform,opacity}
+    .showcase.slide-enter .slide-kicker{animation:presentIn .5s cubic-bezier(.2,.8,.2,1) both}
+    .showcase.slide-enter .explainer-slide h1{animation:presentIn .62s .07s cubic-bezier(.2,.8,.2,1) both}
+    .showcase.slide-enter .explainer-slide #showcase-desc{animation:presentIn .62s .15s cubic-bezier(.2,.8,.2,1) both}
+    .showcase.slide-enter .metric-panel{animation:metricPop .68s .12s cubic-bezier(.18,.9,.25,1.15) both}
+    .showcase.slide-enter .slide-feature:nth-child(1){animation:cardIn .55s .24s cubic-bezier(.2,.8,.2,1) both}
+    .showcase.slide-enter .slide-feature:nth-child(2){animation:cardIn .55s .32s cubic-bezier(.2,.8,.2,1) both}
+    .showcase.slide-enter .slide-feature:nth-child(3){animation:cardIn .55s .40s cubic-bezier(.2,.8,.2,1) both}
+    .showcase.slide-enter .slide-rule{animation:ruleGrow .65s .08s ease both;transform-origin:right center}
+    .metric-icon{animation:metricIconFloat 2.8s ease-in-out infinite}
+    .metric-value.live-kpi{animation:kpiGlow 1.1s ease both}
+    .slide-progress span{position:relative;overflow:hidden;transition:width .65s cubic-bezier(.2,.8,.2,1)}
+    .slide-progress span::after{content:'';position:absolute;inset:0;transform:translateX(-110%);background:linear-gradient(90deg,transparent,rgba(255,255,255,.75),transparent);animation:progressShine 2.8s ease-in-out infinite}
+    .slide-feature{transition:transform .22s ease,border-color .22s ease,background .22s ease}
+    @media(hover:hover) and (pointer:fine){.slide-feature:hover{transform:translateY(-4px);border-color:#285074;background:rgba(10,24,43,.86)}}
+    @keyframes presentIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes cardIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+    @keyframes metricPop{0%{opacity:0;transform:translateX(-16px) scale(.94)}70%{opacity:1;transform:translateX(2px) scale(1.02)}100%{opacity:1;transform:none}}
+    @keyframes ruleGrow{from{opacity:.1;transform:scaleX(.08)}to{opacity:1;transform:scaleX(1)}}
+    @keyframes gridDrift{from{background-position:0 0,0 0}to{background-position:42px 42px,42px 42px}}
+    @keyframes orbFloatA{from{transform:translate(0,0) scale(1)}to{transform:translate(-28px,34px) scale(1.14)}}
+    @keyframes orbFloatB{from{transform:translate(0,0) scale(.96)}to{transform:translate(30px,-22px) scale(1.1)}}
+    @keyframes slideSweep{0%,15%{right:-150px;opacity:0}35%{opacity:1}65%{opacity:.8}85%,100%{right:115%;opacity:0}}
+    @keyframes liveBadgePulse{0%{box-shadow:0 0 0 0 rgba(52,211,153,.42);opacity:.75}70%{box-shadow:0 0 0 8px rgba(52,211,153,0);opacity:1}100%{box-shadow:0 0 0 0 rgba(52,211,153,0);opacity:.75}}
+    @keyframes metricIconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+    @keyframes kpiGlow{0%{transform:scale(.86);opacity:.4;text-shadow:0 0 0 rgba(125,211,252,0)}55%{transform:scale(1.08);opacity:1;text-shadow:0 0 22px rgba(125,211,252,.35)}100%{transform:scale(1);text-shadow:none}}
+    @keyframes progressShine{0%,35%{transform:translateX(-120%)}60%,100%{transform:translateX(140%)}}
+    @media(prefers-reduced-motion:reduce){.explainer-slide::before,.live-orb,.motion-sweep,.slide-live-badge span,.metric-icon,.slide-progress span::after{animation:none!important}.showcase.slide-enter .slide-kicker,.showcase.slide-enter .explainer-slide h1,.showcase.slide-enter .explainer-slide #showcase-desc,.showcase.slide-enter .metric-panel,.showcase.slide-enter .slide-feature,.showcase.slide-enter .slide-rule{animation:none!important}}
+
+    /* ===== V6 PRODUCT-DEMO POLISH ===== */
+    body{background:radial-gradient(circle at 70% 20%,rgba(14,165,233,.07),transparent 26%),#07101d}
+    .phone{border-color:#223148;box-shadow:0 34px 110px rgba(0,0,0,.62),0 0 0 1px rgba(125,211,252,.05),inset 0 0 0 1px rgba(255,255,255,.025)}
+    .statusbar{background:linear-gradient(180deg,rgba(2,6,23,.98),rgba(2,6,23,.86));backdrop-filter:blur(16px)}
+    .history-btn{border-color:#24364d;background:#0a1322;box-shadow:inset 0 1px rgba(255,255,255,.02)}
+    .screen{background:linear-gradient(180deg,#020617 0%,#030817 100%)}
+    .app-home-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+    .app-user{display:flex;align-items:center;gap:10px}.app-avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#0c4a6e,#082f49);border:1px solid #0e7490;color:#bae6fd;font-weight:900;box-shadow:0 8px 24px rgba(14,165,233,.12)}
+    .app-user-copy small{display:block;color:#7c8da4;font-size:8px;margin-bottom:2px}.app-user-copy b{display:block;font-size:13px;color:#f8fafc}.ready-chip{display:flex;align-items:center;gap:6px;padding:6px 9px;border-radius:999px;background:#052e16;border:1px solid #14532d;color:#86efac;font-size:8px;font-weight:900}.ready-chip i{font-size:6px;animation:livePulse 1.5s infinite}@keyframes livePulse{0%,100%{opacity:.45;transform:scale(.85)}50%{opacity:1;transform:scale(1.2)}}
+    .smart-status{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:13px}.smart-status .mini-status{position:relative;display:flex;align-items:center;gap:9px;background:#08111f;border:1px solid #1d2b40;border-radius:16px;padding:10px 11px;overflow:hidden}.smart-status .mini-status::after{content:'';position:absolute;inset:auto -20px -35px auto;width:70px;height:70px;border-radius:50%;background:rgba(56,189,248,.035)}.mini-status .mini-ico{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:#0c1b2e;color:#7dd3fc;border:1px solid #1e3550}.mini-status b{display:block;font-size:9px}.mini-status span{display:block;font-size:7.5px;color:#718199;margin-top:2px}
+    .emergency-grid{gap:9px}.emg{min-height:112px;border-radius:18px;padding:13px;box-shadow:none}.emg .icon{width:36px;height:36px;border-radius:12px;margin-bottom:12px}.emg b{font-size:15px}.emg span{font-size:9px}.emg::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.035),transparent 45%);pointer-events:none}.emg:active{transform:scale(.965);filter:brightness(.94)}
+    .sos-area{margin-top:12px}.sos-wrap{width:132px;height:132px}.sos{background:radial-gradient(circle at 35% 25%,#ef4444,#b91c1c 60%,#991b1b);box-shadow:0 16px 40px rgba(220,38,38,.28),inset 0 1px 0 rgba(255,255,255,.15)}
+    .bottom-nav{left:8px;right:8px;bottom:8px;height:62px;border:1px solid #203149;border-radius:21px;background:rgba(8,17,31,.9);box-shadow:0 12px 35px rgba(0,0,0,.35);padding:4px;backdrop-filter:blur(20px)}.nav-btn{min-height:50px;border-radius:16px}.nav-btn.active{background:#0b2237;color:#7dd3fc}.nav-btn::after{display:none}
+    .demo-indicator{bottom:76px;background:rgba(7,16,28,.8);backdrop-filter:blur(8px);opacity:.75}
+    .sheet{position:relative;border-radius:26px 26px 20px 20px;background:linear-gradient(180deg,#0c1728,#07101d);border-color:#2a3c55;padding-top:22px}.sheet::before{content:'';position:absolute;top:8px;left:50%;transform:translateX(-50%);width:42px;height:4px;border-radius:999px;background:#42536a}
+    .toast{top:48px;border-radius:16px;background:rgba(9,19,33,.94);backdrop-filter:blur(18px);border-color:#2d415b}.toast i{width:26px;height:26px;border-radius:9px;background:#082f49;display:grid;place-items:center}
+    .page-head{position:sticky;top:-14px;z-index:5;background:linear-gradient(180deg,#020617 70%,rgba(2,6,23,0));padding:14px 0 10px;margin-top:-14px}.page-head h2{font-size:18px}.page-head p{font-size:8.5px}
+    .alert-hero{position:relative;overflow:hidden;background:linear-gradient(145deg,#1d0b10,#2d0d14);border-color:#5f2029}.alert-hero::after{content:'';position:absolute;width:100px;height:100px;border-radius:50%;left:-30px;top:-45px;background:rgba(248,113,113,.05)}
+    .map{height:210px!important;background:linear-gradient(145deg,#08121f,#0b1828)!important;border-color:#263951!important;overflow:hidden}.map::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(148,163,184,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.04) 1px,transparent 1px);background-size:24px 24px}.map::after{content:'';position:absolute;inset:18px 14px;border:1px solid rgba(125,211,252,.05);border-radius:28px 38px 24px 44px;transform:rotate(-8deg)}
+    .route{height:3px!important;border-radius:999px;background:repeating-linear-gradient(90deg,#38bdf8 0 10px,transparent 10px 18px)!important;box-shadow:0 0 12px rgba(56,189,248,.2)}
+    .map-label{background:rgba(5,12,23,.86)!important;backdrop-filter:blur(12px);border:1px solid #2a3c55;border-radius:12px!important;padding:7px 9px!important}
+    .timeline{background:#08111f;border-color:#1e2d42}.timeline-row{padding:6px 0 11px}.step-dot{box-shadow:0 0 0 3px #08111f}
+    .interpreter-video{height:350px;background:#08111f;border-color:#24364d}.video-remote{background:radial-gradient(circle at 50% 30%,#16324f,#0a1423 48%,#050a12 100%)}.self-preview{box-shadow:0 10px 28px rgba(0,0,0,.35)}.transcript{background:rgba(3,8,18,.82);backdrop-filter:blur(14px);border-color:#263a54;text-align:right;padding:11px 12px}
+    .field input,.field select,.field textarea{background:#07111e;border-color:#293b54;border-radius:15px;min-height:50px}.field input:focus,.field select:focus,.field textarea:focus{background:#081522;border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,248,.09)}
+    .permission-card,.choice,.onboard-card{box-shadow:inset 0 1px rgba(255,255,255,.015)}
+    .onboard-layer{background:radial-gradient(circle at 50% 5%,rgba(14,165,233,.07),transparent 22%),#020617}.onboard-top{border-bottom-color:#142237}.onboard-welcome{padding-top:30px}.onboard-welcome .onboard-visual{box-shadow:0 18px 50px rgba(14,165,233,.14)}
+    .app-notice{display:flex;align-items:center;gap:9px;border:1px solid #1f3b52;background:linear-gradient(90deg,#081a2b,#0a1625);border-radius:14px;padding:9px 10px;margin-bottom:10px;animation:noticeIn .35s ease}.app-notice .n-icon{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:#082f49;color:#7dd3fc}.app-notice b{display:block;font-size:9px}.app-notice span{display:block;font-size:7.5px;color:#7d8da2;margin-top:1px}@keyframes noticeIn{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:translateY(0)}}
+    .splash{position:absolute;inset:0;z-index:140;background:radial-gradient(circle at 50% 38%,#0b2740,#020617 55%);display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .55s ease,visibility .55s ease}.splash.hide{opacity:0;visibility:hidden;pointer-events:none}.splash-logo{width:88px;height:88px;border-radius:28px;background:linear-gradient(145deg,#0ea5e9,#075985);display:grid;place-items:center;color:#e0f2fe;font-size:34px;box-shadow:0 25px 70px rgba(14,165,233,.25);animation:splashFloat 1.6s ease-in-out infinite alternate}.splash h2{font-size:24px;margin:16px 0 4px}.splash p{font-size:9px;color:#7c8da3;margin:0}.splash-bar{width:86px;height:3px;border-radius:999px;background:#13243a;margin-top:18px;overflow:hidden}.splash-bar::after{content:'';display:block;width:45%;height:100%;background:#38bdf8;border-radius:999px;animation:splashLoad 1.1s ease-in-out infinite}@keyframes splashFloat{to{transform:translateY(-5px)}}@keyframes splashLoad{0%{transform:translateX(130%)}100%{transform:translateX(-240%)}}
+    @media(max-width:860px){.bottom-nav{left:8px;right:8px;bottom:max(8px,env(safe-area-inset-bottom));height:62px}.app{bottom:78px}}
+
+
+    /* ===== V8.1 EXECUTIVE POLISH ===== */
+    .slide-stage-pill{position:absolute;right:38px;top:72px;z-index:3;display:inline-flex;align-items:center;gap:7px;padding:6px 9px;border:1px solid #1f3a54;border-radius:999px;background:rgba(8,19,33,.78);color:#8ba0b8;font-size:8px;font-weight:900;backdrop-filter:blur(10px)}
+    .slide-stage-pill i{color:#7dd3fc}
+    .slide-feature{position:relative;overflow:hidden}.slide-feature::after{content:'';position:absolute;left:-18px;bottom:-22px;width:56px;height:56px;border-radius:50%;background:rgba(56,189,248,.035)}
+    .slide-feature-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.feature-icon{width:24px;height:24px;border-radius:8px;display:grid;place-items:center;background:#0b1f33;border:1px solid #183551;color:#7dd3fc;font-size:9px}.slide-feature p{position:relative;z-index:1}
+    .slide-proof{position:absolute;left:38px;bottom:41px;z-index:3;display:flex;gap:6px;align-items:center}.proof-chip{display:flex;align-items:center;gap:5px;padding:5px 7px;border:1px solid #1f3045;border-radius:999px;background:rgba(7,16,28,.72);color:#71849a;font-size:7px;font-weight:800}.proof-chip i{color:#7dd3fc}
+    .incident-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:-2px 0 9px}.incident-meta-item{padding:8px 9px;border:1px solid #1f2f44;border-radius:12px;background:#08111e;min-width:0}.incident-meta-item span{display:block;font-size:7px;color:#6f8197;margin-bottom:2px}.incident-meta-item b{display:block;font-size:8.5px;color:#dce6f1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.incident-meta-item i{color:#7dd3fc;margin-left:4px}
+    .active-incident-notice{cursor:pointer;border-color:#244863!important;background:linear-gradient(90deg,#092238,#0a1727)!important}.active-incident-notice .n-icon{background:#0b3550!important}.active-incident-notice::after{content:'فتح';margin-right:auto;font-size:7px;font-weight:900;color:#7dd3fc;border:1px solid #1e4c6a;padding:4px 7px;border-radius:999px}
+
+    /* ===== V8.2 SLIDE LAYOUT FIX ===== */
+    .explainer-slide{height:100%;min-height:100%;aspect-ratio:auto;padding:38px 42px 86px;display:flex;flex-direction:column;width:100%;border-radius:44px}
+    .slide-top{flex:0 0 auto}
+    .slide-rule{flex:0 0 auto;margin:13px 0 16px}
+    .slide-body{flex:0 0 auto;grid-template-columns:minmax(0,1fr) 132px;gap:28px;align-items:start}
+    .slide-body>div:first-child{min-width:0}
+    .slide-kicker{font-size:13px;margin-bottom:9px}.slide-title-badge{width:50px;height:50px}.slide-title-badge i{font-size:19px}
+    .explainer-slide h1{font-size:clamp(38px,3.2vw,52px);line-height:1.08;margin:0 0 16px;max-width:100%;letter-spacing:-.03em;text-wrap:balance}
+    .explainer-slide #showcase-desc{font-size:16px;line-height:1.78;max-width:100%;margin:0;color:#aebdd0;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+    .metric-panel{min-height:150px;padding:16px;border-radius:20px;max-width:132px;justify-self:end}
+    .metric-icon{width:34px;height:34px;border-radius:10px;font-size:15px}
+    .metric-value{font-size:29px}
+    .metric-label{font-size:10px;line-height:1.4}
+    .slide-features{flex:0 0 auto;margin-top:24px;gap:12px}
+    .slide-feature{min-height:86px;padding:13px;gap:8px;border-radius:14px}
+    .slide-feature p{font-size:11px!important;line-height:1.55!important;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+    .feature-icon{width:27px;height:27px;font-size:11px}.feature-index{width:27px;height:27px;font-size:10px}
+    .slide-stage-pill{top:78px;right:42px;padding:8px 12px;font-size:11px}
+    .slide-live-badge{left:42px;top:30px}
+    .slide-proof{left:42px;bottom:44px;max-width:42%;flex-wrap:wrap}
+    .proof-chip{font-size:9px;padding:6px 9px}
+    .slide-footer{right:42px;left:42px;bottom:20px;font-size:9px}
+    .slide-progress{width:118px;height:4px}
+    @media(min-width:861px) and (max-width:1180px){
+      .shell{width:min(100%,1040px);grid-template-columns:minmax(540px,620px) 370px;gap:22px}
+      .showcase{height:min(780px,calc(100vh - 40px));min-height:640px}
+      .phone{width:370px;height:min(780px,calc(100vh - 40px));min-height:640px}
+      .explainer-slide{padding:34px 34px 80px}
+      .explainer-slide h1{font-size:clamp(34px,3vw,44px);max-width:100%}
+      .explainer-slide #showcase-desc{font-size:14px;line-height:1.7;-webkit-line-clamp:4}
+      .slide-body{grid-template-columns:minmax(0,1fr) 118px;gap:22px}
+      .metric-panel{min-height:138px;padding:14px;max-width:118px}
+      .metric-value{font-size:27px}
+      .metric-label{font-size:9px}
+      .slide-feature{min-height:92px;padding:12px}
+      .slide-feature p{font-size:11px!important}
+      .slide-stage-pill{right:34px;top:74px}
+      .slide-proof{left:34px;max-width:42%}.slide-footer{right:34px;left:34px}.slide-live-badge{left:34px}
+    }
+
+    /* ===== V8.10 ICON-RICH LIVE WALKTHROUGH ===== */
+    .slide-title-badge{width:58px!important;height:58px!important;border-radius:18px!important;box-shadow:0 10px 30px rgba(14,165,233,.16),inset 0 1px rgba(255,255,255,.06)!important}.slide-title-badge i{font-size:23px!important}
+    .metric-icon{width:46px!important;height:46px!important;border-radius:15px!important;font-size:19px!important;box-shadow:0 10px 26px rgba(14,165,233,.16)!important}
+    .slide-feature{padding:14px!important;min-height:108px!important;background:linear-gradient(180deg,rgba(10,23,40,.9),rgba(6,14,25,.82))!important}.slide-feature-head{margin-bottom:3px}.feature-icon{width:38px!important;height:38px!important;border-radius:12px!important;font-size:16px!important;background:linear-gradient(145deg,#0b3551,#0b2034)!important;border-color:#1d4d6a!important;box-shadow:0 8px 20px rgba(14,165,233,.12)}.feature-index{width:30px!important;height:30px!important;border-radius:10px!important;font-size:10px!important}.slide-feature p{font-size:12px!important;line-height:1.6!important}
+    .slide-icon-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px;position:relative;z-index:2}.slide-icon-stat{border:1px solid #193047;border-radius:13px;background:rgba(7,16,28,.72);padding:9px 7px;display:flex;align-items:center;gap:7px;min-width:0}.slide-icon-stat i{width:27px;height:27px;border-radius:9px;display:grid;place-items:center;background:#0b2941;color:#7dd3fc;font-size:11px;flex:0 0 auto}.slide-icon-stat span{font-size:7.5px;color:#8da1b8;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .showcase.slide-enter .slide-icon-stat:nth-child(1){animation:cardIn .5s .18s both}.showcase.slide-enter .slide-icon-stat:nth-child(2){animation:cardIn .5s .24s both}.showcase.slide-enter .slide-icon-stat:nth-child(3){animation:cardIn .5s .30s both}.showcase.slide-enter .slide-icon-stat:nth-child(4){animation:cardIn .5s .36s both}
+    .field label i{color:#7dd3fc;margin-left:5px;min-width:12px;text-align:center}.onboard-note i,.permission-card .p-icon i{filter:drop-shadow(0 0 8px rgba(56,189,248,.18))}
+    @media(min-width:861px) and (max-width:1180px){.slide-feature{min-height:96px!important;padding:12px!important}.feature-icon{width:34px!important;height:34px!important;font-size:14px!important}.slide-feature p{font-size:10.5px!important}.slide-icon-strip{gap:6px}.slide-icon-stat{padding:7px 6px}.slide-icon-stat span{font-size:6.8px}}
+
+
+    /* ===== V9 PRODUCT SYSTEM EXPANSION ===== */
+    .bottom-nav{grid-template-columns:repeat(5,1fr)}
+    .nav-btn span{font-size:8px}
+    .safety-score{border:1px solid #1e3b54;background:linear-gradient(145deg,#071827,#0b1424);border-radius:22px;padding:15px;margin-bottom:10px;position:relative;overflow:hidden}
+    .safety-score::after{content:'';position:absolute;width:120px;height:120px;border-radius:50%;left:-45px;bottom:-60px;background:rgba(56,189,248,.05)}
+    .score-ring{width:92px;height:92px;border-radius:50%;margin:4px auto 12px;display:grid;place-items:center;background:conic-gradient(#38bdf8 var(--score,85%),#17263b 0);position:relative}.score-ring::after{content:'';position:absolute;inset:8px;border-radius:50%;background:#071321}.score-ring strong{position:relative;z-index:1;font-size:24px}.score-ring span{position:relative;z-index:1;font-size:8px;color:#8fa1b7;margin-top:-13px}
+    .readiness-list{display:grid;gap:7px}.readiness-row{display:grid;grid-template-columns:34px 1fr auto;gap:9px;align-items:center;padding:9px 10px;border:1px solid #1d2d42;border-radius:14px;background:#08111f}.readiness-row .r-ico{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:#0b2136;color:#7dd3fc}.readiness-row b{font-size:9px}.readiness-row small{display:block;font-size:7.5px;color:#75869b;margin-top:2px}.readiness-row .r-state{font-size:7px;border-radius:999px;padding:4px 7px;border:1px solid #27405a;color:#8ca2b9}.readiness-row.done .r-state{border-color:#14532d;background:#052e16;color:#86efac}.readiness-row.warn .r-state{border-color:#78350f;background:#451a03;color:#fcd34d}
+    .emergency-mode-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0}.emergency-mode-btn{border:1px solid #263951;background:#08111f;color:#cbd5e1;border-radius:13px;padding:9px 7px;font-size:8px;font-weight:800;min-height:56px}.emergency-mode-btn i{display:block;font-size:14px;color:#7dd3fc;margin-bottom:5px}.emergency-mode-btn.active{border-color:#0ea5e9;background:#082f49;color:#e0f2fe}
+    .incident-action-strip{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:8px 0 10px}.incident-action-strip button{min-height:48px}
+    .safe-btn{background:#052e16!important;border-color:#166534!important;color:#bbf7d0!important}.assist-btn{background:#2a0c12!important;border-color:#7f1d1d!important;color:#fecaca!important}
+    .control-hero{border:1px solid #223750;background:linear-gradient(145deg,#071523,#0a1322);border-radius:20px;padding:14px;margin-bottom:10px}.control-live{display:flex;align-items:center;gap:7px;color:#86efac;font-size:9px;font-weight:900}.control-live::before{content:'';width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 0 rgba(34,197,94,.35);animation:liveBadgePulse 1.8s infinite}.control-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:11px}.control-kpi{border:1px solid #1c2c41;background:#08111f;border-radius:13px;padding:9px;text-align:center}.control-kpi strong{display:block;font-size:17px}.control-kpi span{font-size:7px;color:#7a8ba0}.dispatch-card{border:1px solid #203149;background:#08111f;border-radius:16px;padding:11px;margin-bottom:8px}.dispatch-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.dispatch-person{display:flex;gap:8px;align-items:center}.dispatch-avatar{width:34px;height:34px;border-radius:11px;background:#0c2b44;display:grid;place-items:center;color:#7dd3fc}.dispatch-person b{display:block;font-size:9px}.dispatch-person span{font-size:7px;color:#7b8ca1}.dispatch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:9px}.dispatch-grid div{padding:7px;border-radius:10px;background:#0b1524;border:1px solid #192a3d}.dispatch-grid span{display:block;font-size:6.5px;color:#6f8195}.dispatch-grid b{font-size:8px}.operator-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}
+    .quick-phrases{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}.phrase-chip{border:1px solid #26405a;background:#091321;color:#cbd5e1;border-radius:999px;padding:7px 9px;font-size:8px}.phrase-chip:active{transform:scale(.97)}
+    .interpreter-tools{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}.interpreter-tools button{min-height:44px}
+    .safety-mini{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin:9px 0}.safety-mini div{padding:9px;border:1px solid #1e3046;background:#08111f;border-radius:13px}.safety-mini span{display:block;font-size:7px;color:#71849a}.safety-mini b{font-size:9px}
+    .showcase-diagram{position:absolute;left:34px;right:34px;bottom:115px;z-index:2;display:flex;align-items:center;justify-content:center;gap:7px;pointer-events:none}.diagram-node{display:flex;align-items:center;gap:6px;border:1px solid #1e3953;background:rgba(7,18,31,.82);padding:6px 8px;border-radius:999px;color:#a9bdd2;font-size:7px;font-weight:800}.diagram-node i{color:#7dd3fc}.diagram-arrow{color:#38bdf8;font-size:10px;opacity:.8}.showcase.slide-enter .diagram-node{animation:cardIn .5s ease both}.showcase.slide-enter .diagram-node:nth-child(3){animation-delay:.08s}.showcase.slide-enter .diagram-node:nth-child(5){animation-delay:.16s}
+
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <aside class="showcase" aria-hidden="true">
+      <div class="explainer-slide">
+        <div class="live-orb orb-a"></div>
+        <div class="live-orb orb-b"></div>
+        <div class="motion-sweep"></div>
+        <div class="slide-live-badge"><span></span> LIVE WALKTHROUGH</div>
+        <div id="slide-stage-pill" class="slide-stage-pill"><i class="fa-solid fa-location-arrow"></i><span>01 · الرئيسية</span></div>
+        <div class="slide-top">
+          <div class="slide-brand"><span class="slide-brand-mark"><i class="fa-solid fa-hand-sparkles"></i></span><span>إشارة | تجربة المنتج</span></div>
+          <div id="slide-number" class="slide-number"><strong>01</strong> / 08</div>
+        </div>
+        <div class="slide-rule"></div>
+        <div class="slide-body">
+          <div>
+            <div id="slide-kicker" class="slide-kicker">الرئيسية</div>
+            <div id="showcase-context">الواجهة الحالية: الرئيسية</div>
+            <div class="slide-title-wrap"><span id="slide-title-badge" class="slide-title-badge"><i class="fa-solid fa-house"></i></span><h1 id="showcase-title">إشارة<br><span>الطوارئ بلغة يفهمها الجميع.</span></h1></div>
+            <p id="showcase-desc">واجهة تبدأ منها الاستغاثة فورًا، مع إبقاء حالة الاتصال والموقع مرئية للمستخدم.</p>
+          </div>
+          <div class="metric-panel">
+            <div id="slide-metric-icon" class="metric-icon"><i class="fa-solid fa-bolt"></i></div>
+            <div><div id="slide-metric-value" class="metric-value">1–2</div><div id="slide-metric-label" class="metric-label">تفاعل لإرسال البلاغ</div></div>
+          </div>
+        </div>
+        <div id="showcase-points" class="slide-features">
+          <div class="slide-feature"><div class="slide-feature-head"><span class="feature-index">01</span><span class="feature-icon"><i class="fa-solid fa-bolt"></i></span></div><p>إرسال فوري بنقرة واحدة أو ضغط SOS مطوّل</p></div>
+          <div class="slide-feature"><div class="slide-feature-head"><span class="feature-index">02</span><span class="feature-icon"><i class="fa-solid fa-route"></i></span></div><p>تتبع مرئي كامل دون الاعتماد على الصوت</p></div>
+          <div class="slide-feature"><div class="slide-feature-head"><span class="feature-index">03</span><span class="feature-icon"><i class="fa-solid fa-universal-access"></i></span></div><p>GPS وSMS ولغة الإشارة ضمن رحلة واحدة</p></div>
+        </div>
+        <div id="slide-icon-strip" class="slide-icon-strip"><div class="slide-icon-stat"><i class="fa-solid fa-location-dot"></i><span>GPS</span></div><div class="slide-icon-stat"><i class="fa-solid fa-message"></i><span>SMS</span></div><div class="slide-icon-stat"><i class="fa-solid fa-hands-asl-interpreting"></i><span>لغة الإشارة</span></div><div class="slide-icon-stat"><i class="fa-solid fa-shield-heart"></i><span>الأمان</span></div></div>
+        <div id="showcase-diagram" class="showcase-diagram"></div>
+        <div id="slide-proof" class="slide-proof"><span class="proof-chip"><i class="fa-solid fa-eye"></i> Visual-first</span><span class="proof-chip"><i class="fa-solid fa-universal-access"></i> Accessible</span></div>
+        <div class="slide-footer"><span>LIVE PRODUCT WALKTHROUGH</span><div class="slide-progress"><span id="slide-progress-fill" style="width:12.5%"></span></div></div>
+      </div>
+    </aside>
+
+    <section class="phone" aria-label="نموذج تطبيق إشارة التفاعلي">
+      <div id="splash" class="splash"><div class="splash-logo"><i class="fa-solid fa-hand-sparkles"></i></div><h2>إشارة</h2><p>جاهزون عندما تحتاج المساعدة</p><div class="splash-bar"></div></div>
+      <div class="notch"><div class="lens"></div><div class="speaker"></div></div>
+      <div class="statusbar">
+        <span class="status-icons"><i id="status-signal" class="fa-solid fa-signal"></i><i id="status-wifi" class="fa-solid fa-wifi"></i><i class="fa-solid fa-battery-three-quarters" style="color:#86efac"></i></span>
+        <span id="clock" class="clock">9:41</span>
+        <span class="history-controls" aria-label="التنقل داخل التطبيق">
+          <button id="app-back-btn" class="history-btn" type="button" onclick="appBack()" aria-label="رجوع" title="رجوع"><i class="fa-solid fa-arrow-right"></i></button>
+          <button id="app-forward-btn" class="history-btn" type="button" onclick="appForward()" aria-label="إلى الأمام" title="إلى الأمام"><i class="fa-solid fa-arrow-left"></i></button>
+        </span>
+      </div>
+      <div class="app">
+
+        <section id="screen-home" class="screen active" aria-label="الرئيسية">
+          <div class="app-home-header">
+            <div class="app-user"><div class="app-avatar" id="home-avatar">أ</div><div class="app-user-copy"><small><i class="fa-solid fa-hand-wave"></i> مرحباً بك</small><b id="home-user-name">أحمد محمد</b></div></div>
+            <div style="display:flex;align-items:center;gap:7px"><span class="ready-chip"><i class="fa-solid fa-shield-heart"></i> جاهز للطوارئ</span><button class="circle-btn" onclick="openDemoPanel()" aria-label="إعدادات"><i class="fa-solid fa-sliders"></i></button></div>
+          </div>
+          <div id="home-notice"></div>
+          <div class="smart-status">
+            <div class="mini-status"><div class="mini-ico"><i class="fa-solid fa-tower-broadcast"></i></div><div><b id="home-connection-title">الاتصال متاح</b><span id="home-connection-sub">قناة الإنترنت جاهزة</span></div></div>
+            <div class="mini-status"><div class="mini-ico"><i class="fa-solid fa-location-crosshairs"></i></div><div><b id="home-gps-title">الموقع محدد</b><span id="home-gps-sub">دقة تقريبية ± 18 م</span></div></div>
+          </div>
+
+          <div id="connectivity-banner"></div>
+          <div class="section-label"><i class="fa-solid fa-bolt"></i>اختر نوع الطوارئ — سيتم إرسال البلاغ فورًا</div>
+          <div class="emergency-grid">
+            <button class="emg med" onclick="startEmergency('ambulance')" aria-label="طلب إسعاف"><div class="icon"><i class="fa-solid fa-truck-medical"></i></div><b>إسعاف</b><span>حالة صحية / إصابة</span></button>
+            <button class="emg fire" onclick="startEmergency('fire')" aria-label="بلاغ حريق"><div class="icon"><i class="fa-solid fa-fire-flame-curved"></i></div><b>حريق</b><span>حريق / دخان / إنقاذ</span></button>
+            <button class="emg police" onclick="startEmergency('police')" aria-label="طلب شرطة"><div class="icon"><i class="fa-solid fa-shield-halved"></i></div><b>شرطة</b><span>أمن / خطر مباشر</span></button>
+            <button class="emg crash" onclick="startEmergency('traffic')" aria-label="بلاغ حادث سير"><div class="icon"><i class="fa-solid fa-car-burst"></i></div><b>حادث</b><span>حادث سير / تصادم</span></button>
+            <button class="emg other" onclick="startEmergency('other')" aria-label="طوارئ أخرى"><div class="icon"><i class="fa-solid fa-triangle-exclamation"></i></div><div><b>طوارئ أخرى</b><span>موقف عاجل غير مصنّف</span></div></button>
+          </div>
+
+          <div class="sos-area">
+            <div class="sos-hint"><i class="fa-solid fa-hand-pointer" style="color:#fca5a5;margin-left:5px"></i>للطوارئ القصوى: اضغط باستمرار لمدة ثانيتين</div>
+            <div id="sos-wrap" class="sos-wrap">
+              <button id="sos-btn" class="sos" aria-label="زر SOS، اضغط مطولًا لمدة ثانيتين"><i class="fa-solid fa-hand-fist" style="font-size:26px;margin-bottom:6px"></i><strong>SOS</strong><span>استغاثة عاجلة</span><span id="sos-pct" class="pct">اضغط مطولًا</span></button>
+            </div>
+          </div>
+        </section>
+
+        <section id="screen-incident" class="screen" aria-label="البلاغ">
+          <div class="page-head"><div><h2><i class="fa-solid fa-file-waveform"></i>البلاغ</h2><p>حالة الطلب ومتابعة الاستجابة</p></div><span id="incident-state-pill" class="tiny-pill">غير نشط</span></div>
+          <div id="incident-empty" class="empty-state">
+            <div class="empty-icon"><i class="fa-regular fa-file-lines"></i></div><h3>لا يوجد بلاغ نشط</h3><p>عند إنشاء حالة طوارئ ستظهر هنا مراحل الاستجابة والموقع والوقت المتوقع للوصول.</p>
+            <button class="primary-btn wide" style="margin-top:16px" onclick="switchScreen('screen-home')"><i class="fa-solid fa-bolt"></i> إنشاء بلاغ سريع</button>
+          </div>
+          <div id="incident-active" style="display:none">
+            <div class="alert-hero"><div class="live"><i class="fa-solid fa-siren-on"></i> بلاغ نشط — <span id="incident-type-label">طوارئ</span></div><h3 id="tracking-title">تم استلام بلاغك</h3><div class="eta"><i class="fa-regular fa-clock" style="margin-left:5px"></i>الوقت المتوقع للوصول: <strong id="eta-value">5 دقائق</strong></div></div>
+            <div class="incident-meta"><div class="incident-meta-item"><span><i class="fa-solid fa-hashtag"></i>رقم البلاغ</span><b id="incident-ref"><i class="fa-solid fa-hashtag"></i>—</b></div><div class="incident-meta-item"><span><i class="fa-regular fa-clock"></i>وقت الإنشاء</span><b id="incident-created"><i class="fa-regular fa-clock"></i>—</b></div><div class="incident-meta-item"><span><i class="fa-solid fa-list-check"></i>التفاصيل</span><b id="incident-details-count"><i class="fa-solid fa-list-check"></i>0 مضافة</b></div></div>
+            <div class="emergency-mode-bar"><button id="safe-state-btn" class="emergency-mode-btn" onclick="setEmergencyCondition('safe')"><i class="fa-solid fa-shield"></i>الموقع آمن</button><button id="mobility-state-btn" class="emergency-mode-btn" onclick="setEmergencyCondition('mobility')"><i class="fa-solid fa-person-walking"></i>أستطيع الحركة</button><button id="people-state-btn" class="emergency-mode-btn" onclick="cyclePeopleCount()"><i class="fa-solid fa-people-group"></i><span id="people-count-label">شخص واحد</span></button></div>
+            <div class="incident-action-strip"><button class="ghost-btn assist-btn" onclick="requestExtraHelp()"><i class="fa-solid fa-circle-plus"></i> أحتاج مساعدة إضافية</button><button class="ghost-btn safe-btn" onclick="markSafeNow()"><i class="fa-solid fa-circle-check"></i> أنا بأمان الآن</button></div>
+            <div id="fallback-panel"></div>
+            <div class="card timeline" id="timeline"></div>
+            <div class="card map" aria-label="خريطة محاكاة لموقع المستخدم وفريق الطوارئ"><div class="route"></div><div class="map-pin"><i class="fa-solid fa-location-dot"></i></div><div class="unit-pin"><i class="fa-solid fa-truck-fast"></i></div><div class="map-label"><span><i class="fa-solid fa-road" style="margin-left:4px;color:#7dd3fc"></i><span id="distance-label">المسافة 1.8 كم</span></span><span><i class="fa-solid fa-location-crosshairs" style="margin-left:4px;color:#7dd3fc"></i><span id="gps-mini">GPS ±18م</span></span></div></div>
+            <div class="quick-grid">
+              <button class="ghost-btn" onclick="openDetailsModal()"><i class="fa-solid fa-list-check"></i>إضافة تفاصيل</button>
+              <button class="ghost-btn" onclick="openInterpreter()"><i class="fa-solid fa-hands-asl-interpreting"></i>لغة الإشارة</button>
+              <button class="ghost-btn" onclick="notifyContacts()"><i class="fa-solid fa-user-group"></i>تنبيه جهة اتصال</button>
+              <button class="ghost-btn" style="color:#fca5a5" onclick="confirmCancelIncident()"><i class="fa-solid fa-xmark"></i>إلغاء البلاغ</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="screen-interpreter" class="screen" aria-label="مترجم لغة الإشارة">
+          <div class="page-head"><div><h2><i class="fa-solid fa-hands-asl-interpreting"></i>لغة الإشارة</h2><p>اتصال مرئي مع مترجم أثناء الطوارئ</p></div><span id="interpreter-pill" class="tiny-pill">غير متصل</span></div>
+          <div id="interpreter-content"></div>
+        </section>
+
+        <section id="screen-profile" class="screen" aria-label="حسابي">
+          <div class="page-head"><div><h2><i class="fa-solid fa-user-shield"></i>حسابي</h2><p>بيانات الطوارئ ووسائل المساعدة</p></div><div style="display:flex;gap:6px"><button class="circle-btn" onclick="switchScreen('screen-profile-edit')" aria-label="تعديل البيانات"><i class="fa-solid fa-pen"></i></button><button class="circle-btn" onclick="openDemoPanel()" aria-label="إعدادات العرض"><i class="fa-solid fa-sliders"></i></button></div></div>
+          <div class="banner info"><i class="fa-solid fa-shield-heart"></i><div><b>خصوصية بيانات الطوارئ</b><br>سيتم مشاركة بيانات الطوارئ فقط أثناء البلاغ.</div></div>
+          <button class="primary-btn wide" style="margin-bottom:10px" onclick="switchScreen('screen-profile-edit')"><i class="fa-solid fa-pen-to-square"></i> تعبئة / تعديل بيانات الطوارئ</button>
+          <div class="card" style="padding:4px 13px;margin-bottom:10px">
+            <div class="profile-row"><span><i class="fa-solid fa-user"></i>الاسم</span><b id="profile-name">—</b></div>
+            <div class="profile-row"><span><i class="fa-solid fa-droplet"></i>فصيلة الدم</span><b id="profile-blood" style="color:#fca5a5">—</b></div>
+            <div class="profile-row"><span><i class="fa-solid fa-triangle-exclamation"></i>الحساسية</span><b id="profile-allergies">—</b></div>
+            <div class="profile-row"><span><i class="fa-solid fa-heart-pulse"></i>حالات مزمنة</span><b id="profile-chronic">—</b></div>
+            <div class="profile-row"><span><i class="fa-solid fa-capsules"></i>دواء طارئ</span><b id="profile-medication">—</b></div>
+            <div class="profile-row"><span><i class="fa-solid fa-comments"></i>طريقة التواصل</span><b id="profile-communication" style="color:#7dd3fc">—</b></div>
+            <div class="profile-row"><span><i class="fa-solid fa-hands"></i>لغة الإشارة</span><b id="profile-sign-language">—</b></div>
+            <div class="profile-row"><span><i class="fa-solid fa-shield-heart"></i>مشاركة البيانات الطبية</span><button id="medical-share" class="switch on" onclick="toggleMedicalShare()" aria-label="تبديل مشاركة البيانات الطبية"></button></div>
+          </div>
+          <div class="card" style="margin-bottom:10px;overflow:hidden">
+            <div class="card-head"><b><i class="fa-solid fa-user-group"></i>جهات اتصال الطوارئ</b><button class="mini-icon" onclick="openContactModal()" aria-label="إضافة جهة اتصال"><i class="fa-solid fa-plus"></i></button></div>
+            <div id="contacts-list"></div>
+          </div>
+          <button class="ghost-btn wide" onclick="switchScreen('screen-device')"><i class="fa-brands fa-bluetooth-b" style="color:#7dd3fc"></i> زر SOS الذكي <span id="device-status-inline" class="tiny-pill" style="margin-right:auto">غير متصل</span></button>
+          <button class="outline-btn wide" style="margin-top:8px" onclick="requestLocation()"><i class="fa-solid fa-location-crosshairs"></i> تحديث الموقع</button>
+        </section>
+
+        <section id="screen-profile-edit" class="screen" aria-label="تعبئة بيانات الطوارئ">
+          <div class="page-head"><div><h2><i class="fa-solid fa-clipboard-list"></i>تعبئة بيانات الطوارئ</h2><p>أدخل البيانات التي يمكن مشاركتها عند الحاجة</p></div><button class="circle-btn" onclick="appBack()" aria-label="رجوع"><i class="fa-solid fa-arrow-right"></i></button></div>
+          <div class="banner info"><i class="fa-solid fa-circle-info"></i><div>يمكنك تعديل هذه البيانات في أي وقت. الحقول الطبية اختيارية، والاسم مطلوب لعرض تجربة واقعية.</div></div>
+          <form id="profile-form" onsubmit="saveProfileForm(event)">
+            <div class="card form-card">
+              <div class="form-section-title"><i class="fa-solid fa-id-card"></i> البيانات الأساسية</div>
+              <div class="field"><label for="edit-name"><i class="fa-solid fa-user"></i> الاسم الكامل <span class="required">*</span></label><input id="edit-name" autocomplete="name" placeholder="مثال: أحمد محمد" required></div>
+              <div class="form-grid">
+                <div class="field"><label for="edit-blood"><span><i class="fa-solid fa-droplet"></i> فصيلة الدم</span><span class="optional">اختياري</span></label><div class="select-wrap"><select id="edit-blood"><option value="">غير محدد</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div></div>
+                <div class="field"><label for="edit-communication"><span><i class="fa-solid fa-comments"></i> طريقة التواصل</span></label><div class="select-wrap"><select id="edit-communication"><option>لغة الإشارة + نص</option><option>لغة الإشارة</option><option>رسائل نصية</option><option>قراءة الشفاه + نص</option></select></div></div>
+              </div>
+              <div class="field"><label for="edit-sign-language"><span><i class="fa-solid fa-hands"></i> تفضيل لغة الإشارة</span></label><div class="select-wrap"><select id="edit-sign-language"><option>لغة الإشارة</option><option>لغة الإشارة + كتابة</option><option>نص فقط عند تعذر الفيديو</option></select></div></div>
+            </div>
+            <div class="card form-card">
+              <div class="form-section-title"><i class="fa-solid fa-notes-medical"></i> الملف الطبي للطوارئ</div>
+              <div class="field"><label for="edit-allergies"><i class="fa-solid fa-triangle-exclamation"></i> الحساسية</label><input id="edit-allergies" placeholder="مثال: البنسلين / لا يوجد"></div>
+              <div class="field"><label for="edit-chronic"><i class="fa-solid fa-heart-pulse"></i> الحالات المزمنة</label><input id="edit-chronic" placeholder="مثال: السكري / الربو / لا يوجد"></div>
+              <div class="field"><label for="edit-medication"><i class="fa-solid fa-capsules"></i> دواء طارئ أو مهم</label><input id="edit-medication" placeholder="مثال: بخاخ ربو / غير محدد"></div>
+              <div class="form-hint">لا تُدخل تفاصيل لا ترغب بمشاركتها أثناء حالة الطوارئ.</div>
+            </div>
+            <button class="primary-btn wide" type="submit"><i class="fa-solid fa-check"></i> حفظ البيانات</button>
+            <button class="outline-btn wide" type="button" style="margin-top:8px" onclick="appBack()"><i class="fa-solid fa-arrow-right"></i> رجوع بدون حفظ</button>
+          </form>
+        </section>
+
+        <section id="screen-device" class="screen" aria-label="زر SOS الذكي">
+          <div class="page-head"><div><h2><i class="fa-solid fa-hand-fist"></i>زر SOS الذكي</h2><p>ربط جهاز Bluetooth للطوارئ</p></div><button class="circle-btn" onclick="appBack()"><i class="fa-solid fa-arrow-right"></i></button></div>
+          <div class="card device-hero">
+            <div class="device-icon"><i class="fa-solid fa-hand-fist"></i></div><h3 style="font-size:15px;margin:0 0 5px">زر SOS</h3><div id="device-status" class="tiny-pill" style="margin:auto">غير متصل</div>
+            <div id="device-battery" style="font-size:10px;color:#94a3b8;margin-top:9px"><i class="fa-solid fa-battery-half" style="color:#7dd3fc;margin-left:5px"></i>البطارية —</div>
+          </div>
+          <div class="banner info" style="margin-top:10px"><i class="fa-solid fa-circle-info"></i><div>عند الضغط على زر SOS الخارجي يتم إرسال الاستغاثة دون الحاجة لفتح الهاتف. يمكن اختبار الربط والإرسال من هذه الشاشة.</div></div>
+          <div style="display:grid;gap:8px;margin-top:2px">
+            <button id="pair-device-btn" class="primary-btn wide" onclick="toggleDeviceConnection()"><i class="fa-brands fa-bluetooth-b"></i> ربط الجهاز</button>
+            <button class="ghost-btn wide" onclick="testDeviceSOS()"><i class="fa-solid fa-vial"></i> اختبار زر SOS</button>
+          </div>
+        </section>
+
+        <section id="screen-safety" class="screen" aria-label="مركز الأمان">
+          <div class="page-head"><div><h2><i class="fa-solid fa-shield-heart"></i>مركز الأمان</h2><p>جهّز حسابك قبل حدوث الطوارئ</p></div><span id="readiness-pill" class="tiny-pill success">85% جاهز</span></div>
+          <div class="safety-score"><div id="score-ring" class="score-ring" style="--score:85%"><div style="text-align:center"><strong id="safety-score-value">85%</strong><span>جاهزية</span></div></div><div style="text-align:center"><b style="font-size:13px">جاهزية حسابك للطوارئ</b><p style="font-size:8px;color:#7e8fa5;margin:4px 0 0">أكمل العناصر الناقصة لتقليل الخطوات وقت الاستغاثة.</p></div></div>
+          <div id="readiness-list" class="readiness-list"></div>
+          <div class="card" style="margin-top:10px;padding:12px"><div class="form-section-title"><i class="fa-solid fa-location-dot"></i>معلومات الوصول</div><div class="safety-mini"><div><span>موقع المنزل</span><b>غير محدد</b></div><div><span>المستشفى المفضل</span><b>غير محدد</b></div></div><button class="outline-btn wide" onclick="showToast('يمكن إضافة مواقع محفوظة في النسخة القادمة')"><i class="fa-solid fa-plus"></i> إضافة معلومات الوصول</button></div>
+        </section>
+
+        <section id="screen-control" class="screen" aria-label="مركز عمليات الطوارئ">
+          <div class="page-head"><div><h2><i class="fa-solid fa-tower-broadcast"></i>مركز العمليات</h2><p>محاكاة جهة الاستجابة للطوارئ</p></div><button class="circle-btn" onclick="appBack()"><i class="fa-solid fa-arrow-right"></i></button></div>
+          <div class="control-hero"><div class="control-live">غرفة العمليات متصلة</div><div class="control-kpis"><div class="control-kpi"><strong id="control-active-count">1</strong><span>بلاغ نشط</span></div><div class="control-kpi"><strong>03:18</strong><span>متوسط التعيين</span></div><div class="control-kpi"><strong>92%</strong><span>GPS مكتمل</span></div></div></div>
+          <div id="control-incident-list"></div>
+          <div class="banner info"><i class="fa-solid fa-circle-info"></i><div><b>منظومة متكاملة</b><br>هذه الواجهة توضّح كيف يستقبل المشغل البلاغ، يرى احتياجات الوصول، ثم يعيّن فريق الاستجابة أو المترجم.</div></div>
+        </section>
+
+      </div>
+
+      <div class="demo-indicator"><i class="fa-solid fa-flask" style="margin-left:4px"></i> نسخة استعراضية</div>
+      <nav class="bottom-nav" aria-label="التنقل الرئيسي">
+        <button class="nav-btn active" data-nav="screen-home" onclick="switchScreen('screen-home')"><i class="fa-solid fa-house"></i><span>الرئيسية</span></button>
+        <button class="nav-btn" data-nav="screen-incident" onclick="switchScreen('screen-incident')"><i class="fa-solid fa-truck-medical"></i><span>البلاغ</span></button>
+        <button class="nav-btn" data-nav="screen-interpreter" onclick="switchScreen('screen-interpreter')"><i class="fa-solid fa-hands-asl-interpreting"></i><span>المترجم</span></button>
+        <button class="nav-btn" data-nav="screen-safety" onclick="switchScreen('screen-safety')"><i class="fa-solid fa-shield-heart"></i><span>الأمان</span></button>
+        <button class="nav-btn" data-nav="screen-profile" onclick="switchScreen('screen-profile')"><i class="fa-solid fa-user"></i><span>حسابي</span></button>
+      </nav>
+
+      <div id="modal-layer" class="modal-layer" onclick="closeModalFromBackdrop(event)"><div id="modal-sheet" class="sheet" role="dialog" aria-modal="true"></div></div>
+      <div id="onboard-layer" class="onboard-layer show"></div>
+      <div id="flash-layer" class="flash-layer"></div>
+      <div id="dispatch-layer" class="dispatch-layer"></div>
+      <div id="toast" class="toast"><i class="fa-solid fa-circle-info"></i><span id="toast-text"></span></div>
+    </section>
+  </main>
+
+<script>
+  const incidentConfig = {
+    ambulance:{label:'إسعاف', icon:'fa-truck-medical', details:['صعوبة في التنفس','نزيف شديد','فقدان الوعي','إصابة أو كسر','ألم شديد','حالة أخرى']},
+    fire:{label:'حريق', icon:'fa-fire-flame-curved', details:['حريق داخل مبنى','دخان كثيف','شخص محاصر','تسرب غاز','حريق مركبة','حالة أخرى']},
+    police:{label:'شرطة', icon:'fa-shield-halved', details:['اعتداء','تهديد مباشر','سرقة','شخص مشبوه','خطر أمني','حالة أخرى']},
+    traffic:{label:'حادث سير', icon:'fa-car-burst', details:['توجد إصابات','شخص محاصر','أكثر من مركبة','طريق مغلق','المركبة غير قابلة للحركة','حالة أخرى']},
+    other:{label:'طوارئ أخرى', icon:'fa-triangle-exclamation', details:['خطر مباشر','أحتاج مساعدة فورية','يوجد شخص مصاب','الموقع غير آمن','أحتاج إنقاذ','حالة أخرى']}
+  };
+
+  const state = {
+    activeIncident:false, category:null, selectedDetails:[], connectivity:'online',
+    gps:{status:'ready', accuracy:18, lat:null, lng:null}, dispatchStage:0, eta:5,
+    interpreter:'idle', medicalShare:true, deviceConnected:false, deviceBattery:82,
+    profile:{name:'أحمد محمد',blood:'O+',allergies:'لا يوجد',chronic:'السكري — النوع الثاني',medication:'غير محدد',communication:'لغة الإشارة + نص',signLanguage:'لغة الإشارة'},
+    setup:{communication:'لغة الإشارة + نص',locationAllowed:false,notificationsAllowed:true},
+    navHistory:['screen-home'], navIndex:0, currentScreen:'screen-home',
+    contacts:[
+      {id:1,name:'خالد محمد',relation:'أخ',phone:'05••• 0123',auto:true},
+      {id:2,name:'مريم محمد',relation:'زوجة',phone:'05••• 0987',auto:true},
+      {id:3,name:'سامي محمد',relation:'قريب',phone:'05••• 0442',auto:true}
+    ],
+    onboardingStep:0, holdStart:0, holdRAF:null, dispatchOverlayTimer:null, timers:[], incidentId:null, incidentCreatedAt:null, contactsNotified:false, emergencySafe:null, mobility:null, peopleCount:1, extraHelp:false, safeNow:false
+  };
+
+  const onboarding = [
+    {icon:'fa-hand-sparkles',title:'مرحباً بك في إشارة',text:'منصة بصرية تساعدك على إرسال طلب طوارئ بسرعة دون الحاجة إلى مكالمة صوتية.'},
+    {icon:'fa-hands-asl-interpreting',title:'اختيار طريقة التواصل',text:'لغة الإشارة والنصوص المرئية هي طريقة التواصل الأساسية في هذا النموذج.'},
+    {icon:'fa-notes-medical',title:'الملف الطبي للطوارئ',text:'يمكن مشاركة معلومات طبية مختصرة تلقائياً أثناء البلاغ فقط — وبموافقتك.'},
+    {icon:'fa-user-group',title:'جهات اتصال الطوارئ',text:'أضف حتى 5 جهات اتصال وحدد من ترغب بتنبيهه تلقائياً وقت الطوارئ.'},
+    {icon:'fa-location-crosshairs',title:'الموقع والإشعارات',text:'الموقع يساعد فريق الطوارئ على الوصول إليك. لن نطلب إذن الموقع إلا عند اختيار تحديث الموقع.'},
+    {icon:'fa-hand-fist',title:'ربط زر SOS',text:'خطوة اختيارية لمحاكاة زر Bluetooth يمكنه إرسال الاستغاثة دون فتح الهاتف.'}
+  ];
+
+  function $(id){ return document.getElementById(id); }
+  function renderHomeIdentity(){
+    if($('home-user-name')) $('home-user-name').textContent=state.profile.name||'مستخدم إشارة';
+    if($('home-avatar')) $('home-avatar').textContent=(state.profile.name||'إ').trim().charAt(0)||'إ';
+    const host=$('home-notice');
+    if(host && state.activeIncident){ const cfg=incidentConfig[state.category]||incidentConfig.other; host.innerHTML=`<div class="app-notice active-incident-notice" onclick="switchScreen('screen-incident')"><div class="n-icon"><i class="fa-solid fa-truck-fast"></i></div><div><b>بلاغ ${cfg.label} نشط</b><span>${state.eta===0?'وصل الفريق إلى موقعك':`الفريق في الاستجابة · ${state.eta} دقائق تقريباً`}</span></div></div>`; }
+  }
+  function showHomeNotice(title,text,icon='fa-circle-info'){
+    const host=$('home-notice'); if(!host) return;
+    host.innerHTML=`<div class="app-notice"><div class="n-icon"><i class="fa-solid ${icon}"></i></div><div><b>${title}</b><span>${text}</span></div></div>`;
+    clearTimeout(showHomeNotice._t); showHomeNotice._t=setTimeout(()=>{ if(host){ if(state.activeIncident) renderHomeIdentity(); else host.innerHTML=''; } },4200);
+  }
+  function vibrate(pattern=80){ try{ if(navigator.vibrate) navigator.vibrate(pattern); }catch(e){} }
+  function clearTimers(){ state.timers.forEach(clearTimeout); state.timers=[]; }
+  function later(fn,ms){ const t=setTimeout(fn,ms); state.timers.push(t); return t; }
+
+  function updateClock(){ const d=new Date(); $('clock').textContent=d.toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}); }
+  updateClock(); setInterval(updateClock,60000);
+
+  let showcaseFeatureIcons=['fa-bolt','fa-route','fa-universal-access'];
+  function showcasePoint(text,index){ const icon=showcaseFeatureIcons[index]||'fa-circle'; return `<div class="slide-feature"><div class="slide-feature-head"><span class="feature-index">0${index+1}</span><span class="feature-icon"><i class="fa-solid ${icon}"></i></span></div><p>${text}</p></div>`; }
+  function getShowcaseFeatureIcons(context=''){
+    const c=context||'';
+    if(c.includes('الإعداد الأولي')) return ['fa-list-check','fa-shield-heart','fa-forward'];
+    if(c.includes('تأكيد إرسال')) return ['fa-paper-plane','fa-location-crosshairs','fa-tower-broadcast'];
+    if(c.includes('نافذة منبثقة')) return ['fa-layer-group','fa-window-maximize','fa-arrow-right'];
+    if(c.includes('الرئيسية')) return ['fa-bolt','fa-signal','fa-location-dot'];
+    if(c.includes('البلاغ')) return ['fa-route','fa-clock','fa-list-check'];
+    if(c.includes('لغة الإشارة')) return ['fa-hands-asl-interpreting','fa-video','fa-closed-captioning'];
+    if(c.includes('حسابي')) return ['fa-user-group','fa-notes-medical','fa-comments'];
+    if(c.includes('تعبئة بيانات')) return ['fa-id-card','fa-heart-pulse','fa-floppy-disk'];
+    if(c.includes('SOS الذكي')) return ['fa-bluetooth-b','fa-battery-three-quarters','fa-vial'];
+    return ['fa-bolt','fa-route','fa-universal-access'];
+  }
+  function getShowcaseTitleIcon(context=''){const c=context||'';if(c.includes('الإعداد الأولي'))return'fa-list-check';if(c.includes('تأكيد إرسال'))return'fa-paper-plane';if(c.includes('نافذة منبثقة'))return'fa-window-maximize';if(c.includes('الرئيسية'))return'fa-house';if(c.includes('البلاغ'))return'fa-file-waveform';if(c.includes('لغة الإشارة'))return'fa-hands-asl-interpreting';if(c.includes('حسابي'))return'fa-user-shield';if(c.includes('تعبئة بيانات'))return'fa-clipboard-list';if(c.includes('SOS الذكي'))return'fa-hand-fist';return'fa-bolt';}
+  function getShowcaseMeta(context=''){const c=context||'';if(c.includes('الإعداد الأولي'))return{n:1,kicker:'الإعداد الأولي',metric:`${state.onboardingStep+1}/6`,label:'خطوة الإعداد الحالية',icon:'fa-list-check'};if(c.includes('تأكيد إرسال'))return{n:3,kicker:'الإرسال الفوري',metric:'<2ث',label:'للانتقال إلى التتبع',icon:'fa-paper-plane'};if(c.includes('نافذة منبثقة'))return{n:7,kicker:'إجراء سياقي',metric:'1',label:'مهمة في نفس السياق',icon:'fa-layer-group'};if(c.includes('الرئيسية'))return{n:2,kicker:'الرئيسية',metric:'1–2',label:'تفاعل لإرسال البلاغ',icon:'fa-bolt'};if(c.includes('البلاغ'))return{n:4,kicker:'تتبع البلاغ',metric:state.activeIncident?(state.eta===0?'وصل':state.eta+' د'):'—',label:state.activeIncident?'الوقت المتوقع للوصول':'لا يوجد بلاغ نشط',icon:'fa-route'};if(c.includes('لغة الإشارة'))return{n:5,kicker:'لغة الإشارة',metric:'LIVE',label:'اتصال مرئي ونص مباشر',icon:'fa-hands-asl-interpreting'};if(c.includes('تعبئة بيانات'))return{n:6,kicker:'بيانات الطوارئ',metric:'✓',label:'بيانات قابلة للتعديل',icon:'fa-pen-to-square'};if(c.includes('حسابي'))return{n:6,kicker:'الملف الشخصي',metric:String(state.contacts.length),label:'جهات اتصال محفوظة',icon:'fa-user-shield'};if(c.includes('مركز الأمان'))return{n:7,kicker:'مركز الأمان',metric:calculateReadiness()+'%',label:'جاهزية الحساب',icon:'fa-shield-heart'};if(c.includes('مركز العمليات'))return{n:8,kicker:'مركز العمليات',metric:state.activeIncident?'LIVE':'READY',label:'غرفة الاستجابة',icon:'fa-tower-broadcast'};if(c.includes('SOS الذكي'))return{n:8,kicker:'زر SOS الذكي',metric:state.deviceConnected?state.deviceBattery+'%':'OFF',label:state.deviceConnected?'بطارية الجهاز':'الجهاز غير متصل',icon:'fa-hand-fist'};return{n:1,kicker:'تجربة المنتج',metric:'01',label:'رحلة استخدام مترابطة',icon:'fa-mobile-screen-button'};}
+  function getShowcaseIconStrip(context=''){const c=context||'';let items;if(c.includes('الإعداد الأولي'))items=[['fa-list-check','خطوات'],['fa-comments','تواصل'],['fa-notes-medical','طبي'],['fa-user-group','جهات']];else if(c.includes('تأكيد إرسال'))items=[['fa-paper-plane','إرسال'],['fa-location-dot','موقع'],['fa-tower-broadcast','اتصال'],['fa-shield','آمن']];else if(c.includes('البلاغ'))items=[['fa-route','تتبع'],['fa-clock','ETA'],['fa-location-dot','GPS'],['fa-list-check','تفاصيل']];else if(c.includes('لغة الإشارة'))items=[['fa-video','فيديو'],['fa-hands-asl-interpreting','مترجم'],['fa-closed-captioning','نص حي'],['fa-signal','اتصال']];else if(c.includes('حسابي')||c.includes('تعبئة بيانات'))items=[['fa-user-shield','ملف'],['fa-droplet','طبي'],['fa-user-group','جهات'],['fa-lock','خصوصية']];else if(c.includes('SOS الذكي'))items=[['fa-bluetooth-b','Bluetooth'],['fa-battery-three-quarters','بطارية'],['fa-hand-fist','SOS'],['fa-vial','اختبار']];else items=[['fa-bolt','سريع'],['fa-location-dot','GPS'],['fa-message','SMS'],['fa-hands-asl-interpreting','إشارة']];return items.map(([i,l])=>`<div class="slide-icon-stat"><i class="fa-solid ${i}"></i><span>${l}</span></div>`).join('');}
+  function setShowcaseContent({context,title,desc,points=[]}){const wrap=document.querySelector('.showcase');const meta=getShowcaseMeta(context);showcaseFeatureIcons=getShowcaseFeatureIcons(context);if($('showcase-context'))$('showcase-context').textContent=context||'الواجهة الحالية';if($('showcase-title'))$('showcase-title').innerHTML=title||'إشارة';if($('slide-title-badge'))$('slide-title-badge').innerHTML=`<i class="fa-solid ${getShowcaseTitleIcon(context)}"></i>`;if($('showcase-desc'))$('showcase-desc').textContent=desc||'';if($('showcase-points'))$('showcase-points').innerHTML=(points||[]).slice(0,3).map(showcasePoint).join('');if($('slide-icon-strip'))$('slide-icon-strip').innerHTML=getShowcaseIconStrip(context);if($('slide-number'))$('slide-number').innerHTML=`<strong>${String(meta.n).padStart(2,'0')}</strong> / 08`;if($('slide-kicker'))$('slide-kicker').textContent=meta.kicker;if($('slide-stage-pill'))$('slide-stage-pill').innerHTML=`<i class="fa-solid ${meta.icon}"></i><span>${String(meta.n).padStart(2,'0')} · ${meta.kicker}</span>`;if($('slide-metric-value'))$('slide-metric-value').innerHTML=meta.metric;if($('slide-metric-label'))$('slide-metric-label').textContent=meta.label;if($('slide-metric-icon'))$('slide-metric-icon').innerHTML=`<i class="fa-solid ${meta.icon}"></i>`;if($('slide-progress-fill'))$('slide-progress-fill').style.width=`${Math.max(12.5,Math.min(100,meta.n*12.5))}%`;if($('slide-proof')){const proofs=context?.includes('لغة الإشارة')?[['fa-video','Visual communication'],['fa-closed-captioning','Live text']]:context?.includes('البلاغ')?[['fa-route','Live status'],['fa-location-dot','Location aware']]:context?.includes('حسابي')||context?.includes('تعبئة')?[['fa-lock','Privacy controls'],['fa-pen','Editable data']]:[['fa-eye','Visual-first'],['fa-universal-access','Accessible']];$('slide-proof').innerHTML=proofs.map(p=>`<span class="proof-chip"><i class="fa-solid ${p[0]}"></i>${p[1]}</span>`).join('');}const metricEl=$('slide-metric-value');if(metricEl){metricEl.classList.remove('live-kpi');void metricEl.offsetWidth;metricEl.classList.add('live-kpi');}if(wrap){wrap.classList.remove('updating','slide-enter');void wrap.offsetWidth;wrap.classList.add('slide-enter');clearTimeout(setShowcaseContent._animT);setShowcaseContent._animT=setTimeout(()=>wrap.classList.remove('slide-enter'),1100);}}
+
+  function updateShowcase(){
+    const currentLabelMap = {
+      'screen-home':'الواجهة الحالية: الرئيسية',
+      'screen-incident':'الواجهة الحالية: البلاغ',
+      'screen-interpreter':'الواجهة الحالية: لغة الإشارة',
+      'screen-profile':'الواجهة الحالية: حسابي',
+      'screen-profile-edit':'الواجهة الحالية: تعبئة بيانات الطوارئ',
+      'screen-device':'الواجهة الحالية: زر SOS الذكي',
+      'screen-safety':'الواجهة الحالية: مركز الأمان',
+      'screen-control':'الواجهة الحالية: مركز العمليات'
+    };
+
+    if($('onboard-layer')?.classList.contains('show')){
+      const item = onboarding[state.onboardingStep] || onboarding[0];
+      setShowcaseContent({
+        context:`الإعداد الأولي: خطوة ${state.onboardingStep + 1} من ${onboarding.length}` ,
+        title:`<span style="color:#7dd3fc">${item.title}</span>`,
+        desc:item.text,
+        points:[
+          'الإعداد قصير وواضح حتى لا يرهق المستخدم.',
+          state.onboardingStep >= 2 ? 'في هذه المرحلة تظهر تعبئة بيانات حقيقية وليست شاشة شرح فقط.' : 'يتنقل المستخدم بين الخطوات بزر التالي والسابق بشكل طبيعي.',
+          'يمكن تخطي الإعداد والدخول مباشرة إلى النموذج التجريبي.'
+        ]
+      });
+      return;
+    }
+
+    if($('dispatch-layer')?.classList.contains('show')){
+      const cfg = incidentConfig[state.category] || incidentConfig.other;
+      setShowcaseContent({
+        context:'الواجهة الحالية: تأكيد إرسال البلاغ',
+        title:`تم إرسال البلاغ<br><span style="color:#7dd3fc">${cfg.label}</span>`,
+        desc:'هذه الواجهة تؤكد أن البلاغ أُرسل فورًا، ثم ينقلك النموذج تلقائيًا إلى شاشة التتبع بعد لحظات قصيرة.',
+        points:[
+          `نوع الطوارئ الحالي: ${cfg.label}.`,
+          `حالة الإرسال: ${state.connectivity === 'online' ? 'عبر الإنترنت' : 'سيتم تجهيز مسار SMS احتياطي'}.`,
+          'زر الرجوع يبقى ظاهرًا أعلى الهاتف حتى أثناء شاشة التأكيد.'
+        ]
+      });
+      return;
+    }
+
+    if($('modal-layer')?.classList.contains('show')){
+      setShowcaseContent({
+        context:'الواجهة الحالية: نافذة منبثقة',
+        title:'إجراء إضافي داخل التطبيق',
+        desc:'النافذة المنبثقة تُستخدم للمهام السريعة مثل إضافة جهة اتصال، إعدادات العرض التجريبي، أو تأكيد إلغاء البلاغ.',
+        points:[
+          'يمكن إغلاق النافذة من الخلفية أو بزر الرجوع.',
+          'لا يتم إعادة تحميل الصفحة؛ كل شيء يحدث داخل نفس النموذج.',
+          'هذه النافذة تتغير حسب الإجراء الذي اختاره المستخدم.'
+        ]
+      });
+      return;
+    }
+
+    const screen = state.currentScreen;
+    if(screen === 'screen-home'){
+      setShowcaseContent({
+        context: currentLabelMap[screen],
+        title:'إشارة<br><span style="color:#7dd3fc">طوارئ بصرية بلا عوائق</span>',
+        desc:'من الشاشة الرئيسية يبدأ المستخدم البلاغ فورًا بنقرة واحدة أو عبر زر SOS، مع إبقاء حالة الاتصال والموقع واضحة طوال الوقت.',
+        points:[
+          'خمسة أزرار كبيرة للطوارئ بتمييز بصري واضح.',
+          `حالة الاتصال الآن: ${state.connectivity === 'online' ? 'متصل' : state.connectivity === 'weak' ? 'ضعيف' : 'بدون إنترنت'}.`,
+          `حالة الموقع الآن: ${state.gps.status === 'ready' ? `محدد بدقة تقريبية ± ${state.gps.accuracy} م` : state.gps.status === 'locating' ? 'جارٍ تحديد الموقع' : 'تعذر تحديد الموقع'}.`
+        ]
+      });
+      return;
+    }
+
+    if(screen === 'screen-incident'){
+      if(!state.activeIncident){
+        setShowcaseContent({
+          context: currentLabelMap[screen],
+          title:'البلاغ<br><span style="color:#7dd3fc">لا يوجد بلاغ نشط</span>',
+          desc:'قبل إنشاء الطوارئ لا يعرض التطبيق حالة وهمية. تظهر هنا شاشة فارغة توضّح للمستخدم أين سيظهر التتبع بعد الإرسال.',
+          points:[
+            'الواجهة توضّح أن النظام ينتظر إنشاء بلاغ جديد.',
+            'يمكن بدء بلاغ سريع مباشرة من هذا المكان.',
+            'هذا يمنع الالتباس ويجعل الحالة الحالية صادقة وواقعية.'
+          ]
+        });
+      } else {
+        const cfg = incidentConfig[state.category] || incidentConfig.other;
+        const stageText = ['تم إنشاء البلاغ','تم إرسال الموقع','تم استلام البلاغ','تم تحديد أقرب فريق','الفريق في الطريق','وصل الفريق'][state.dispatchStage] || 'متابعة البلاغ';
+        setShowcaseContent({
+          context: currentLabelMap[screen],
+          title:`تتبع البلاغ<br><span style="color:#7dd3fc">${cfg.label}</span>`,
+          desc:'هذه الشاشة تعرض حالة البلاغ بشكل مرئي كامل: خط زمني، وقت متوقع للوصول، خريطة محاكاة، وأزرار سريعة لإضافة التفاصيل أو طلب مترجم.',
+          points:[
+            `مرحلة الاستجابة الحالية: ${stageText}.`,
+            `الوقت المتوقع للوصول الآن: ${state.eta === 0 ? 'وصل الفريق' : `${state.eta} دقائق`}.`,
+            'يمكن إضافة تفاصيل بعد بدء الإرسال دون تعطيل تحرك فريق الاستجابة.'
+          ]
+        });
+      }
+      return;
+    }
+
+    if(screen === 'screen-interpreter'){
+      const statesMap = {idle:'غير متصل',requesting:'جارٍ طلب مترجم',assigned:'تم تعيين مترجم',connecting:'جارٍ الاتصال',live:'جلسة مباشرة',lost:'انقطع الاتصال',reconnecting:'إعادة الاتصال'};
+      setShowcaseContent({
+        context: currentLabelMap[screen],
+        title:'لغة الإشارة<br><span style="color:#7dd3fc">تواصل بصري مباشر</span>',
+        desc:'هذه الواجهة مخصصة للاتصال المرئي مع مترجم لغة الإشارة، مع نص مباشر ومعلومات مختصرة عن البلاغ دون الاعتماد على الصوت.',
+        points:[
+          `حالة الجلسة الحالية: ${statesMap[state.interpreter] || 'غير متصل'}.`,
+          'عند بدء الجلسة تظهر مساحة المترجم وكاميرا المستخدم والنص المباشر.',
+          'يمكن الرجوع فورًا إلى شاشة التتبع دون فقدان حالة البلاغ.'
+        ]
+      });
+      return;
+    }
+
+    if(screen === 'screen-profile'){
+      setShowcaseContent({
+        context: currentLabelMap[screen],
+        title:'حسابي<br><span style="color:#7dd3fc">بيانات الطوارئ والمساعدة</span>',
+        desc:'هنا تظهر البيانات الأساسية والملف الطبي وجهات الاتصال، مع إمكانية تشغيل أو إيقاف مشاركة البيانات الطبية أثناء البلاغ.',
+        points:[
+          `اسم المستخدم الحالي: ${state.profile.name || 'غير محدد'}.`,
+          `عدد جهات الاتصال المحفوظة: ${state.contacts.length}.`,
+          `مشاركة البيانات الطبية: ${state.medicalShare ? 'مفعلة' : 'متوقفة'}.`
+        ]
+      });
+      return;
+    }
+
+    if(screen === 'screen-profile-edit'){
+      setShowcaseContent({
+        context: currentLabelMap[screen],
+        title:'بيانات الطوارئ<br><span style="color:#7dd3fc">جاهزة قبل الحاجة</span>',
+        desc:'في هذه الصفحة يرى المستخدم كيف يعبّئ البيانات بشكل فعلي داخل النموذج، وليس فقط قراءة شرح نظري. يمكن الحفظ والرجوع مثل أي تطبيق طبيعي.',
+        points:[
+          'الاسم مطلوب لتجربة أكثر واقعية.',
+          'يمكن تعديل طريقة التواصل، فصيلة الدم، والحالة الطبية.',
+          'بعد الحفظ تنعكس القيم مباشرة في صفحة حسابي.'
+        ]
+      });
+      return;
+    }
+
+    if(screen === 'screen-device'){
+      setShowcaseContent({
+        context: currentLabelMap[screen],
+        title:'زر SOS الذكي<br><span style="color:#7dd3fc">Bluetooth تجريبي</span>',
+        desc:'هذه الواجهة تشرح فكرة زر SOS الخارجي الذي يسمح بإرسال الاستغاثة دون فتح الهاتف، مع محاكاة ربط الجهاز والبطارية واختبار الزر.',
+        points:[
+          `حالة الجهاز الحالية: ${state.deviceConnected ? 'متصل' : 'غير متصل'}.`,
+          `البطارية الحالية: ${state.deviceConnected ? state.deviceBattery + '%' : 'غير متاحة'}.`,
+          'الربط والاختبار هنا محاكاة فقط ضمن نسخة استعراضية.'
+        ]
+      });
+      return;
+    }
+
+
+    if(screen === 'screen-safety'){
+      const score=calculateReadiness();
+      setShowcaseContent({context:currentLabelMap[screen],title:'مركز الأمان<br><span style="color:#7dd3fc">الاستعداد قبل الطوارئ</span>',desc:'لوحة جاهزية تجمع الموقع، الملف الطبي، جهات الاتصال، طريقة التواصل، وزر SOS في مكان واحد.',points:[`جاهزية الحساب الحالية: ${score}%`,'كل عنصر ناقص يظهر كإجراء واضح للمستخدم.','الهدف: تقليل القرارات المطلوبة وقت الطوارئ.']});return;
+    }
+    if(screen === 'screen-control'){
+      setShowcaseContent({context:currentLabelMap[screen],title:'مركز العمليات<br><span style="color:#7dd3fc">الوجه الآخر من إشارة</span>',desc:'محاكاة لما يراه مشغل الطوارئ عند وصول البلاغ: الموقع، الوصول، البيانات المهمة، وتعيين الاستجابة.',points:['استقبال بلاغ موحّد مع احتياجات الوصول.','تعيين فريق أو مترجم من نفس السياق.','حالة البلاغ تتحدث بين المستخدم وغرفة العمليات.']});return;
+    }
+    setShowcaseContent({
+      context:'الواجهة الحالية',
+      title:'إشارة',
+      desc:'نموذج تفاعلي للطوارئ البصرية.',
+      points:['واجهة تفاعلية','تنقل طبيعي','شرح يتغير حسب الشاشة']
+    });
+  }
+
+  function showScreen(id,direction='forward'){
+    const target=$(id); if(!target) return;
+    const previous=document.querySelector('.screen.active');
+    const same=previous===target;
+    state.currentScreen=id;
+    document.querySelectorAll('.screen').forEach(s=>{
+      s.classList.remove('active','enter-forward','enter-back','enter-fade');
+    });
+    target.classList.add('active', same?'enter-fade':direction==='back'?'enter-back':'enter-forward');
+    setTimeout(()=>target.classList.remove('enter-forward','enter-back','enter-fade'),380);
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.nav===id));
+    if(id==='screen-incident') renderIncident();
+    if(id==='screen-interpreter') renderInterpreter();
+    if(id==='screen-profile'){ renderProfile(); renderContacts(); }
+    if(id==='screen-profile-edit') populateProfileForm();
+    if(id==='screen-safety') renderSafetyCenter();
+    if(id==='screen-control') renderControlCenter();
+    updateHistoryButtons();
+    updateShowcase();
+    window.setTimeout(()=>{ const el=$(id); if(el) el.scrollTop=0; },0);
+  }
+
+  function switchScreen(id, options={record:true,direction:'forward'}){
+    if(!$(id)) return;
+    if(options.record!==false && id!==state.currentScreen){
+      state.navHistory=state.navHistory.slice(0,state.navIndex+1);
+      state.navHistory.push(id);
+      state.navIndex=state.navHistory.length-1;
+      try{ history.pushState({ishara:true,screen:id,index:state.navIndex},'',`#${id}`); }catch(e){}
+    }
+    showScreen(id,options.direction||'forward');
+  }
+
+  function appBack(){
+    if($('dispatch-layer').classList.contains('show')){ closeDispatchOverlay(true); return; }
+    if($('modal-layer').classList.contains('show')){ closeModal(); return; }
+    if(state.navIndex<=0){ showToast('أنت في بداية التنقل'); updateHistoryButtons(); return; }
+    try{ history.back(); }catch(e){ state.navIndex--; showScreen(state.navHistory[state.navIndex],'back'); }
+  }
+
+  function appForward(){
+    if(state.navIndex>=state.navHistory.length-1){ showToast('لا توجد صفحة تالية'); updateHistoryButtons(); return; }
+    try{ history.forward(); }catch(e){ state.navIndex++; showScreen(state.navHistory[state.navIndex],'forward'); }
+  }
+
+  function updateHistoryButtons(){
+    const back=$('app-back-btn'), fwd=$('app-forward-btn');
+    if(back) back.disabled=state.navIndex<=0;
+    if(fwd) fwd.disabled=state.navIndex>=state.navHistory.length-1;
+  }
+
+  window.addEventListener('popstate',e=>{
+    const st=e.state;
+    if(st && st.ishara && st.screen && $(st.screen)){
+      const nextIndex=Math.max(0,Math.min(Number(st.index)||0,state.navHistory.length-1));
+      const direction=nextIndex<state.navIndex?'back':'forward';
+      state.navIndex=nextIndex;
+      showScreen(st.screen,direction);
+    }
+  });
+
+  function renderOnboarding(){
+    const item=onboarding[state.onboardingStep];
+    const step=state.onboardingStep;
+    const pct=((step+1)/onboarding.length)*100;
+    let body='';
+    if(step===0){
+      body=`<div class="onboard-welcome"><div class="onboard-visual"><i class="fa-solid ${item.icon}"></i></div><h2>${item.title}</h2><p>${item.text}</p><div class="onboard-note" style="margin-top:18px;text-align:right"><i class="fa-solid fa-shield-heart"></i><div><b style="display:block;color:#dbeafe;margin-bottom:2px">إعداد سريع وآمن</b>تُجهّز هذه المعلومات مسبقاً لتقليل الخطوات وقت الطوارئ، ولن تمنعك من إرسال البلاغ لاحقاً.</div></div></div>`;
+    }else if(step===1){
+      const choices=[['لغة الإشارة + نص','fa-hands-asl-interpreting'],['لغة الإشارة','fa-hands'],['رسائل نصية','fa-message'],['نص فقط','fa-keyboard']];
+      body=`<div class="onboard-heading"><div class="onboard-visual"><i class="fa-solid ${item.icon}"></i></div><div class="onboard-title-group"><h2>${item.title}</h2><p>اختر الطريقة الأساسية التي تفضّل استخدامها أثناء التواصل مع فريق الطوارئ.</p></div></div><div class="onboard-form"><div class="choice-grid">${choices.map(([c,icon])=>`<button type="button" class="choice ${state.setup.communication===c?'selected':''}" onclick="selectSetupCommunication('${c}')"><i class="fa-solid ${icon}"></i>${c}</button>`).join('')}</div><div class="onboard-note" style="margin-top:10px"><i class="fa-solid fa-circle-info"></i><div>يمكن تغيير طريقة التواصل لاحقاً من <b>حسابي</b>.</div></div></div>`;
+    }else if(step===2){
+      body=`<div class="onboard-heading"><div class="onboard-visual"><i class="fa-solid ${item.icon}"></i></div><div class="onboard-title-group"><h2>${item.title}</h2><p>أضف فقط المعلومات التي قد تساعد فريق الاستجابة في حالة طبية.</p></div></div><div class="onboard-form"><div class="onboard-card">
+        <div class="field" id="field-ob-name"><label for="ob-name"><span><i class="fa-solid fa-user"></i> الاسم الكامل <span class="required">*</span></span><span class="optional">مطلوب</span></label><input id="ob-name" autocomplete="name" value="${escapeHtml(state.profile.name)}" placeholder="مثال: أحمد محمد"><div class="field-error">أدخل الاسم الكامل للمتابعة</div></div>
+        <div class="form-grid"><div class="field"><label for="ob-blood"><span><i class="fa-solid fa-droplet"></i> فصيلة الدم</span><span class="optional">اختياري</span></label><div class="select-wrap"><select id="ob-blood">${bloodOptions(state.profile.blood)}</select></div></div><div class="field"><label for="ob-allergies"><span><i class="fa-solid fa-triangle-exclamation"></i> الحساسية</span><span class="optional">اختياري</span></label><input id="ob-allergies" value="${escapeHtml(state.profile.allergies==='غير محدد'?'':state.profile.allergies)}" placeholder="مثال: البنسلين"></div></div>
+        <div class="field"><label for="ob-chronic"><span><i class="fa-solid fa-heart-pulse"></i> الحالات المزمنة</span><span class="optional">اختياري</span></label><input id="ob-chronic" value="${escapeHtml(state.profile.chronic==='غير محدد'?'':state.profile.chronic)}" placeholder="مثال: السكري أو الربو"></div>
+        <div class="field" style="margin-bottom:0"><label for="ob-medication"><span><i class="fa-solid fa-capsules"></i> دواء مهم وقت الطوارئ</span><span class="optional">اختياري</span></label><input id="ob-medication" value="${escapeHtml(state.profile.medication==='غير محدد'?'':state.profile.medication)}" placeholder="مثال: بخاخ ربو"></div>
+      </div><div class="onboard-note" style="margin-top:9px"><i class="fa-solid fa-lock"></i><div>يمكن تعطيل مشاركة البيانات الطبية بالكامل من صفحة <b>حسابي</b>.</div></div></div>`;
+    }else if(step===3){
+      body=`<div class="onboard-heading"><div class="onboard-visual"><i class="fa-solid ${item.icon}"></i></div><div class="onboard-title-group"><h2>${item.title}</h2><p>أضف شخصاً واحداً يمكن تنبيهه تلقائياً. يمكنك إضافة حتى 5 لاحقاً.</p></div></div><div class="onboard-form"><div class="onboard-card">
+        <div class="field" id="field-ob-contact-name"><label for="ob-contact-name"><span><i class="fa-solid fa-user"></i> اسم جهة الاتصال</span><span class="optional">اختياري</span></label><input id="ob-contact-name" autocomplete="name" placeholder="مثال: خالد محمد"><div class="field-error">أدخل اسم جهة الاتصال</div></div>
+        <div class="field" id="field-ob-contact-relation"><label for="ob-contact-relation"><span><i class="fa-solid fa-people-arrows"></i> صلة القرابة</span><span class="optional">اختر من القائمة</span></label><div class="select-wrap"><select id="ob-contact-relation"><option value="">اختر صلة القرابة</option>${relationOptions('')}</select></div><div class="field-error">اختر صلة القرابة</div></div>
+        <div class="field" id="field-ob-contact-phone"><label for="ob-contact-phone"><span><i class="fa-solid fa-phone"></i> رقم الهاتف</span><span class="optional">مع رمز الدولة إن أمكن</span></label><input id="ob-contact-phone" autocomplete="tel" inputmode="tel" dir="ltr" placeholder="+970 59 123 4567"><div class="field-error">أدخل رقم هاتف صالحاً</div></div>
+        <button type="button" class="permission-card active" style="margin-top:2px" onclick="toggleDraftAutoNotify(this)"><span class="p-icon"><i class="fa-solid fa-bell"></i></span><span><b>التنبيه التلقائي</b><small>إرسال إشعار لهذه الجهة عند بدء بلاغ</small></span><span id="draft-auto-state" class="state-chip">مفعّل</span></button>
+      </div><div class="form-hint" style="margin-top:8px">لا تريد إضافة جهة اتصال الآن؟ اترك الحقول فارغة واضغط “التالي”.</div></div>`;
+    }else if(step===4){
+      body=`<div class="onboard-heading"><div class="onboard-visual"><i class="fa-solid ${item.icon}"></i></div><div class="onboard-title-group"><h2>${item.title}</h2><p>هذه الصلاحيات تساعد التطبيق على مشاركة موقعك وإظهار التنبيهات المرئية.</p></div></div><div class="onboard-form"><div class="permission-list"><button type="button" class="permission-card ${state.setup.locationAllowed?'active':''}" onclick="toggleSetupPermission('location')"><span class="p-icon"><i class="fa-solid fa-location-crosshairs"></i></span><span><b>الوصول إلى الموقع</b><small>لمشاركة موقعك تلقائياً عند إنشاء البلاغ</small></span><span class="state-chip">${state.setup.locationAllowed?'مسموح':'غير مفعّل'}</span></button><button type="button" class="permission-card ${state.setup.notificationsAllowed?'active':''}" onclick="toggleSetupPermission('notifications')"><span class="p-icon"><i class="fa-solid fa-bell"></i></span><span><b>التنبيهات المرئية</b><small>لعرض تحديثات حالة البلاغ بوضوح</small></span><span class="state-chip">${state.setup.notificationsAllowed?'مفعّلة':'متوقفة'}</span></button></div><div class="onboard-note" style="margin-top:10px"><i class="fa-solid fa-location-dot"></i><div>لن يطلب النموذج إذن الموقع من المتصفح إلا عند الضغط على <b>تحديث الموقع</b>.</div></div></div>`;
+    }else{
+      body=`<div class="onboard-heading"><div class="onboard-visual"><i class="fa-solid ${item.icon}"></i></div><div class="onboard-title-group"><h2>${item.title}</h2><p>يمكن ربط زر خارجي اختياري لإرسال SOS دون فتح الهاتف.</p></div></div><div class="onboard-form"><div class="card device-hero" style="margin:0 0 10px"><div class="device-icon"><i class="fa-solid fa-hand-fist"></i></div><h3 style="font-size:14px;margin:0 0 5px">زر SOS</h3><span class="tiny-pill ${state.deviceConnected?'success':''}">${state.deviceConnected?'متصل':'غير متصل'}</span><div style="font-size:9px;color:#94a3b8;margin-top:7px">${state.deviceConnected?`البطارية ${state.deviceBattery}%`:'يمكن ربطه لاحقاً من حسابي'}</div></div><button type="button" class="${state.deviceConnected?'ghost-btn':'primary-btn'} wide" onclick="toggleDeviceConnection();renderOnboarding()"><i class="fa-brands fa-bluetooth-b"></i>${state.deviceConnected?'فصل الجهاز التجريبي':'ربط زر SOS تجريبياً'}</button><div class="setup-summary"><div><span><i class="fa-solid fa-comments"></i> طريقة التواصل</span><b>${escapeHtml(state.setup.communication)}</b></div><div><span><i class="fa-solid fa-notes-medical"></i> الملف الطبي</span><b>${escapeHtml(state.profile.blood||'غير محدد')}</b></div><div><span><i class="fa-solid fa-user-group"></i> جهات الاتصال</span><b>${state.contacts.length}</b></div><div><span><i class="fa-solid fa-location-dot"></i> الموقع</span><b>${state.setup.locationAllowed?'مسموح':'لاحقاً'}</b></div></div></div>`;
+    }
+    $('onboard-layer').innerHTML=`<div class="onboard-top"><div><div class="onboard-step-copy"><b>إعداد إشارة</b><span>الخطوة ${step+1} من ${onboarding.length}</span></div><div class="onboard-progress"><div class="onboard-progress-bar" style="width:${pct}%"></div></div></div><button class="skip" type="button" onclick="finishOnboarding()">تخطي الآن</button></div><div class="onboard-content">${body}</div><div class="onboard-actions">${step>0?'<button class="ghost-btn" type="button" style="flex:1" onclick="prevOnboarding()"><i class="fa-solid fa-arrow-right"></i> رجوع</button>':''}<button class="primary-btn" type="button" style="flex:2" onclick="nextOnboarding()">${step===onboarding.length-1?'إنهاء الإعداد':'التالي'} <i class="fa-solid ${step===onboarding.length-1?'fa-check':'fa-arrow-left'}"></i></button></div>`;
+    updateShowcase();
+  }
+  function escapeHtml(v=''){return String(v).replace(/[&<>'"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));}
+  function bloodOptions(selected=''){return ['','A+','A-','B+','B-','AB+','AB-','O+','O-'].map(v=>`<option value="${v}" ${v===selected?'selected':''}>${v||'غير محدد'}</option>`).join('');}
+  function relationOptions(selected=''){const opts=['أب','أم','زوج','زوجة','أخ','أخت','ابن','ابنة','قريب / قريبة','صديق / صديقة','جار / جارة','مقدم رعاية','أخرى'];return opts.map(v=>`<option value="${v}" ${v===selected?'selected':''}>${v}</option>`).join('');}
+  function selectSetupCommunication(value){state.setup.communication=value;state.profile.communication=value;vibrate(18);renderOnboarding();}
+  function toggleSetupPermission(type){if(type==='location')state.setup.locationAllowed=!state.setup.locationAllowed;else state.setup.notificationsAllowed=!state.setup.notificationsAllowed;vibrate(16);renderOnboarding();}
+  function toggleDraftAutoNotify(btn){btn.classList.toggle('active');const label=$('draft-auto-state');if(label)label.textContent=btn.classList.contains('active')?'مفعّل':'متوقف';}
+  function setFieldInvalid(fieldId,invalid=true){const field=$(fieldId);if(field)field.classList.toggle('invalid',invalid);}
+  function validPhone(value){const digits=String(value||'').replace(/\D/g,'');return digits.length>=7&&digits.length<=15;}
+  function saveOnboardingStep(){
+    if(state.onboardingStep===2){const name=$('ob-name')?.value.trim();setFieldInvalid('field-ob-name',!name);if(!name){showToast('أدخل الاسم الكامل للمتابعة');$('ob-name')?.focus();return false;}state.profile.name=name;state.profile.blood=$('ob-blood')?.value||'';state.profile.allergies=$('ob-allergies')?.value.trim()||'غير محدد';state.profile.chronic=$('ob-chronic')?.value.trim()||'غير محدد';state.profile.medication=$('ob-medication')?.value.trim()||'غير محدد';}
+    if(state.onboardingStep===3){const n=$('ob-contact-name')?.value.trim(),r=$('ob-contact-relation')?.value.trim(),p=$('ob-contact-phone')?.value.trim();const started=Boolean(n||r||p);if(started){const badName=!n,badRelation=!r,badPhone=!validPhone(p);setFieldInvalid('field-ob-contact-name',badName);setFieldInvalid('field-ob-contact-relation',badRelation);setFieldInvalid('field-ob-contact-phone',badPhone);if(badName||badRelation||badPhone){showToast('أكمل بيانات جهة الاتصال بشكل صحيح');(badName?$('ob-contact-name'):badRelation?$('ob-contact-relation'):$('ob-contact-phone'))?.focus();return false;}const auto=$('draft-auto-state')?.textContent!=='متوقف';state.contacts=[{id:Date.now(),name:n,relation:r,phone:p,auto}];}}
+    return true;
+  }
+  function nextOnboarding(){if(!saveOnboardingStep())return;if(state.onboardingStep<onboarding.length-1){state.onboardingStep++;renderOnboarding();}else finishOnboarding();}
+  function prevOnboarding(){state.onboardingStep=Math.max(0,state.onboardingStep-1);renderOnboarding();}
+  function finishOnboarding(){renderProfile();renderContacts();$('onboard-layer').classList.remove('show');updateShowcase();showToast('اكتمل الإعداد — يمكنك تعديل بياناتك من حسابي');}
+  renderOnboarding();
+
+  function visualFeedback(message){
+    const f=$('flash-layer'); f.classList.remove('go'); void f.offsetWidth; f.classList.add('go'); vibrate([70,45,70]);
+    if(message){ showToast(message); if(state.currentScreen==='screen-home') showHomeNotice('تم التحديث',message,'fa-check'); }
+  }
+
+  function showToast(text){ $('toast-text').textContent=text; $('toast').classList.add('show'); clearTimeout(showToast._t); showToast._t=setTimeout(()=>$('toast').classList.remove('show'),2500); }
+
+  function startEmergency(category,source='button'){
+    if(state.activeIncident){ showToast('يوجد بلاغ نشط بالفعل'); switchScreen('screen-incident'); return; }
+    clearTimers();
+    if(state.dispatchOverlayTimer){ clearTimeout(state.dispatchOverlayTimer); state.dispatchOverlayTimer=null; }
+    state.category=category; state.selectedDetails=[]; state.activeIncident=true; state.dispatchStage=0; state.eta=5; state.contactsNotified=false;
+    state.incidentId='IS-'+String(Date.now()).slice(-6); state.incidentCreatedAt=new Date();
+    visualFeedback(source==='sos'?'تم تفعيل استغاثة SOS':'تم إنشاء البلاغ');
+    showDispatchOverlay();
+    simulateDispatch();
+  }
+
+  function showDispatchOverlay(){
+    const cfg=incidentConfig[state.category]||incidentConfig.other;
+    const fallback=state.connectivity==='online'?'إرسال آمن عبر الإنترنت':'تجهيز قناة SMS للطوارئ';
+    $('dispatch-layer').innerHTML=`<div class="dispatch-check"><i class="fa-solid fa-check"></i></div><h2>تم إرسال الاستغاثة</h2><p>جاري مشاركة موقعك وبيانات البلاغ مع مركز الطوارئ</p><div class="dispatch-meta"><span><i class="fa-solid ${cfg.icon}" style="color:#7dd3fc;margin-left:6px"></i>${cfg.label}</span><span><i class="fa-solid fa-location-dot" style="color:#7dd3fc;margin-left:6px"></i>الموقع ${state.gps.status==='ready'?'جاهز للمشاركة':'قيد التحديد'}</span><span><i class="fa-solid fa-tower-broadcast" style="color:#7dd3fc;margin-left:6px"></i>${fallback}</span></div><p class="dispatch-back-note"><i class="fa-solid fa-arrow-right"></i> يمكنك استخدام زر الرجوع أعلى الشاشة في أي وقت</p>`;
+    $('dispatch-layer').classList.add('show');
+    updateShowcase();
+    if(state.dispatchOverlayTimer) clearTimeout(state.dispatchOverlayTimer);
+    state.dispatchOverlayTimer=setTimeout(()=>{
+      state.dispatchOverlayTimer=null;
+      $('dispatch-layer').classList.remove('show');
+      if(state.activeIncident) switchScreen('screen-incident'); else updateShowcase();
+    },1800);
+  }
+
+  function closeDispatchOverlay(fromBack=false){
+    if(state.dispatchOverlayTimer){ clearTimeout(state.dispatchOverlayTimer); state.dispatchOverlayTimer=null; }
+    $('dispatch-layer').classList.remove('show');
+    if(fromBack){
+      showScreen('screen-home','back');
+      showToast('تم الرجوع — البلاغ ما زال نشطًا ويمكن فتحه من تبويب البلاغ');
+    } else {
+      updateShowcase();
+    }
+  }
+
+  function simulateDispatch(){
+    const stages=[350,1300,2600,4300];
+    stages.forEach((ms,i)=>later(()=>{ if(!state.activeIncident) return; state.dispatchStage=i+1; if(i>=2) state.eta=Math.max(2,state.eta-1); renderIncident(); },ms));
+    later(()=>{ if(!state.activeIncident)return; state.dispatchStage=5; state.eta=0; renderIncident(); visualFeedback('تم تحديث الحالة: وصل الفريق'); },9000);
+  }
+
+  function calculateReadiness(){
+    let score=20;
+    if(state.profile.name) score+=10;
+    if(state.profile.blood) score+=10;
+    if(state.contacts.length) score+=15;
+    if(state.setup.communication) score+=15;
+    if(state.setup.locationAllowed || state.gps.status==='ready') score+=15;
+    if(state.deviceConnected) score+=15;
+    return Math.min(100,score);
+  }
+  function renderSafetyCenter(){
+    const score=calculateReadiness();
+    if($('safety-score-value')) $('safety-score-value').textContent=score+'%';
+    if($('score-ring')) $('score-ring').style.setProperty('--score',score+'%');
+    if($('readiness-pill')) $('readiness-pill').textContent=score+'% جاهز';
+    const rows=[
+      ['fa-location-crosshairs','الموقع','مشاركة الموقع وقت البلاغ',state.setup.locationAllowed||state.gps.status==='ready'],
+      ['fa-user-group','جهات اتصال موثوقة',`${state.contacts.length} جهات محفوظة`,state.contacts.length>0],
+      ['fa-notes-medical','الملف الطبي',state.profile.blood?`فصيلة الدم ${state.profile.blood}`:'غير مكتمل',Boolean(state.profile.blood)],
+      ['fa-comments','طريقة التواصل',state.setup.communication||'غير محددة',Boolean(state.setup.communication)],
+      ['fa-hand-fist','زر SOS الذكي',state.deviceConnected?'متصل':'غير مرتبط',state.deviceConnected]
+    ];
+    if($('readiness-list')) $('readiness-list').innerHTML=rows.map(r=>`<div class="readiness-row ${r[3]?'done':'warn'}"><span class="r-ico"><i class="fa-solid ${r[0]}"></i></span><div><b>${r[1]}</b><small>${r[2]}</small></div><span class="r-state">${r[3]?'جاهز':'إجراء مطلوب'}</span></div>`).join('');
+  }
+  function renderControlCenter(){
+    if($('control-active-count')) $('control-active-count').textContent=state.activeIncident?'1':'0';
+    const host=$('control-incident-list'); if(!host) return;
+    if(!state.activeIncident){host.innerHTML=`<div class="empty-state" style="padding:28px 12px"><div class="empty-icon"><i class="fa-solid fa-tower-broadcast"></i></div><h3>لا توجد بلاغات نشطة</h3><p>أنشئ بلاغاً من تطبيق المستخدم لمشاهدة تدفق غرفة العمليات.</p></div>`;return;}
+    const cfg=incidentConfig[state.category]||incidentConfig.other;
+    host.innerHTML=`<div class="dispatch-card"><div class="dispatch-head"><div class="dispatch-person"><span class="dispatch-avatar"><i class="fa-solid ${cfg.icon}"></i></span><div><b>${cfg.label} · ${state.incidentId||'بلاغ جديد'}</b><span>${state.profile.name} · ${state.profile.communication}</span></div></div><span class="tiny-pill danger">نشط</span></div><div class="dispatch-grid"><div><span>الموقع</span><b>${state.gps.status==='ready'?'GPS جاهز':'غير مؤكد'}</b></div><div><span>الوصول</span><b>${state.profile.communication.includes('إشارة')?'مترجم':'نص'}</b></div><div><span>ETA</span><b>${state.eta===0?'وصل':state.eta+' د'}</b></div></div><div class="operator-actions"><button class="ghost-btn" onclick="showToast('تم تعيين وحدة الاستجابة')"><i class="fa-solid fa-truck-fast"></i> تعيين فريق</button><button class="primary-btn" onclick="openInterpreter()"><i class="fa-solid fa-hands-asl-interpreting"></i> ربط مترجم</button></div></div>`;
+  }
+  function setEmergencyCondition(type){
+    if(type==='safe') state.emergencySafe=state.emergencySafe===true?false:true;
+    if(type==='mobility') state.mobility=state.mobility===true?false:true;
+    renderEmergencyMode(); showToast('تم تحديث معلومات الحالة');
+  }
+  function cyclePeopleCount(){state.peopleCount=state.peopleCount>=5?1:state.peopleCount+1;renderEmergencyMode();showToast(`عدد الأشخاص: ${state.peopleCount}`)}
+  function renderEmergencyMode(){
+    const safe=$('safe-state-btn'),mob=$('mobility-state-btn'),people=$('people-count-label');
+    if(safe){safe.classList.toggle('active',state.emergencySafe===true);safe.innerHTML=`<i class="fa-solid ${state.emergencySafe===true?'fa-shield-check':'fa-shield'}"></i>${state.emergencySafe===true?'الموقع آمن':'الموقع غير محدد'}`;}
+    if(mob){mob.classList.toggle('active',state.mobility===true);mob.innerHTML=`<i class="fa-solid fa-person-walking"></i>${state.mobility===true?'أستطيع الحركة':'القدرة غير محددة'}`;}
+    if(people) people.textContent=state.peopleCount===1?'شخص واحد':state.peopleCount+' أشخاص';
+  }
+  function requestExtraHelp(){state.extraHelp=true;visualFeedback('تم إرسال طلب مساعدة إضافية');renderControlCenter();}
+  function markSafeNow(){state.safeNow=true;openModal(`<h3>تأكيد أنك بأمان</h3><p>سيتم تحديث البلاغ بأن الخطر المباشر انتهى، مع إبقاء سجل البلاغ في النظام.</p><div class="modal-actions"><button class="ghost-btn" onclick="closeModal()">إلغاء</button><button class="primary-btn" onclick="closeModal();visualFeedback('تم تحديث حالتك: بأمان الآن')"><i class="fa-solid fa-check"></i> تأكيد</button></div>`)}
+  function sendQuickPhrase(text){visualFeedback('تم إرسال العبارة للمترجم');const tr=document.querySelector('.transcript');if(tr)tr.innerHTML=`<span style="display:block;color:#7dd3fc;font-size:8px;font-weight:900;margin-bottom:3px">النص المباشر</span>${text}`;}
+  function renderShowcaseDiagram(context=''){
+    const host=$('showcase-diagram');if(!host)return;const c=context||'';let nodes=[];
+    if(c.includes('لغة الإشارة'))nodes=[['fa-hands','المستخدم'],['fa-arrow-left',''],['fa-user-tie','المترجم'],['fa-arrow-left',''],['fa-tower-broadcast','الطوارئ']];
+    else if(c.includes('مركز العمليات'))nodes=[['fa-mobile-screen','البلاغ'],['fa-arrow-left',''],['fa-tower-broadcast','العمليات'],['fa-arrow-left',''],['fa-truck-fast','الفريق']];
+    else if(c.includes('البلاغ'))nodes=[['fa-paper-plane','إرسال'],['fa-arrow-left',''],['fa-route','تتبع'],['fa-arrow-left',''],['fa-location-dot','وصول']];
+    else if(c.includes('مركز الأمان'))nodes=[['fa-user','الملف'],['fa-plus',''],['fa-location-dot','GPS'],['fa-plus',''],['fa-shield-heart','جاهزية']];
+    else {host.innerHTML='';return;}
+    host.innerHTML=nodes.map((n,i)=>i%2===1?`<span class="diagram-arrow"><i class="fa-solid ${n[0]}"></i></span>`:`<span class="diagram-node"><i class="fa-solid ${n[0]}"></i>${n[1]}</span>`).join('');
+  }
+
+  function renderIncident(){
+    $('incident-empty').style.display=state.activeIncident?'none':'block';
+    $('incident-active').style.display=state.activeIncident?'block':'none';
+    $('incident-state-pill').textContent=state.activeIncident?'نشط':'غير نشط';
+    $('incident-state-pill').className='tiny-pill '+(state.activeIncident?'danger':'');
+    if(!state.activeIncident)return;
+    const cfg=incidentConfig[state.category]||incidentConfig.other;
+    $('incident-type-label').textContent=cfg.label;
+    const titles=['جارٍ إرسال البلاغ','تم استلام بلاغك','تم تحديد أقرب فريق','الفريق في الطريق','الفريق قريب منك','وصل الفريق'];
+    $('tracking-title').textContent=titles[state.dispatchStage]||titles[1];
+    const etaEl=$('eta-value');
+    etaEl.textContent=state.eta===0?'وصل الآن':`${state.eta} دقائق`;
+    etaEl.classList.remove('eta-change'); void etaEl.offsetWidth; etaEl.classList.add('eta-change');
+    $('distance-label').textContent=state.eta===0?'تم الوصول':`المسافة ${(0.55+state.eta*.24).toFixed(1)} كم`;
+    $('gps-mini').textContent=state.gps.status==='ready'?`GPS ±${state.gps.accuracy}م`:'GPS غير متاح';
+    if($('incident-ref')) $('incident-ref').innerHTML=`<i class="fa-solid fa-hashtag"></i>${state.incidentId||'—'}`;
+    if($('incident-created')) $('incident-created').innerHTML=`<i class="fa-regular fa-clock"></i>${state.incidentCreatedAt?state.incidentCreatedAt.toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}):'—'}`;
+    if($('incident-details-count')) $('incident-details-count').innerHTML=`<i class="fa-solid fa-list-check"></i>${state.selectedDetails.length} مضافة`;
+    renderHomeIdentity();
+    const positions=[[17,26],[22,31],[30,37],[40,43],[51,49],[62,54]];
+    const pos=positions[Math.max(0,Math.min(state.dispatchStage,positions.length-1))];
+    const unit=document.querySelector('.unit-pin'); if(unit){unit.style.left=pos[0]+'%';unit.style.top=pos[1]+'%';}
+    const steps=['تم إرسال الموقع','تم استلام البلاغ','تم تحديد أقرب فريق','الفريق في الطريق','وصل الفريق'];
+    $('timeline').innerHTML=steps.map((s,i)=>{
+      const idx=i+1; const cls=state.dispatchStage>idx?'done':state.dispatchStage===idx?'active':'';
+      const icon=state.dispatchStage>idx?'fa-check':state.dispatchStage===idx?(i===3?'fa-truck-fast':'fa-circle-dot'):'fa-circle';
+      return `<div class="timeline-row ${cls}" style="animation-delay:${i*45}ms"><div class="step-dot"><i class="fa-solid ${icon}"></i></div><b>${s}</b><small>${state.dispatchStage>idx?'مكتمل':state.dispatchStage===idx?'الآن':''}</small></div>`;
+    }).join('');
+    renderFallback();
+    renderEmergencyMode();
+    renderControlCenter();
+  }
+
+  function renderFallback(){
+    if(!state.activeIncident){$('fallback-panel').innerHTML='';return;}
+    if(state.connectivity==='online'){$('fallback-panel').innerHTML='';return;}
+    const noNet=state.connectivity==='offline';
+    $('fallback-panel').innerHTML=`<div class="banner warn"><i class="fa-solid fa-message"></i><div><b>${noNet?'لا يوجد اتصال بالإنترنت':'الاتصال بالإنترنت ضعيف'}</b><br>سيتم استخدام رسالة طوارئ SMS كقناة احتياطية في هذا العرض.<div style="margin-top:5px;color:#fde68a">✓ الموقع محدد &nbsp; ✓ بيانات الطوارئ جاهزة &nbsp; ✓ جهة الطوارئ محددة</div></div></div>`;
+  }
+
+  function openDetailsModal(){
+    if(!state.activeIncident)return;
+    const cfg=incidentConfig[state.category]||incidentConfig.other;
+    const selected=new Set(state.selectedDetails);
+    openModal(`<h3>إضافة تفاصيل للبلاغ</h3><p>البلاغ أُرسل بالفعل. هذه التفاصيل اختيارية وتساعد فريق الاستجابة.</p><div class="detail-chips">${cfg.details.map((d,i)=>`<button class="chip ${selected.has(d)?'selected':''}" data-detail="${encodeURIComponent(d)}" onclick="toggleDetail(this)"><i class="fa-solid ${detailIcon(i)}"></i>${d}</button>`).join('')}</div><div class="field" style="margin-top:10px"><label>ملاحظة نصية اختيارية</label><textarea id="incident-note" placeholder="مثال: أنا في الطابق الثاني بالقرب من المدخل..."></textarea></div><button class="primary-btn wide" onclick="saveIncidentDetails()"><i class="fa-solid fa-check"></i> حفظ التفاصيل وإرسال التحديث</button>`);
+  }
+  function detailIcon(i){return ['fa-lungs','fa-droplet','fa-person-falling','fa-bone','fa-bolt','fa-ellipsis'][i%6]}
+  function toggleDetail(btn){const d=decodeURIComponent(btn.dataset.detail);const idx=state.selectedDetails.indexOf(d);if(idx>=0){state.selectedDetails.splice(idx,1);btn.classList.remove('selected')}else{state.selectedDetails.push(d);btn.classList.add('selected')}}
+  function saveIncidentDetails(){ closeModal(); renderIncident(); visualFeedback(`تم تحديث البلاغ${state.selectedDetails.length?` بـ ${state.selectedDetails.length} تفاصيل`:''}`); }
+
+  function notifyContacts(){ const enabled=state.contacts.filter(c=>c.auto).length; state.contactsNotified=true; visualFeedback(`تم تنبيه ${enabled} جهات اتصال`); }
+
+  function confirmCancelIncident(){
+    openModal(`<h3>إلغاء البلاغ؟</h3><p>استخدم الإلغاء فقط إذا تم إنشاء البلاغ بالخطأ. لن يتم إلغاء البلاغ إلا بعد هذا التأكيد.</p><div class="modal-actions"><button class="ghost-btn" onclick="closeModal()">العودة</button><button class="danger-btn" onclick="cancelIncident()"><i class="fa-solid fa-triangle-exclamation"></i> تأكيد الإلغاء</button></div>`);
+  }
+  function cancelIncident(){ clearTimers(); if(state.dispatchOverlayTimer){clearTimeout(state.dispatchOverlayTimer);state.dispatchOverlayTimer=null;} $('dispatch-layer').classList.remove('show'); state.activeIncident=false;state.category=null;state.dispatchStage=0;state.eta=5;state.selectedDetails=[];state.incidentId=null;state.incidentCreatedAt=null;state.contactsNotified=false;closeModal();switchScreen('screen-incident');visualFeedback('تم إلغاء البلاغ'); }
+
+  function renderInterpreter(){
+    const p=$('interpreter-pill');
+    const labels={idle:'غير متصل',requesting:'جاري الطلب',assigned:'تم تعيين مترجم',connecting:'جارٍ الاتصال',live:'بث مباشر',lost:'انقطع الاتصال',reconnecting:'إعادة اتصال'};
+    p.textContent=labels[state.interpreter]; p.className='tiny-pill '+(state.interpreter==='live'?'success':state.interpreter==='lost'?'danger':state.interpreter==='idle'?'':'warn');
+    if(state.interpreter==='live'){
+      $('interpreter-content').innerHTML=`<div class="interpreter-video"><div class="video-remote"><div style="text-align:center"><div class="video-avatar"><i class="fa-solid fa-user"></i></div><b style="display:block;font-size:11px;margin-top:8px">مترجم لغة الإشارة</b><span style="font-size:8px;color:#94a3b8">اتصال مرئي آمن</span></div></div><div class="self-preview"><i class="fa-solid fa-user" style="font-size:22px"></i><span style="position:absolute;bottom:5px;font-size:7px;color:#94a3b8">كاميرتك</span></div><span class="quality tiny-pill success"><i class="fa-solid fa-signal"></i> جودة جيدة</span><div class="transcript"><span style="display:block;color:#7dd3fc;font-size:8px;font-weight:900;margin-bottom:3px">النص المباشر</span>أنا بخير، أحتاج المساعدة في موقعي الحالي.</div></div><div class="card" style="padding:10px 12px;margin-top:9px"><div style="display:flex;justify-content:space-between;font-size:9px"><span class="muted"><i class="fa-solid fa-circle-info" style="color:#7dd3fc;margin-left:5px"></i>معلومات الطوارئ</span><b>${state.activeIncident?(incidentConfig[state.category]||incidentConfig.other).label:'لا يوجد بلاغ نشط'}</b></div></div><div class="quick-phrases"><button class="phrase-chip" onclick="sendQuickPhrase('أنا مصاب وأحتاج إسعاف')">أنا مصاب</button><button class="phrase-chip" onclick="sendQuickPhrase('لا أستطيع الحركة')">لا أستطيع الحركة</button><button class="phrase-chip" onclick="sendQuickPhrase('يوجد شخص آخر معي')">يوجد شخص معي</button><button class="phrase-chip" onclick="sendQuickPhrase('لا أفهم، أعد الشرح')">لا أفهم</button></div><div class="interpreter-tools"><button class="ghost-btn" onclick="showToast('تم فتح أداة الرسائل')"><i class="fa-solid fa-keyboard"></i> كتابة رسالة</button><button class="ghost-btn" onclick="showToast('تم تجهيز إضافة صورة تجريبية')"><i class="fa-solid fa-camera"></i> إرسال صورة</button></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px"><button class="ghost-btn" onclick="simulateInterpreterLoss()"><i class="fa-solid fa-wifi"></i> محاكاة انقطاع</button><button class="primary-btn" onclick="switchScreen('screen-incident')"><i class="fa-solid fa-arrow-right"></i> العودة للتتبع</button></div>`;
+      return;
+    }
+    const meta={
+      idle:['fa-hands-asl-interpreting','التواصل بلغة الإشارة','اطلب مترجماً للانضمام إلى جلسة مرئية معك ومع غرفة العمليات.','طلب مترجم الآن'],
+      requesting:['fa-hourglass-half','جاري طلب مترجم','تم إرسال الطلب إلى قائمة المترجمين المتاحين.','جاري البحث...'],
+      assigned:['fa-user-check','تم تعيين مترجم','تم العثور على مترجم وجارٍ تجهيز الاتصال.','بدء الاتصال'],
+      connecting:['fa-link','جاري الاتصال','يتم الآن إنشاء الجلسة المرئية الآمنة.','جاري الاتصال...'],
+      lost:['fa-triangle-exclamation','انقطع الاتصال','تم فقد الاتصال المرئي. سيحاول التطبيق إعادة الاتصال.','إعادة الاتصال'],
+      reconnecting:['fa-arrows-rotate','إعادة الاتصال','جارٍ استعادة جلسة لغة الإشارة.','جارٍ الاستعادة...']
+    }[state.interpreter];
+    const busy=['requesting','connecting','reconnecting'].includes(state.interpreter); const dots=busy?'<span class="loading-dots"><i></i><i></i><i></i></span>':'';
+    $('interpreter-content').innerHTML=`<div class="interpreter-state"><div class="state-icon"><i class="fa-solid ${meta[0]}"></i></div><h3>${meta[1]}</h3><p>${meta[2]}</p><button class="primary-btn wide" ${busy?'disabled style="opacity:.78"':''} onclick="interpreterAction()"><i class="fa-solid fa-video"></i> ${meta[3]} ${dots}</button>${state.activeIncident?'<button class="outline-btn wide" style="margin-top:8px" onclick="switchScreen(\'screen-incident\')">العودة إلى البلاغ</button>':''}</div>`;
+  }
+
+  function openInterpreter(){ switchScreen('screen-interpreter'); if(state.interpreter==='idle') requestInterpreter(); }
+  function interpreterAction(){ if(state.interpreter==='idle')requestInterpreter(); else if(state.interpreter==='assigned')connectInterpreter(); else if(state.interpreter==='lost')reconnectInterpreter(); }
+  function requestInterpreter(){ state.interpreter='requesting';renderInterpreter();later(()=>{state.interpreter='assigned';renderInterpreter();visualFeedback('تم تعيين مترجم لغة الإشارة');},1100);later(()=>{if(state.interpreter==='assigned')connectInterpreter();},1900); }
+  function connectInterpreter(){ state.interpreter='connecting';renderInterpreter();later(()=>{state.interpreter='live';renderInterpreter();visualFeedback('تم بدء جلسة لغة الإشارة');},1000); }
+  function simulateInterpreterLoss(){ state.interpreter='lost';renderInterpreter();visualFeedback('انقطع الاتصال المرئي'); }
+  function reconnectInterpreter(){ state.interpreter='reconnecting';renderInterpreter();later(()=>{state.interpreter='live';renderInterpreter();visualFeedback('تمت استعادة الاتصال');},1400); }
+
+  function renderProfile(){
+    renderHomeIdentity();
+    const p=state.profile;
+    const vals={
+      'profile-name':p.name||'غير محدد','profile-blood':p.blood||'غير محدد','profile-allergies':p.allergies||'غير محدد','profile-chronic':p.chronic||'غير محدد','profile-medication':p.medication||'غير محدد','profile-communication':p.communication||'غير محدد','profile-sign-language':p.signLanguage||'لغة الإشارة'
+    };
+    Object.entries(vals).forEach(([id,v])=>{const el=$(id);if(el)el.textContent=v;});
+    const sw=$('medical-share');if(sw)sw.classList.toggle('on',state.medicalShare);
+  }
+  function populateProfileForm(){
+    const p=state.profile;
+    const set=(id,v)=>{const el=$(id);if(el)el.value=v||'';};
+    set('edit-name',p.name);set('edit-blood',p.blood);set('edit-allergies',p.allergies==='غير محدد'?'':p.allergies);set('edit-chronic',p.chronic==='غير محدد'?'':p.chronic);set('edit-medication',p.medication==='غير محدد'?'':p.medication);set('edit-communication',p.communication);set('edit-sign-language',p.signLanguage);
+  }
+  function saveProfileForm(e){
+    e.preventDefault();
+    const name=$('edit-name').value.trim(); if(!name){showToast('الاسم مطلوب');$('edit-name').focus();return;}
+    state.profile={name,blood:$('edit-blood').value,allergies:$('edit-allergies').value.trim()||'غير محدد',chronic:$('edit-chronic').value.trim()||'غير محدد',medication:$('edit-medication').value.trim()||'غير محدد',communication:$('edit-communication').value,signLanguage:$('edit-sign-language').value};
+    state.setup.communication=state.profile.communication;
+    renderProfile();visualFeedback('تم حفظ بيانات الطوارئ');appBack();
+  }
+
+  function renderContacts(){
+    $('contacts-list').innerHTML=state.contacts.map(c=>`<div class="contact"><div class="who"><div class="avatar">${c.name.charAt(0)}</div><div><b>${c.name} <span style="display:inline;color:#64748b">(${c.relation})</span></b><span>${c.phone} · ${c.auto?'تنبيه تلقائي':'تنبيه يدوي'}</span></div></div><div class="contact-actions"><button class="mini-icon" onclick="toggleContactAuto(${c.id})" title="تبديل التنبيه"><i class="fa-solid ${c.auto?'fa-bell':'fa-bell-slash'}"></i></button><button class="mini-icon" onclick="editContact(${c.id})" title="تعديل"><i class="fa-solid fa-pen"></i></button><button class="mini-icon" onclick="deleteContact(${c.id})" title="حذف"><i class="fa-solid fa-trash"></i></button></div></div>`).join('');
+  }
+  function openContactModal(){if(state.contacts.length>=5){showToast('يمكن إضافة 5 جهات اتصال كحد أقصى');return;}openModal(`<h3>إضافة جهة اتصال للطوارئ</h3><p>أدخل شخصاً يمكن تنبيهه عند بدء حالة طوارئ. يمكنك التحكم بالتنبيه التلقائي لاحقاً.</p><div class="field" id="field-contact-name"><label for="contact-name"><span>الاسم <span class="required">*</span></span></label><input id="contact-name" autocomplete="name" placeholder="مثال: خالد محمد"><div class="field-error">أدخل الاسم</div></div><div class="field" id="field-contact-relation"><label for="contact-relation"><span>صلة القرابة <span class="required">*</span></span></label><div class="select-wrap"><select id="contact-relation"><option value="">اختر صلة القرابة</option>${relationOptions('')}</select></div><div class="field-error">اختر صلة القرابة</div></div><div class="field" id="field-contact-phone"><label for="contact-phone"><span>رقم الهاتف <span class="required">*</span></span></label><input id="contact-phone" autocomplete="tel" dir="ltr" placeholder="+970 59 123 4567" inputmode="tel"><div class="field-error">أدخل رقم هاتف صالحاً</div></div><button class="primary-btn wide" onclick="saveContact()"><i class="fa-solid fa-plus"></i> إضافة جهة الاتصال</button>`);}
+  function saveContact(){const n=$('contact-name').value.trim(),r=$('contact-relation').value.trim(),p=$('contact-phone').value.trim();const badName=!n,badRelation=!r,badPhone=!validPhone(p);setFieldInvalid('field-contact-name',badName);setFieldInvalid('field-contact-relation',badRelation);setFieldInvalid('field-contact-phone',badPhone);if(badName||badRelation||badPhone){showToast('راجع الحقول المطلوبة');return;}state.contacts.push({id:Date.now(),name:n,relation:r,phone:p,auto:true});closeModal();renderContacts();visualFeedback('تمت إضافة جهة اتصال');}
+  function editContact(id){const c=state.contacts.find(x=>x.id===id);if(!c)return;openModal(`<h3>تعديل جهة الاتصال</h3><p>حدّث البيانات ثم احفظ التغييرات.</p><div class="field" id="field-contact-name"><label for="contact-name"><span>الاسم <span class="required">*</span></span></label><input id="contact-name" value="${escapeHtml(c.name)}"></div><div class="field" id="field-contact-relation"><label for="contact-relation"><span>صلة القرابة <span class="required">*</span></span></label><div class="select-wrap"><select id="contact-relation"><option value="">اختر صلة القرابة</option>${relationOptions(c.relation||'')}</select></div></div><div class="field" id="field-contact-phone"><label for="contact-phone"><span>رقم الهاتف <span class="required">*</span></span></label><input id="contact-phone" value="${escapeHtml(c.phone)}" dir="ltr" inputmode="tel"></div><button class="primary-btn wide" onclick="saveEditedContact(${id})"><i class="fa-solid fa-check"></i> حفظ التعديلات</button>`);}
+  function saveEditedContact(id){const c=state.contacts.find(x=>x.id===id);if(!c)return;const n=$('contact-name').value.trim(),r=$('contact-relation').value.trim(),p=$('contact-phone').value.trim();if(!n||!r||!validPhone(p)){showToast('راجع الاسم وصلة القرابة ورقم الهاتف');return;}c.name=n;c.relation=r;c.phone=p;closeModal();renderContacts();visualFeedback('تم تحديث جهة الاتصال');}
+  function toggleContactAuto(id){ const c=state.contacts.find(x=>x.id===id);if(c){c.auto=!c.auto;renderContacts();} }
+  function deleteContact(id){state.contacts=state.contacts.filter(x=>x.id!==id);renderContacts();showToast('تم حذف جهة الاتصال من النموذج');}
+  function toggleMedicalShare(){state.medicalShare=!state.medicalShare;$('medical-share').classList.toggle('on',state.medicalShare);showToast(state.medicalShare?'مشاركة البيانات الطبية مفعّلة':'مشاركة البيانات الطبية متوقفة');}
+
+  function requestLocation(){
+    state.gps.status='locating';updateLocationUI();showToast('جاري تحديد موقعك...');
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(pos=>{state.gps.status='ready';state.gps.lat=pos.coords.latitude;state.gps.lng=pos.coords.longitude;state.gps.accuracy=Math.max(5,Math.round(pos.coords.accuracy||18));updateLocationUI();visualFeedback('تم تحديث الموقع بنجاح');},()=>{state.gps.status='failed';updateLocationUI();showToast('تعذر تحديد الموقع — يمكنك المحاولة مجددًا');},{enableHighAccuracy:true,timeout:7000,maximumAge:0});
+    }else{ later(()=>{state.gps.status='ready';state.gps.accuracy=25;updateLocationUI();showToast('تم استخدام موقع تجريبي تقريبي');},900); }
+  }
+  function updateLocationUI(){
+    const map={ready:['الموقع محدد',`دقة تقريبية ± ${state.gps.accuracy} م`],locating:['جاري تحديد موقعك...','بانتظار إذن الموقع'],failed:['تعذر تحديد الموقع','اضغط تحديث الموقع للمحاولة']};
+    const v=map[state.gps.status]||map.ready;$('home-gps-title').textContent=v[0];$('home-gps-sub').textContent=v[1];if(state.activeIncident)renderIncident(); else updateShowcase();
+  }
+
+  function setConnectivity(mode){
+    state.connectivity=mode;document.querySelectorAll('.sim-btn[data-net]').forEach(b=>b.classList.toggle('active',b.dataset.net===mode));updateConnectivityUI();renderIncident();closeModal();showToast(mode==='online'?'تمت محاكاة اتصال جيد':mode==='weak'?'تمت محاكاة اتصال ضعيف':'تمت محاكاة انقطاع الإنترنت');
+  }
+  function updateConnectivityUI(){
+    const map={online:['الاتصال متاح','قناة الإنترنت جاهزة',''],weak:['اتصال ضعيف','SMS احتياطي جاهز','<div class="banner warn"><i class="fa-solid fa-signal"></i><div><b>الاتصال بالإنترنت ضعيف</b><br>سيتم تجهيز رسالة طوارئ SMS كقناة احتياطية.</div></div>'],offline:['لا يوجد إنترنت','SMS هو القناة الاحتياطية','<div class="banner danger"><i class="fa-solid fa-wifi"></i><div><b>لا يوجد اتصال بالإنترنت</b><br>سيتم محاكاة إرسال البلاغ عبر رسالة طوارئ SMS.</div></div>']};
+    const v=map[state.connectivity];$('home-connection-title').textContent=v[0];$('home-connection-sub').textContent=v[1];$('connectivity-banner').innerHTML=v[2];$('status-wifi').style.opacity=state.connectivity==='offline'?'.25':'1';
+    if(state.currentScreen==='screen-home' && state.connectivity!=='online') showHomeNotice(state.connectivity==='weak'?'الاتصال ضعيف':'لا يوجد إنترنت',state.connectivity==='weak'?'سيتم تجهيز SMS احتياطي تلقائياً.':'سيتم استخدام قناة SMS الاحتياطية.','fa-signal');
+    updateShowcase();
+  }
+
+  function toggleDeviceConnection(){state.deviceConnected=!state.deviceConnected;renderDevice();visualFeedback(state.deviceConnected?'تم ربط زر SOS التجريبي':'تم فصل زر SOS التجريبي');}
+  function renderDevice(){
+    const status=state.deviceConnected?'متصل':'غير متصل';
+    $('device-status').textContent=status;$('device-status').className='tiny-pill '+(state.deviceConnected?'success':'');
+    $('device-status-inline').textContent=status;$('device-status-inline').className='tiny-pill '+(state.deviceConnected?'success':'');
+    $('device-battery').textContent=state.deviceConnected?`البطارية ${state.deviceBattery}%`:'البطارية —';
+    $('pair-device-btn').innerHTML=state.deviceConnected?'<i class="fa-brands fa-bluetooth-b"></i> فصل الجهاز':'<i class="fa-brands fa-bluetooth-b"></i> ربط الجهاز';
+    updateShowcase();
+  }
+  function testDeviceSOS(){ if(!state.deviceConnected){showToast('اربط الجهاز أولاً');return;} visualFeedback('اختبار ناجح — تم استقبال إشارة SOS من الجهاز'); }
+
+  function openDemoPanel(){
+    openModal(`<h3>نسخة استعراضية</h3><p>غيّر ظروف الاتصال لاختبار سلوك التطبيق. هذه النسخة الاستعراضية لا تتصل بجهات طوارئ حقيقية ولا ترسل SMS فعلياً.</p><div class="field"><label>حالة الاتصال</label><div class="sim-controls"><button data-net="online" class="sim-btn ${state.connectivity==='online'?'active':''}" onclick="setConnectivity('online')"><i class="fa-solid fa-wifi"></i><br>متصل</button><button data-net="weak" class="sim-btn ${state.connectivity==='weak'?'active':''}" onclick="setConnectivity('weak')"><i class="fa-solid fa-signal"></i><br>ضعيف</button><button data-net="offline" class="sim-btn ${state.connectivity==='offline'?'active':''}" onclick="setConnectivity('offline')"><i class="fa-solid fa-ban"></i><br>بدون إنترنت</button></div></div><button class="ghost-btn wide" onclick="closeModal();requestLocation()"><i class="fa-solid fa-location-crosshairs"></i> اختبار تحديث GPS</button><button class="ghost-btn wide" style="margin-top:8px" onclick="closeModal();switchScreen('screen-control')"><i class="fa-solid fa-tower-broadcast"></i> فتح مركز العمليات</button><button class="outline-btn wide" style="margin-top:8px" onclick="resetDemo()"><i class="fa-solid fa-arrow-rotate-right"></i> إعادة ضبط النموذج</button>`);
+  }
+  function resetDemo(){clearTimers();state.activeIncident=false;state.category=null;state.selectedDetails=[];state.connectivity='online';state.gps={status:'ready',accuracy:18,lat:null,lng:null};state.dispatchStage=0;state.eta=5;state.interpreter='idle';state.deviceConnected=false;state.emergencySafe=null;state.mobility=null;state.peopleCount=1;state.extraHelp=false;state.safeNow=false;closeModal();updateConnectivityUI();updateLocationUI();renderDevice();renderProfile();switchScreen('screen-home');showToast('تمت إعادة ضبط التجربة');}
+
+  function openModal(html){$('modal-sheet').innerHTML=html; const h=$('modal-sheet').querySelector('h3'); if(h && !h.querySelector('i')){ const i=document.createElement('i'); i.className='fa-solid fa-circle-info'; i.style.color='#7dd3fc'; i.style.marginLeft='7px'; h.prepend(i); } $('modal-layer').classList.add('show');updateShowcase();}
+  function closeModal(){$('modal-layer').classList.remove('show');$('modal-sheet').innerHTML='';updateShowcase();}
+  function closeModalFromBackdrop(e){if(e.target===$('modal-layer'))closeModal();}
+
+  // SOS: press and hold ~2 seconds with circular progress.
+  const sos=$('sos-btn');
+  function beginSOS(e){e.preventDefault();if(state.activeIncident){showToast('يوجد بلاغ نشط بالفعل');return;}state.holdStart=performance.now();$('sos-wrap').classList.add('holding');vibrate(35);const animate=now=>{const p=Math.min(1,(now-state.holdStart)/2000);$('sos-wrap').style.setProperty('--p',`${p*360}deg`);$('sos-pct').textContent=`${Math.round(p*100)}%`;if(p>=1){endSOS(true);startEmergency('other','sos');return;}state.holdRAF=requestAnimationFrame(animate)};state.holdRAF=requestAnimationFrame(animate);}
+  function endSOS(done=false){if(state.holdRAF)cancelAnimationFrame(state.holdRAF);state.holdRAF=null;state.holdStart=0;$('sos-wrap').classList.remove('holding');$('sos-wrap').style.setProperty('--p','0deg');$('sos-pct').textContent='اضغط مطولًا';if(!done)vibrate(20);}
+  sos.addEventListener('pointerdown',beginSOS);['pointerup','pointercancel','pointerleave'].forEach(ev=>sos.addEventListener(ev,()=>endSOS(false)));
+  sos.addEventListener('contextmenu',e=>e.preventDefault());
+
+  // Tactile tap feedback across the prototype.
+  document.addEventListener('pointerdown',e=>{
+    const btn=e.target.closest('button');
+    if(!btn || btn.disabled || btn===sos) return;
+    const rect=btn.getBoundingClientRect();
+    const size=Math.max(rect.width,rect.height)*1.55;
+    const ripple=document.createElement('span');
+    ripple.className='tap-ripple';
+    ripple.style.width=ripple.style.height=size+'px';
+    ripple.style.left=(e.clientX-rect.left)+'px';
+    ripple.style.top=(e.clientY-rect.top)+'px';
+    btn.appendChild(ripple);
+    setTimeout(()=>ripple.remove(),520);
+  },{passive:true});
+
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();if(e.altKey&&e.key==='ArrowRight')appBack();if(e.altKey&&e.key==='ArrowLeft')appForward();});
+  try{history.replaceState({ishara:true,screen:'screen-home',index:0},'',location.href.split('#')[0]+'#screen-home');}catch(e){}
+  window.setTimeout(()=>{$('splash')?.classList.add('hide');},1250);
+  updateConnectivityUI();updateLocationUI();renderProfile();renderContacts();renderDevice();renderInterpreter();renderIncident();updateHistoryButtons();renderHomeIdentity();updateShowcase();
+</script>
+</body>
+</html>
