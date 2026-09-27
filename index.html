@@ -700,7 +700,7 @@
           <div class="page-head"><div><h2><i class="fa-solid fa-shield-heart"></i>مركز الأمان</h2><p>جهّز حسابك قبل حدوث الطوارئ</p></div><span id="readiness-pill" class="tiny-pill success">85% جاهز</span></div>
           <div class="safety-score"><div id="score-ring" class="score-ring" style="--score:85%"><div style="text-align:center"><strong id="safety-score-value">85%</strong><span>جاهزية</span></div></div><div style="text-align:center"><b style="font-size:13px">جاهزية حسابك للطوارئ</b><p style="font-size:8px;color:#7e8fa5;margin:4px 0 0">أكمل العناصر الناقصة لتقليل الخطوات وقت الاستغاثة.</p></div></div>
           <div id="readiness-list" class="readiness-list"></div>
-          <div class="card" style="margin-top:10px;padding:12px"><div class="form-section-title"><i class="fa-solid fa-location-dot"></i>معلومات الوصول</div><div class="safety-mini"><div><span>موقع المنزل</span><b>غير محدد</b></div><div><span>المستشفى المفضل</span><b>غير محدد</b></div></div><button class="outline-btn wide" onclick="showToast('يمكن إضافة مواقع محفوظة في النسخة القادمة')"><i class="fa-solid fa-plus"></i> إضافة معلومات الوصول</button></div>
+          <div class="card" style="margin-top:10px;padding:12px"><div class="form-section-title"><i class="fa-solid fa-location-dot"></i>معلومات الوصول</div><div class="safety-mini"><div><span>موقع المنزل</span><b>غير محدد</b></div><div><span>المستشفى المفضل</span><b>غير محدد</b></div></div><button class="outline-btn wide" onclick="showToast(l('يمكن إضافة مواقع محفوظة في النسخة القادمة','Saved locations can be added in a future version'))"><i class="fa-solid fa-plus"></i> إضافة معلومات الوصول</button></div>
         </section>
 
         <section id="screen-control" class="screen" aria-label="مركز عمليات الطوارئ">
@@ -854,7 +854,7 @@
     try{renderDevice();}catch(e){}
     try{renderSafetyCenter();}catch(e){}
     try{renderControlCenter();}catch(e){}
-    try{if($('onboard-layer')?.classList.contains('show'))renderOnboarding();}catch(e){}
+    try{if($('onboard-layer')?.classList.contains('show') && getComputedStyle($('onboard-layer')).display!=='none')renderOnboarding();}catch(e){}
     try{updateShowcase();}catch(e){}
   }
   function setLanguage(lang){
@@ -1228,18 +1228,46 @@
   function setFieldInvalid(fieldId,invalid=true){const field=$(fieldId);if(field)field.classList.toggle('invalid',invalid);}
   function validPhone(value){const digits=String(value||'').replace(/\D/g,'');return digits.length>=7&&digits.length<=15;}
   function saveOnboardingStep(){
-    if(state.onboardingStep===2){const name=$('ob-name')?.value.trim();setFieldInvalid('field-ob-name',!name);if(!name){showToast('أدخل الاسم الكامل للمتابعة');$('ob-name')?.focus();return false;}state.profile.name=name;state.profile.blood=$('ob-blood')?.value||'';state.profile.allergies=$('ob-allergies')?.value.trim()||'غير محدد';state.profile.chronic=$('ob-chronic')?.value.trim()||'غير محدد';state.profile.medication=$('ob-medication')?.value.trim()||'غير محدد';}
-    if(state.onboardingStep===3){const n=$('ob-contact-name')?.value.trim(),r=$('ob-contact-relation')?.value.trim(),p=$('ob-contact-phone')?.value.trim();const started=Boolean(n||r||p);if(started){const badName=!n,badRelation=!r,badPhone=!validPhone(p);setFieldInvalid('field-ob-contact-name',badName);setFieldInvalid('field-ob-contact-relation',badRelation);setFieldInvalid('field-ob-contact-phone',badPhone);if(badName||badRelation||badPhone){showToast('أكمل بيانات جهة الاتصال بشكل صحيح');(badName?$('ob-contact-name'):badRelation?$('ob-contact-relation'):$('ob-contact-phone'))?.focus();return false;}const auto=$('draft-auto-state')?.textContent!=='متوقف';state.contacts=[{id:Date.now(),name:n,relation:r,phone:p,auto}];}}
+    if(state.onboardingStep===2){const name=$('ob-name')?.value.trim();setFieldInvalid('field-ob-name',!name);if(!name){showToast(l('أدخل الاسم الكامل للمتابعة','Enter your full name to continue'));$('ob-name')?.focus();return false;}state.profile.name=name;state.profile.blood=$('ob-blood')?.value||'';state.profile.allergies=$('ob-allergies')?.value.trim()||'غير محدد';state.profile.chronic=$('ob-chronic')?.value.trim()||'غير محدد';state.profile.medication=$('ob-medication')?.value.trim()||'غير محدد';}
+    if(state.onboardingStep===3){const n=$('ob-contact-name')?.value.trim(),r=$('ob-contact-relation')?.value.trim(),p=$('ob-contact-phone')?.value.trim();const started=Boolean(n||r||p);if(started){const badName=!n,badRelation=!r,badPhone=!validPhone(p);setFieldInvalid('field-ob-contact-name',badName);setFieldInvalid('field-ob-contact-relation',badRelation);setFieldInvalid('field-ob-contact-phone',badPhone);if(badName||badRelation||badPhone){showToast(l('أكمل بيانات جهة الاتصال بشكل صحيح','Complete the contact information correctly'));(badName?$('ob-contact-name'):badRelation?$('ob-contact-relation'):$('ob-contact-phone'))?.focus();return false;}const auto=$('draft-auto-state')?.closest('.permission-card')?.classList.contains('active') ?? true;state.contacts=[{id:Date.now(),name:n,relation:r,phone:p,auto}];}}
     return true;
   }
-  function nextOnboarding(){if(!saveOnboardingStep())return;if(state.onboardingStep<onboarding.length-1){state.onboardingStep++;renderOnboarding();}else finishOnboarding();}
+  function nextOnboarding(){
+    if(!saveOnboardingStep()) return;
+    if(state.onboardingStep<onboarding.length-1){
+      state.onboardingStep++;
+      renderOnboarding();
+      return;
+    }
+    finishOnboarding();
+  }
   function prevOnboarding(){state.onboardingStep=Math.max(0,state.onboardingStep-1);renderOnboarding();}
-  function finishOnboarding(){renderProfile();renderContacts();$('onboard-layer').classList.remove('show');updateShowcase();showToast('اكتمل الإعداد — يمكنك تعديل بياناتك من حسابي');}
+  function finishOnboarding(){
+    const layer=$('onboard-layer');
+    if(layer){
+      layer.classList.remove('show');
+      layer.style.display='none';
+      layer.style.pointerEvents='none';
+      layer.setAttribute('aria-hidden','true');
+    }
+    state.onboardingStep=onboarding.length-1;
+    try{ localStorage.setItem('isharaOnboardingComplete','1'); }catch(e){}
+    state.currentScreen='screen-home';
+    try{ showScreen('screen-home'); }catch(e){
+      document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id==='screen-home'));
+    }
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.nav==='screen-home'));
+    try{ renderProfile(); }catch(e){ console.error('renderProfile after onboarding:',e); }
+    try{ renderContacts(); }catch(e){ console.error('renderContacts after onboarding:',e); }
+    try{ renderHomeIdentity(); }catch(e){ console.error('renderHomeIdentity after onboarding:',e); }
+    try{ updateShowcase(); }catch(e){ console.error('updateShowcase after onboarding:',e); }
+    showToast(l('اكتمل الإعداد — يمكنك تعديل بياناتك من حسابي','Setup complete — you can edit your information from Profile'));
+  };
   renderOnboarding();
 
   function visualFeedback(message){
     const f=$('flash-layer'); f.classList.remove('go'); void f.offsetWidth; f.classList.add('go'); vibrate([70,45,70]);
-    if(message){ showToast(message); if(state.currentScreen==='screen-home') showHomeNotice('تم التحديث',message,'fa-check'); }
+    if(message){ showToast(message); if(state.currentScreen==='screen-home') showHomeNotice(l('تم التحديث','Updated'),message,'fa-check'); }
   }
 
   function showToast(text){ $('toast-text').textContent=text; $('toast').classList.add('show'); clearTimeout(showToast._t); showToast._t=setTimeout(()=>$('toast').classList.remove('show'),2500); }
@@ -1333,8 +1361,8 @@
   }
 
   function requestExtraHelp(){state.extraHelp=true;visualFeedback(l('تم إرسال طلب مساعدة إضافية','Additional help request sent'));renderControlCenter();}
-  function markSafeNow(){state.safeNow=true;openModal(`<h3>تأكيد أنك بأمان</h3><p>سيتم تحديث البلاغ بأن الخطر المباشر انتهى، مع إبقاء سجل البلاغ في النظام.</p><div class="modal-actions"><button class="ghost-btn" onclick="closeModal()">إلغاء</button><button class="primary-btn" onclick="closeModal();visualFeedback('تم تحديث حالتك: بأمان الآن')"><i class="fa-solid fa-check"></i> تأكيد</button></div>`)}
-  function sendQuickPhrase(text){visualFeedback(l('تم إرسال العبارة للمترجم','Phrase sent to interpreter'));const tr=document.querySelector('.transcript');if(tr)tr.innerHTML=`<span style="display:block;color:#7dd3fc;font-size:8px;font-weight:900;margin-bottom:3px">النص المباشر</span>${text}`;}
+  function markSafeNow(){state.safeNow=true;openModal(`<h3>${l('تأكيد أنك بأمان','Confirm you are safe')}</h3><p>${l('سيتم تحديث البلاغ بأن الخطر المباشر انتهى، مع إبقاء سجل البلاغ في النظام.','The incident will be updated to show that the immediate danger has ended, while keeping the incident record.')}</p><div class="modal-actions"><button class="ghost-btn" onclick="closeModal()">${l('إلغاء','Cancel')}</button><button class="primary-btn" onclick="closeModal();visualFeedback(l('تم تحديث حالتك: بأمان الآن','Status updated: you are safe now'))"><i class="fa-solid fa-check"></i> ${l('تأكيد','Confirm')}</button></div>`)}
+  function sendQuickPhrase(text){visualFeedback(l('تم إرسال العبارة للمترجم','Phrase sent to interpreter'));const tr=document.querySelector('.transcript');if(tr)tr.innerHTML=`<span style="display:block;color:#7dd3fc;font-size:8px;font-weight:900;margin-bottom:3px">${l('النص المباشر','Live transcript')}</span>${text}`;}
   function renderShowcaseDiagram(context=''){
     const host=$('showcase-diagram');if(!host)return;const c=context||'';let nodes=[];
     if(contextHas(c,'لغة الإشارة','Sign language'))nodes=[['fa-hands',l('المستخدم','User')],['fa-arrow-left',''],['fa-user-tie',l('المترجم','Interpreter')],['fa-arrow-left',''],['fa-tower-broadcast',l('الطوارئ','Emergency')]];
@@ -1379,7 +1407,13 @@
   function openDetailsModal(){
     if(!state.activeIncident)return;
     const cfg=incidentConfig[state.category]||incidentConfig.other, selected=new Set(state.selectedDetails);
-    const detailLabels=state.language==='en'?['Breathing difficulty','Severe bleeding','Loss of consciousness','Injury or fracture','Severe pain','Other condition']:cfg.details;
+    const detailLabels=state.language==='en'?({
+      ambulance:['Breathing difficulty','Severe bleeding','Loss of consciousness','Injury or fracture','Severe pain','Other medical condition'],
+      fire:['Fire inside a building','Heavy smoke','Person trapped','Gas leak','Vehicle fire','Other fire emergency'],
+      police:['Assault','Immediate threat','Theft','Suspicious person','Security risk','Other police emergency'],
+      traffic:['Injured person','Vehicle collision','Vehicle overturned','Road blocked','Multiple vehicles','Other traffic emergency'],
+      other:['Immediate danger','Need urgent assistance','Unable to communicate by voice','Need location-based help','Another person is involved','Other urgent situation']
+    }[state.category]||['Emergency detail']):cfg.details;
     openModal(`<h3>${l('إضافة تفاصيل للبلاغ','Add incident details')}</h3><p>${l('البلاغ أُرسل بالفعل. هذه التفاصيل اختيارية وتساعد فريق الاستجابة.','The alert has already been sent. These optional details can help the response team.')}</p><div class="detail-chips">${detailLabels.map((d,i)=>`<button class="chip" data-detail="${encodeURIComponent(d)}" onclick="toggleDetail(this)"><i class="fa-solid ${detailIcon(i)}"></i>${d}</button>`).join('')}</div><div class="field" style="margin-top:10px"><label>${l('ملاحظة نصية اختيارية','Optional note')}</label><textarea id="incident-note" placeholder="${l('مثال: أنا في الطابق الثاني بالقرب من المدخل...','Example: I am on the second floor near the entrance...')}"></textarea></div><button class="primary-btn wide" onclick="saveIncidentDetails()"><i class="fa-solid fa-check"></i> ${l('حفظ التفاصيل وإرسال التحديث','Save details and send update')}</button>`);
   }
 
@@ -1478,8 +1512,20 @@
     renderProfile();visualFeedback(l('تم حفظ بيانات الطوارئ','Emergency information saved'));appBack();
   }
 
+  function localizedDemoContactName(name){
+    const map={
+      'خالد محمد':'Khaled Mohammad','مريم محمد':'Mariam Mohammad','سامي محمد':'Sami Mohammad',
+      'Khaled Mohammad':'خالد محمد','Mariam Mohammad':'مريم محمد','Sami Mohammad':'سامي محمد'
+    };
+    return state.language==='en'?(map[name]||name):(map[name]||name);
+  }
+  function localizedRelation(value){
+    if(state.language==='en') return translateString(value);
+    const reverse={'Father':'أب','Mother':'أم','Husband':'زوج','Wife':'زوجة','Brother':'أخ','Sister':'أخت','Son':'ابن','Daughter':'ابنة','Relative':'قريب','Friend':'صديق','Neighbor':'جار','Caregiver':'مقدم رعاية','Other':'أخرى'};
+    return reverse[value]||value;
+  }
   function renderContacts(){
-    $('contacts-list').innerHTML=state.contacts.map(c=>`<div class="contact"><div class="who"><div class="avatar">${c.name.charAt(0)}</div><div><b>${c.name} <span style="display:inline;color:#64748b">(${state.language==='en'?translateString(c.relation):c.relation})</span></b><span>${c.phone} · ${c.auto?l('تنبيه تلقائي','Automatic alert'):l('تنبيه يدوي','Manual alert')}</span></div></div><div class="contact-actions"><button class="mini-icon" onclick="toggleContactAuto(${c.id})" title="${l('تبديل التنبيه','Toggle alert')}"><i class="fa-solid ${c.auto?'fa-bell':'fa-bell-slash'}"></i></button><button class="mini-icon" onclick="editContact(${c.id})" title="${l('تعديل','Edit')}"><i class="fa-solid fa-pen"></i></button><button class="mini-icon" onclick="deleteContact(${c.id})" title="${l('حذف','Delete')}"><i class="fa-solid fa-trash"></i></button></div></div>`).join('');
+    $('contacts-list').innerHTML=state.contacts.map(c=>`<div class="contact"><div class="who"><div class="avatar">${localizedDemoContactName(c.name).charAt(0)}</div><div><b>${localizedDemoContactName(c.name)} <span style="display:inline;color:#64748b">(${localizedRelation(c.relation)})</span></b><span>${c.phone} · ${c.auto?l('تنبيه تلقائي','Automatic alert'):l('تنبيه يدوي','Manual alert')}</span></div></div><div class="contact-actions"><button class="mini-icon" onclick="toggleContactAuto(${c.id})" title="${l('تبديل التنبيه','Toggle alert')}"><i class="fa-solid ${c.auto?'fa-bell':'fa-bell-slash'}"></i></button><button class="mini-icon" onclick="editContact(${c.id})" title="${l('تعديل','Edit')}"><i class="fa-solid fa-pen"></i></button><button class="mini-icon" onclick="deleteContact(${c.id})" title="${l('حذف','Delete')}"><i class="fa-solid fa-trash"></i></button></div></div>`).join('');
   }
 
   function openContactModal(){
@@ -1488,7 +1534,7 @@
   }
 
   function saveContact(){const n=$('contact-name').value.trim(),r=$('contact-relation').value.trim(),p=$('contact-phone').value.trim();const badName=!n,badRelation=!r,badPhone=!validPhone(p);setFieldInvalid('field-contact-name',badName);setFieldInvalid('field-contact-relation',badRelation);setFieldInvalid('field-contact-phone',badPhone);if(badName||badRelation||badPhone){showToast(l('راجع الحقول المطلوبة','Check the required fields'));return;}state.contacts.push({id:Date.now(),name:n,relation:r,phone:p,auto:true});closeModal();renderContacts();visualFeedback(l('تمت إضافة جهة اتصال','Contact added'));}
-  function editContact(id){const c=state.contacts.find(x=>x.id===id);if(!c)return;openModal(`<h3>${l('تعديل جهة الاتصال','Edit emergency contact')}</h3><p>${l('حدّث البيانات ثم احفظ التغييرات.','Update the details, then save your changes.')}</p><div class="field" id="field-contact-name"><label for="contact-name"><span>${l('الاسم','Name')} <span class="required">*</span></span></label><input id="contact-name" value="${escapeHtml(c.name)}"></div><div class="field" id="field-contact-relation"><label for="contact-relation"><span>${l('صلة القرابة','Relationship')} <span class="required">*</span></span></label><div class="select-wrap"><select id="contact-relation"><option value="">${l('اختر صلة القرابة','Choose relationship')}</option>${relationOptions(c.relation||'')}</select></div></div><div class="field" id="field-contact-phone"><label for="contact-phone"><span>${l('رقم الهاتف','Phone number')} <span class="required">*</span></span></label><input id="contact-phone" value="${escapeHtml(c.phone)}" dir="ltr" inputmode="tel"></div><button class="primary-btn wide" onclick="saveEditedContact(${id})"><i class="fa-solid fa-check"></i> ${l('حفظ التعديلات','Save changes')}</button>`);}
+  function editContact(id){const c=state.contacts.find(x=>x.id===id);if(!c)return;openModal(`<h3>${l('تعديل جهة الاتصال','Edit emergency contact')}</h3><p>${l('حدّث البيانات ثم احفظ التغييرات.','Update the details, then save your changes.')}</p><div class="field" id="field-contact-name"><label for="contact-name"><span>${l('الاسم','Name')} <span class="required">*</span></span></label><input id="contact-name" value="${escapeHtml(localizedDemoContactName(c.name))}"></div><div class="field" id="field-contact-relation"><label for="contact-relation"><span>${l('صلة القرابة','Relationship')} <span class="required">*</span></span></label><div class="select-wrap"><select id="contact-relation"><option value="">${l('اختر صلة القرابة','Choose relationship')}</option>${relationOptions(c.relation||'')}</select></div></div><div class="field" id="field-contact-phone"><label for="contact-phone"><span>${l('رقم الهاتف','Phone number')} <span class="required">*</span></span></label><input id="contact-phone" value="${escapeHtml(c.phone)}" dir="ltr" inputmode="tel"></div><button class="primary-btn wide" onclick="saveEditedContact(${id})"><i class="fa-solid fa-check"></i> ${l('حفظ التعديلات','Save changes')}</button>`);}
   function saveEditedContact(id){const c=state.contacts.find(x=>x.id===id);if(!c)return;const n=$('contact-name').value.trim(),r=$('contact-relation').value.trim(),p=$('contact-phone').value.trim();if(!n||!r||!validPhone(p)){showToast(l('راجع الاسم وصلة القرابة ورقم الهاتف','Check the name, relationship and phone number'));return;}c.name=n;c.relation=r;c.phone=p;closeModal();renderContacts();visualFeedback(l('تم تحديث جهة الاتصال','Contact updated'));}
   function toggleContactAuto(id){ const c=state.contacts.find(x=>x.id===id);if(c){c.auto=!c.auto;renderContacts();} }
   function deleteContact(id){state.contacts=state.contacts.filter(x=>x.id!==id);renderContacts();showToast(l('تم حذف جهة الاتصال من النموذج','Contact removed'));}
@@ -1537,20 +1583,6 @@
   function closeModalFromBackdrop(e){if(e.target===$('modal-layer'))closeModal();}
 
 
-  function auditEnglishUI(){
-    if(state.language!=='en') return [];
-    const issues=[];
-    const arabic=/[\u0600-\u06FF]/;
-    document.querySelectorAll('body *').forEach(el=>{
-      if(el.closest('script,style')) return;
-      if(['INPUT','TEXTAREA'].includes(el.tagName)) return;
-      if(el.children.length) return;
-      const t=(el.textContent||'').trim();
-      if(t && arabic.test(t)) issues.push(t);
-    });
-    if(issues.length) console.warn('[Ishara EN audit] Arabic UI text found:',[...new Set(issues)]);
-    return issues;
-  }
 
   // SOS: press and hold ~2 seconds with circular progress.
   const sos=$('sos-btn');
@@ -1584,8 +1616,8 @@
     const protectedIds=new Set(['home-user-name','profile-name']);
     const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let node;
     while(node=walker.nextNode()){const p=node.parentElement,txt=(node.nodeValue||'').trim();if(!txt||!hasArabic(txt)||!p||p.closest('script,style,#onboard-layer')||protectedIds.has(p.id)||p.closest('#contacts-list'))continue;issues.push(txt);}
-    if(issues.length)console.warn('[Ishara i18n] Arabic UI text found in English mode:',issues);
-    return issues;
+    const unique=[...new Set(issues)];if(unique.length)console.warn('[Ishara i18n] Arabic UI text found in English mode:',unique);
+    return unique;
   }
   try{state.language=localStorage.getItem('ishara-language')||'ar';state.theme=localStorage.getItem('ishara-theme')||'dark';}catch(e){}
   applyTheme(state.theme);rerenderLocalizedViews();applyLanguage();i18nObserver.observe(document.body,{subtree:true,childList:true,characterData:true});
