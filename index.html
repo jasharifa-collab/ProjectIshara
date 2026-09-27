@@ -287,6 +287,21 @@
     html[data-theme="light"] .map{background:linear-gradient(145deg,#eef5fa,#e4eef6)!important;border-color:#cddbe6!important}html[data-theme="light"] .map-label{background:rgba(255,255,255,.88)!important;border-color:#cedce8;color:#30465d}
     @media(max-width:860px){.experience-controls{top:auto;bottom:82px;padding:5px}.experience-control{height:32px;min-width:55px;padding:0 8px}.experience-control strong{display:none}}
 
+    /* ===== V9.3 LOCALIZATION FIX ===== */
+    html[dir="ltr"] body,html[dir="ltr"] .screen,html[dir="ltr"] .sheet,html[dir="ltr"] .presentation-overlay,html[dir="ltr"] .explainer-slide{text-align:left}
+    html[dir="ltr"] .page-head,html[dir="ltr"] .app-home-header,html[dir="ltr"] .slide-top{direction:ltr}
+    html[dir="ltr"] .page-head>div:first-child,html[dir="ltr"] .onboard-title-group,html[dir="ltr"] .app-user-copy,html[dir="ltr"] .field,html[dir="ltr"] .banner,html[dir="ltr"] .card,html[dir="ltr"] .presentation-feature,html[dir="ltr"] .slide-feature{text-align:left}
+    html[dir="ltr"] .field label,html[dir="ltr"] .profile-row,html[dir="ltr"] .setup-summary div,html[dir="ltr"] .dispatch-grid>div{text-align:left}
+    html[dir="ltr"] .select-wrap select{padding-left:13px;padding-right:35px}
+    html[dir="ltr"] .select-wrap::after{left:auto;right:13px}
+    html[dir="ltr"] .input-prefix i{right:auto;left:12px}html[dir="ltr"] .input-prefix input{padding-right:13px!important;padding-left:34px!important}
+    html[dir="ltr"] .slide-kicker::before{order:-1}html[dir="ltr"] .slide-kicker::after{order:2}
+    html[dir="ltr"] .fa-arrow-right::before{content:"\f060"}html[dir="ltr"] .fa-arrow-left::before{content:"\f061"}
+    html[dir="ltr"] .dispatch-meta,html[dir="ltr"] .incident-meta-item,html[dir="ltr"] .readiness-row,html[dir="ltr"] .contact{text-align:left}
+    html[dir="ltr"] .presentation-quote{border-right:0;border-left:4px solid #38bdf8}
+    html[dir="ltr"] .slide-stage-pill{right:auto;left:38px}
+    html[dir="ltr"] .slide-live-badge{left:auto;right:38px}
+
   </style>
 </head>
 <body>
@@ -334,7 +349,7 @@
           <div class="presentation-eyebrow"><span><i class="fa-solid fa-hand-sparkles"></i></span> مقدمة المشروع</div>
           <h2>إشارة<br><em>جسر أمان بصري للصم وضعاف السمع</em></h2>
           <p class="lead">يُشكّل إخواننا وأخواتنا من الصم وضعاف السمع جزءًا أصيلًا وعزيزًا من مجتمعنا. وفي لحظات الطوارئ، قد يصبح الاعتماد على الاتصال الصوتي تحديًا حقيقيًا أمام سرعة طلب المساعدة وإيصال طبيعة الخطر بوضوح.</p>
-          <div class="presentation-quote">من هنا جاءت فكرة <b>إشارة</b>؛ منظومة طوارئ بصرية صُممت لتكون جسر أمان — بعد الله — وتمكّن المستخدم من طلب المساعدة بسرعة واستقلالية دون الاعتماد على التواصل الصوتي.</div>
+          <div class="presentation-quote">من هنا جاءت فكرة إشارة؛ منظومة طوارئ بصرية صُممت لتكون جسر أمان — بعد الله — وتمكّن المستخدم من طلب المساعدة بسرعة واستقلالية دون الاعتماد على التواصل الصوتي.</div>
           <div class="presentation-feature-grid">
             <div class="presentation-feature"><i class="fa-solid fa-bolt"></i><div><b>بلاغ بصري سريع</b><p>تحديد نوع الخطر من خلال أيقونات واضحة ومباشرة.</p></div></div>
             <div class="presentation-feature"><i class="fa-solid fa-location-dot"></i><div><b>إرسال تلقائي للبيانات</b><p>مشاركة الموقع الجغرافي وبيانات الطوارئ الطبية.</p></div></div>
@@ -560,7 +575,7 @@
 
   function $(id){ return document.getElementById(id); }
   const I18N = {
-    'إشارة':'Ishara','الرئيسية':'Home','البلاغ':'Incident','المترجم':'Interpreter','حسابي':'Profile','الأمان':'Safety',
+    'إشارة':'Ishara','المقدمة':'Introduction','إعداد إشارة':'Ishara setup','مطلوب':'Required','اسم جهة الاتصال':'Contact name','صلة القرابة':'Relationship','اختر من القائمة':'Choose from the list','اختر صلة القرابة':'Choose relationship','رقم الهاتف':'Phone number','مع رمز الدولة إن أمكن':'Include country code if possible','التنبيه التلقائي':'Automatic alert','التنبيهات المرئية':'Visual notifications','الوصول إلى الموقع':'Location access','الملف الطبي':'Medical profile','جهات الاتصال':'Contacts','لاحقاً':'Later','إنهاء الإعداد':'Finish setup','البطارية':'Battery','فصل الجهاز':'Disconnect device','الرئيسية':'Home','البلاغ':'Incident','المترجم':'Interpreter','حسابي':'Profile','الأمان':'Safety',
     'مقدمة المشروع':'Project introduction','الخاتمة':'Closing','ابدأ العرض':'Start presentation','العودة للعرض':'Back to presentation',
     'إشارة | تجربة المنتج':'Ishara | Product experience','الطوارئ بلغة يفهمها الجميع.':'Emergency help in a language everyone understands.',
     'واجهة تبدأ منها الاستغاثة فورًا، مع إبقاء حالة الاتصال والموقع مرئية للمستخدم.':'A visual home screen for instant emergency reporting, while keeping connectivity and location visible.',
@@ -578,19 +593,100 @@
     'تجربة مصممة من البداية حول الوصول البصري.':'An experience designed around visual accessibility from the start.','تقليل الخطوات المطلوبة للوصول إلى المساعدة.':'Reduce the steps required to reach help.','من البلاغ إلى التتبع والمترجم ومركز العمليات.':'From the alert to tracking, interpreting and the Operations Center.','حل تقني يخدم استقلالية وأمان المستخدم.':'A technical solution that supports user independence and safety.',
     'مرحباً بك في إشارة':'Welcome to Ishara','منصة بصرية تساعدك على إرسال طلب طوارئ بسرعة دون الحاجة إلى مكالمة صوتية.':'A visual platform that helps you send an emergency request quickly without needing a voice call.','لغة الإشارة والنصوص المرئية هي طريقة التواصل الأساسية في هذا النموذج.':'Sign language and visual text are the primary communication methods in this experience.','يمكن مشاركة معلومات طبية مختصرة تلقائياً أثناء البلاغ فقط — وبموافقتك.':'Brief medical information can be shared automatically only during an incident — with your consent.','أضف حتى 5 جهات اتصال وحدد من ترغب بتنبيهه تلقائياً وقت الطوارئ.':'Add up to 5 emergency contacts and choose who should be notified automatically.','الموقع يساعد فريق الطوارئ على الوصول إليك. لن نطلب إذن الموقع إلا عند اختيار تحديث الموقع.':'Location helps the emergency team reach you. Location permission is requested only when you choose to update it.','خطوة اختيارية لمحاكاة زر Bluetooth يمكنه إرسال الاستغاثة دون فتح الهاتف.':'An optional step to simulate a Bluetooth button that can send an SOS without opening the phone.',
     'اختر الطريقة الأساسية التي تفضّل استخدامها أثناء التواصل مع فريق الطوارئ.':'Choose the primary communication method you prefer when interacting with the emergency team.','أضف فقط المعلومات التي قد تساعد فريق الاستجابة في حالة طبية.':'Add only the information that may help responders in a medical emergency.','أضف شخصاً واحداً يمكن تنبيهه تلقائياً. يمكنك إضافة حتى 5 لاحقاً.':'Add one person who can be alerted automatically. You can add up to 5 later.','هذه الصلاحيات تساعد التطبيق على مشاركة موقعك وإظهار التنبيهات المرئية.':'These permissions help the app share your location and display visual alerts.','يمكن ربط زر خارجي اختياري لإرسال SOS دون فتح الهاتف.':'An optional external button can be connected to send an SOS without opening the phone.','يمكنك تعديل هذه البيانات في أي وقت. الحقول الطبية اختيارية، والاسم مطلوب لعرض تجربة واقعية.':'You can edit this information at any time. Medical fields are optional; a name is required for a realistic experience.','لا تُدخل تفاصيل لا ترغب بمشاركتها أثناء حالة الطوارئ.':'Do not enter details you would not want shared during an emergency.','عند الضغط على زر SOS الخارجي يتم إرسال الاستغاثة دون الحاجة لفتح الهاتف. يمكن اختبار الربط والإرسال من هذه الشاشة.':'Pressing the external SOS button sends an alert without opening the phone. Connection and sending can be tested from this screen.','عند إنشاء حالة طوارئ ستظهر هنا مراحل الاستجابة والموقع والوقت المتوقع للوصول.':'When an emergency is created, response stages, location and estimated arrival time will appear here.','هذه الواجهة توضّح كيف يستقبل المشغل البلاغ، يرى احتياجات الوصول، ثم يعيّن فريق الاستجابة أو المترجم.':'This view shows how an operator receives the incident, sees accessibility needs, then assigns a response team or interpreter.','أكمل العناصر الناقصة لتقليل الخطوات وقت الاستغاثة.':'Complete the missing items to reduce steps during an emergency.',
+    'من هنا جاءت فكرة إشارة؛ منظومة طوارئ بصرية صُممت لتكون جسر أمان — بعد الله — وتمكّن المستخدم من طلب المساعدة بسرعة واستقلالية دون الاعتماد على التواصل الصوتي.':'From this need came Ishara: a visual emergency system designed to serve as a safety bridge — after God — enabling users to request help quickly and independently without relying on voice communication.',
+    'من هنا جاءت فكرة':'From this need came','بعد الله':'after God','دون الاعتماد على التواصل الصوتي':'without relying on voice communication',
+    'التواصل بلغة الإشارة':'Sign-language communication','اطلب مترجماً للانضمام إلى جلسة مرئية معك ومع غرفة العمليات.':'Request an interpreter to join a secure visual session with you and the Operations Center.','طلب مترجم الآن':'Request an interpreter now','جاري طلب مترجم':'Requesting an interpreter','تم إرسال الطلب إلى قائمة المترجمين المتاحين.':'Your request has been sent to available interpreters.','جاري البحث...':'Searching...','تم تعيين مترجم':'Interpreter assigned','تم العثور على مترجم وجارٍ تجهيز الاتصال.':'An interpreter was found and the connection is being prepared.','بدء الاتصال':'Start connection','جاري الاتصال':'Connecting','يتم الآن إنشاء الجلسة المرئية الآمنة.':'A secure visual session is being established.','جاري الاتصال...':'Connecting...','انقطع الاتصال':'Connection lost','تم فقد الاتصال المرئي. سيحاول التطبيق إعادة الاتصال.':'The visual connection was lost. The app will try to reconnect.','إعادة الاتصال':'Reconnect','جارٍ استعادة جلسة لغة الإشارة.':'Restoring the sign-language session.','جارٍ الاستعادة...':'Restoring...',
+    'مترجم لغة الإشارة':'Sign-language interpreter','اتصال مرئي آمن':'Secure visual connection','كاميرتك':'Your camera','جودة جيدة':'Good quality','النص المباشر':'Live transcript','أنا بخير، أحتاج المساعدة في موقعي الحالي.':'I am safe, but I need help at my current location.','معلومات الطوارئ':'Emergency information','أنا مصاب':'I am injured','لا أستطيع الحركة':'I cannot move','يوجد شخص معي':'Someone is with me','لا أفهم':'I do not understand','كتابة رسالة':'Type a message','إرسال صورة':'Send photo','محاكاة انقطاع':'Simulate disconnect','العودة للتتبع':'Back to tracking','العودة إلى البلاغ':'Back to incident',
+    'منظومة طوارئ بصرية صُممت لتكون جسر أمان':'A visual emergency system designed as a safety bridge',
+    'جاري الطلب':'Requesting','بث مباشر':'Live','إعادة اتصال':'Reconnecting','جاري البحث...':'Searching...','تم تعيين مترجم لغة الإشارة':'Sign-language interpreter assigned','تم بدء جلسة لغة الإشارة':'Sign-language session started','انقطع الاتصال المرئي':'Visual connection lost','تمت استعادة الاتصال':'Connection restored','أنا مصاب وأحتاج إسعاف':'I am injured and need an ambulance','يوجد شخص آخر معي':'Another person is with me','لا أفهم، أعد الشرح':'I do not understand. Please explain again.','تم فتح أداة الرسائل':'Messaging tool opened','تم تجهيز إضافة صورة تجريبية':'Demo image attachment prepared',
     'Visual-first':'Visual-first','Accessible':'Accessible','خطوات':'Steps','تواصل':'Communication','طبي':'Medical','جهات':'Contacts','إرسال':'Send','موقع':'Location','اتصال':'Connection','آمن':'Safe','تتبع':'Tracking','نص حي':'Live text','خصوصية':'Privacy','بطارية':'Battery','اختبار':'Test','سريع':'Fast'
   };
   const originalTextNodes=new WeakMap(), originalAttrs=new WeakMap(); let i18nBusy=false;
-  function translateString(input){if(!input)return input;let s=input;const exact=I18N[s.trim()];if(exact!==undefined)return s.replace(s.trim(),exact);Object.keys(I18N).sort((a,b)=>b.length-a.length).forEach(k=>{if(s.includes(k))s=s.split(k).join(I18N[k]);});return s.replace(/دقة تقريبية ±\s*(\d+)\s*م/g,'Approx. accuracy ± $1 m').replace(/(\d+)\s*دقائق تقريباً/g,'Approx. $1 min').replace(/(\d+)\s*دقائق/g,'$1 minutes').replace(/(\d+)\s*دقيقة/g,'$1 minute').replace(/البطارية\s*(\d+)%/g,'Battery $1%').replace(/الخطوة\s*(\d+)\s*من\s*(\d+)/g,'Step $1 of $2').replace(/(\d+)\s*مضافة/g,'$1 added');}
-  function shouldSkipNode(node){const p=node.parentElement;return !p||['SCRIPT','STYLE'].includes(p.tagName)||p.closest('.no-i18n');}
-  function syncTextNode(node){if(shouldSkipNode(node)||!node.nodeValue||!node.nodeValue.trim())return;const cur=node.nodeValue;let orig=originalTextNodes.get(node);if(!orig||/[\u0600-\u06FF]/.test(cur)){orig=cur;originalTextNodes.set(node,orig);}node.nodeValue=state.language==='en'?translateString(orig):orig;}
-  function syncElementAttrs(el){if(!(el instanceof Element)||el.closest('.no-i18n'))return;const attrs=['placeholder','title','aria-label'];let store=originalAttrs.get(el)||{};attrs.forEach(a=>{const cur=el.getAttribute(a);if(cur!==null){if(!store[a]||/[\u0600-\u06FF]/.test(cur))store[a]=cur;el.setAttribute(a,state.language==='en'?translateString(store[a]):store[a]);}});originalAttrs.set(el,store);}
-  function applyLanguage(root=document.body){if(i18nBusy)return;i18nBusy=true;document.documentElement.lang=state.language;document.documentElement.dir=state.language==='ar'?'rtl':'ltr';const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while(n=walker.nextNode())syncTextNode(n);(root.querySelectorAll?root.querySelectorAll('*'):[]).forEach(syncElementAttrs);const langLabel=$('language-toggle-label');if(langLabel)langLabel.textContent=state.language==='ar'?'EN':'عربي';const langBtn=$('language-toggle');if(langBtn)langBtn.setAttribute('aria-label',state.language==='ar'?'Switch to English':'التبديل إلى العربية');updateClock();i18nBusy=false;}
-  function setLanguage(lang){state.language=lang==='en'?'en':'ar';try{localStorage.setItem('ishara-language',state.language)}catch(e){}applyLanguage();updateShowcase();applyLanguage();applyTheme(state.theme);}
+  const hasArabic=s=>/[\u0600-\u06FF]/.test(s||'');
+  const hasLatin=s=>/[A-Za-z]/.test(s||'');
+  function translateString(input){
+    if(!input)return input;
+    let s=input;
+    const trimmed=s.trim();
+    const exact=I18N[trimmed];
+    if(exact!==undefined)return s.replace(trimmed,exact);
+    Object.keys(I18N).sort((a,b)=>b.length-a.length).forEach(k=>{if(s.includes(k))s=s.split(k).join(I18N[k]);});
+    return s
+      .replace(/دقة تقريبية ±\s*(\d+)\s*م/g,'Approx. accuracy ± $1 m')
+      .replace(/(\d+)\s*دقائق تقريباً/g,'Approx. $1 min')
+      .replace(/(\d+)\s*دقائق/g,'$1 minutes')
+      .replace(/(\d+)\s*دقيقة/g,'$1 minute')
+      .replace(/البطارية\s*(\d+)%/g,'Battery $1%')
+      .replace(/الخطوة\s*(\d+)\s*من\s*(\d+)/g,'Step $1 of $2')
+      .replace(/(\d+)\s*مضافة/g,'$1 added')
+      .replace(/(\d+)\s*أشخاص/g,'$1 people')
+      .replace(/(\d+)\s*جهات محفوظة/g,'$1 saved contacts');
+  }
+  function shouldSkipNode(node){const p=node.parentElement;return !p||['SCRIPT','STYLE'].includes(p.tagName)||p.closest('.no-i18n')||p.closest('#onboard-layer');}
+  function syncTextNode(node){
+    if(shouldSkipNode(node)||!node.nodeValue||!node.nodeValue.trim())return;
+    const cur=node.nodeValue;
+    let orig=originalTextNodes.get(node);
+    if(!orig){orig=cur;originalTextNodes.set(node,orig);}
+    else if(state.language==='en' && hasArabic(cur) && !hasLatin(cur)){orig=cur;originalTextNodes.set(node,orig);}
+    else if(state.language==='ar' && hasArabic(cur) && !hasLatin(cur)){orig=cur;originalTextNodes.set(node,orig);}
+    node.nodeValue=state.language==='en'?translateString(orig):orig;
+  }
+  function syncElementAttrs(el){
+    if(!(el instanceof Element)||el.closest('.no-i18n')||el.closest('#onboard-layer'))return;
+    const attrs=['placeholder','title','aria-label'];let store=originalAttrs.get(el)||{};
+    attrs.forEach(a=>{const cur=el.getAttribute(a);if(cur!==null){if(!store[a]||(hasArabic(cur)&&!hasLatin(cur)))store[a]=cur;el.setAttribute(a,state.language==='en'?translateString(store[a]):store[a]);}});
+    originalAttrs.set(el,store);
+  }
+  function applyLanguage(root=document.body){
+    if(i18nBusy)return;i18nBusy=true;
+    document.documentElement.lang=state.language;
+    document.documentElement.dir=state.language==='ar'?'rtl':'ltr';
+    document.body?.setAttribute('dir',document.documentElement.dir);
+    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while(n=walker.nextNode())syncTextNode(n);
+    (root.querySelectorAll?root.querySelectorAll('*'):[]).forEach(syncElementAttrs);
+    const langLabel=$('language-toggle-label');if(langLabel)langLabel.textContent=state.language==='ar'?'EN':'AR';
+    const langBtn=$('language-toggle');if(langBtn)langBtn.setAttribute('aria-label',state.language==='ar'?'Switch to English':'Switch to Arabic');
+    updateClock();i18nBusy=false;
+  }
+  function rerenderLocalizedViews(){
+    try{renderHomeIdentity();}catch(e){}
+    try{renderIncident();}catch(e){}
+    try{renderInterpreter();}catch(e){}
+    try{renderProfile();renderContacts();}catch(e){}
+    try{renderDevice();}catch(e){}
+    try{renderSafetyCenter();}catch(e){}
+    try{renderControlCenter();}catch(e){}
+    try{if($('onboard-layer')?.classList.contains('show'))renderOnboarding();}catch(e){}
+    try{updateShowcase();}catch(e){}
+  }
+  function setLanguage(lang){
+    state.language=lang==='en'?'en':'ar';
+    try{localStorage.setItem('ishara-language',state.language)}catch(e){}
+    rerenderLocalizedViews();
+    applyLanguage();
+    applyTheme(state.theme);
+  }
   function toggleLanguage(){setLanguage(state.language==='ar'?'en':'ar');}
-  function applyTheme(theme=state.theme){state.theme=theme==='light'?'light':'dark';document.documentElement.dataset.theme=state.theme;document.querySelector('meta[name="theme-color"]')?.setAttribute('content',state.theme==='light'?'#f8fafc':'#020617');const icon=$('theme-toggle-icon'),label=$('theme-toggle-label'),btn=$('theme-toggle');if(icon)icon.className=`fa-solid ${state.theme==='dark'?'fa-sun':'fa-moon'}`;if(label)label.textContent=state.theme==='dark'?(state.language==='ar'?'نهاري':'Light'):(state.language==='ar'?'ليلي':'Dark');if(btn)btn.setAttribute('aria-label',state.theme==='dark'?(state.language==='ar'?'تفعيل الوضع النهاري':'Enable light mode'):(state.language==='ar'?'تفعيل الوضع الليلي':'Enable dark mode'));try{localStorage.setItem('ishara-theme',state.theme)}catch(e){}}
+  function applyTheme(theme=state.theme){
+    state.theme=theme==='light'?'light':'dark';document.documentElement.dataset.theme=state.theme;
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content',state.theme==='light'?'#f8fafc':'#020617');
+    const icon=$('theme-toggle-icon'),label=$('theme-toggle-label'),btn=$('theme-toggle');
+    if(icon)icon.className=`fa-solid ${state.theme==='dark'?'fa-moon':'fa-sun'}`;
+    if(label)label.textContent=state.theme==='dark'?'Dark':'Light';
+    if(btn)btn.setAttribute('aria-label',state.theme==='dark'?(state.language==='ar'?'التبديل إلى الوضع النهاري':'Switch to light mode'):(state.language==='ar'?'التبديل إلى الوضع الليلي':'Switch to dark mode'));
+    try{localStorage.setItem('ishara-theme',state.theme)}catch(e){}
+  }
   function toggleTheme(){applyTheme(state.theme==='dark'?'light':'dark');}
-  const i18nObserver=new MutationObserver(()=>{if(!i18nBusy)requestAnimationFrame(()=>applyLanguage());});
+  const i18nObserver=new MutationObserver(mutations=>{
+    if(i18nBusy)return;
+    let needs=false;
+    for(const m of mutations){
+      if(m.type==='childList'&&[...m.addedNodes].some(n=>n.nodeType===Node.ELEMENT_NODE||n.nodeType===Node.TEXT_NODE)){needs=true;break;}
+      if(m.type==='characterData'&&hasArabic(m.target.nodeValue)&&!hasLatin(m.target.nodeValue)){needs=true;break;}
+    }
+    if(needs)requestAnimationFrame(()=>applyLanguage());
+  });
   function renderHomeIdentity(){
     if($('home-user-name')) $('home-user-name').textContent=state.profile.name||'مستخدم إشارة';
     if($('home-avatar')) $('home-avatar').textContent=(state.profile.name||'إ').trim().charAt(0)||'إ';
@@ -611,199 +707,183 @@
 
   let showcaseFeatureIcons=['fa-bolt','fa-route','fa-universal-access'];
   function showcasePoint(text,index){ const icon=showcaseFeatureIcons[index]||'fa-circle'; return `<div class="slide-feature"><div class="slide-feature-head"><span class="feature-index">0${index+1}</span><span class="feature-icon"><i class="fa-solid ${icon}"></i></span></div><p>${text}</p></div>`; }
+  function contextHas(c,...terms){ return terms.some(t=>c.includes(t)); }
+  function incidentLabelLocalized(key){
+    const ar={ambulance:'إسعاف',fire:'حريق',police:'شرطة',traffic:'حادث',other:'طوارئ أخرى'};
+    const en={ambulance:'Ambulance',fire:'Fire',police:'Police',traffic:'Crash',other:'Other emergency'};
+    return (state.language==='en'?en:ar)[key] || (state.language==='en'?'Emergency':'طوارئ');
+  }
   function getShowcaseFeatureIcons(context=''){
     const c=context||'';
-    if(c.includes('الإعداد الأولي')) return ['fa-list-check','fa-shield-heart','fa-forward'];
-    if(c.includes('تأكيد إرسال')) return ['fa-paper-plane','fa-location-crosshairs','fa-tower-broadcast'];
-    if(c.includes('نافذة منبثقة')) return ['fa-layer-group','fa-window-maximize','fa-arrow-right'];
-    if(c.includes('الرئيسية')) return ['fa-bolt','fa-signal','fa-location-dot'];
-    if(c.includes('البلاغ')) return ['fa-route','fa-clock','fa-list-check'];
-    if(c.includes('لغة الإشارة')) return ['fa-hands-asl-interpreting','fa-video','fa-closed-captioning'];
-    if(c.includes('حسابي')) return ['fa-user-group','fa-notes-medical','fa-comments'];
-    if(c.includes('تعبئة بيانات')) return ['fa-id-card','fa-heart-pulse','fa-floppy-disk'];
-    if(c.includes('SOS الذكي')) return ['fa-bluetooth-b','fa-battery-three-quarters','fa-vial'];
+    if(contextHas(c,'الإعداد الأولي','Initial setup')) return ['fa-list-check','fa-shield-heart','fa-forward'];
+    if(contextHas(c,'تأكيد إرسال','Alert confirmation')) return ['fa-paper-plane','fa-location-crosshairs','fa-tower-broadcast'];
+    if(contextHas(c,'نافذة منبثقة','Modal action')) return ['fa-layer-group','fa-window-maximize','fa-arrow-right'];
+    if(contextHas(c,'الرئيسية','Home')) return ['fa-bolt','fa-signal','fa-location-dot'];
+    if(contextHas(c,'البلاغ','Incident')) return ['fa-route','fa-clock','fa-list-check'];
+    if(contextHas(c,'لغة الإشارة','Sign language')) return ['fa-hands-asl-interpreting','fa-video','fa-closed-captioning'];
+    if(contextHas(c,'حسابي','Profile')) return ['fa-user-group','fa-notes-medical','fa-comments'];
+    if(contextHas(c,'تعبئة بيانات','Emergency data')) return ['fa-id-card','fa-heart-pulse','fa-floppy-disk'];
+    if(contextHas(c,'مركز الأمان','Safety Center')) return ['fa-shield-heart','fa-user-group','fa-location-dot'];
+    if(contextHas(c,'مركز العمليات','Operations Center')) return ['fa-tower-broadcast','fa-truck-fast','fa-headset'];
+    if(contextHas(c,'SOS الذكي','Smart SOS')) return ['fa-bluetooth-b','fa-battery-three-quarters','fa-vial'];
     return ['fa-bolt','fa-route','fa-universal-access'];
   }
-  function getShowcaseTitleIcon(context=''){const c=context||'';if(c.includes('الإعداد الأولي'))return'fa-list-check';if(c.includes('تأكيد إرسال'))return'fa-paper-plane';if(c.includes('نافذة منبثقة'))return'fa-window-maximize';if(c.includes('الرئيسية'))return'fa-house';if(c.includes('البلاغ'))return'fa-file-waveform';if(c.includes('لغة الإشارة'))return'fa-hands-asl-interpreting';if(c.includes('حسابي'))return'fa-user-shield';if(c.includes('تعبئة بيانات'))return'fa-clipboard-list';if(c.includes('SOS الذكي'))return'fa-hand-fist';return'fa-bolt';}
-  function getShowcaseMeta(context=''){const c=context||'';if(c.includes('الإعداد الأولي'))return{n:1,kicker:'الإعداد الأولي',metric:`${state.onboardingStep+1}/6`,label:'خطوة الإعداد الحالية',icon:'fa-list-check'};if(c.includes('تأكيد إرسال'))return{n:3,kicker:'الإرسال الفوري',metric:'<2ث',label:'للانتقال إلى التتبع',icon:'fa-paper-plane'};if(c.includes('نافذة منبثقة'))return{n:7,kicker:'إجراء سياقي',metric:'1',label:'مهمة في نفس السياق',icon:'fa-layer-group'};if(c.includes('الرئيسية'))return{n:2,kicker:'الرئيسية',metric:'1–2',label:'تفاعل لإرسال البلاغ',icon:'fa-bolt'};if(c.includes('البلاغ'))return{n:4,kicker:'تتبع البلاغ',metric:state.activeIncident?(state.eta===0?'وصل':state.eta+' د'):'—',label:state.activeIncident?'الوقت المتوقع للوصول':'لا يوجد بلاغ نشط',icon:'fa-route'};if(c.includes('لغة الإشارة'))return{n:5,kicker:'لغة الإشارة',metric:'LIVE',label:'اتصال مرئي ونص مباشر',icon:'fa-hands-asl-interpreting'};if(c.includes('تعبئة بيانات'))return{n:6,kicker:'بيانات الطوارئ',metric:'✓',label:'بيانات قابلة للتعديل',icon:'fa-pen-to-square'};if(c.includes('حسابي'))return{n:6,kicker:'الملف الشخصي',metric:String(state.contacts.length),label:'جهات اتصال محفوظة',icon:'fa-user-shield'};if(c.includes('مركز الأمان'))return{n:7,kicker:'مركز الأمان',metric:calculateReadiness()+'%',label:'جاهزية الحساب',icon:'fa-shield-heart'};if(c.includes('مركز العمليات'))return{n:8,kicker:'مركز العمليات',metric:state.activeIncident?'LIVE':'READY',label:'غرفة الاستجابة',icon:'fa-tower-broadcast'};if(c.includes('SOS الذكي'))return{n:8,kicker:'زر SOS الذكي',metric:state.deviceConnected?state.deviceBattery+'%':'OFF',label:state.deviceConnected?'بطارية الجهاز':'الجهاز غير متصل',icon:'fa-hand-fist'};return{n:1,kicker:'تجربة المنتج',metric:'01',label:'رحلة استخدام مترابطة',icon:'fa-mobile-screen-button'};}
-  function getShowcaseIconStrip(context=''){const c=context||'';let items;if(c.includes('الإعداد الأولي'))items=[['fa-list-check','خطوات'],['fa-comments','تواصل'],['fa-notes-medical','طبي'],['fa-user-group','جهات']];else if(c.includes('تأكيد إرسال'))items=[['fa-paper-plane','إرسال'],['fa-location-dot','موقع'],['fa-tower-broadcast','اتصال'],['fa-shield','آمن']];else if(c.includes('البلاغ'))items=[['fa-route','تتبع'],['fa-clock','ETA'],['fa-location-dot','GPS'],['fa-list-check','تفاصيل']];else if(c.includes('لغة الإشارة'))items=[['fa-video','فيديو'],['fa-hands-asl-interpreting','مترجم'],['fa-closed-captioning','نص حي'],['fa-signal','اتصال']];else if(c.includes('حسابي')||c.includes('تعبئة بيانات'))items=[['fa-user-shield','ملف'],['fa-droplet','طبي'],['fa-user-group','جهات'],['fa-lock','خصوصية']];else if(c.includes('SOS الذكي'))items=[['fa-bluetooth-b','Bluetooth'],['fa-battery-three-quarters','بطارية'],['fa-hand-fist','SOS'],['fa-vial','اختبار']];else items=[['fa-bolt','سريع'],['fa-location-dot','GPS'],['fa-message','SMS'],['fa-hands-asl-interpreting','إشارة']];return items.map(([i,l])=>`<div class="slide-icon-stat"><i class="fa-solid ${i}"></i><span>${l}</span></div>`).join('');}
-  function setShowcaseContent({context,title,desc,points=[]}){const wrap=document.querySelector('.showcase');const meta=getShowcaseMeta(context);showcaseFeatureIcons=getShowcaseFeatureIcons(context);if($('showcase-context'))$('showcase-context').textContent=context||'الواجهة الحالية';if($('showcase-title'))$('showcase-title').innerHTML=title||'إشارة';if($('slide-title-badge'))$('slide-title-badge').innerHTML=`<i class="fa-solid ${getShowcaseTitleIcon(context)}"></i>`;if($('showcase-desc'))$('showcase-desc').textContent=desc||'';if($('showcase-points'))$('showcase-points').innerHTML=(points||[]).slice(0,3).map(showcasePoint).join('');if($('slide-icon-strip'))$('slide-icon-strip').innerHTML=getShowcaseIconStrip(context);if($('slide-number'))$('slide-number').innerHTML=`<strong>${String(meta.n).padStart(2,'0')}</strong> / 08`;if($('slide-kicker'))$('slide-kicker').textContent=meta.kicker;if($('slide-stage-pill'))$('slide-stage-pill').innerHTML=`<i class="fa-solid ${meta.icon}"></i><span>${String(meta.n).padStart(2,'0')} · ${meta.kicker}</span>`;if($('slide-metric-value'))$('slide-metric-value').innerHTML=meta.metric;if($('slide-metric-label'))$('slide-metric-label').textContent=meta.label;if($('slide-metric-icon'))$('slide-metric-icon').innerHTML=`<i class="fa-solid ${meta.icon}"></i>`;if($('slide-progress-fill'))$('slide-progress-fill').style.width=`${Math.max(12.5,Math.min(100,meta.n*12.5))}%`;if($('slide-proof')){const proofs=context?.includes('لغة الإشارة')?[['fa-video','Visual communication'],['fa-closed-captioning','Live text']]:context?.includes('البلاغ')?[['fa-route','Live status'],['fa-location-dot','Location aware']]:context?.includes('حسابي')||context?.includes('تعبئة')?[['fa-lock','Privacy controls'],['fa-pen','Editable data']]:[['fa-eye','Visual-first'],['fa-universal-access','Accessible']];$('slide-proof').innerHTML=proofs.map(p=>`<span class="proof-chip"><i class="fa-solid ${p[0]}"></i>${p[1]}</span>`).join('');}const metricEl=$('slide-metric-value');if(metricEl){metricEl.classList.remove('live-kpi');void metricEl.offsetWidth;metricEl.classList.add('live-kpi');}if(wrap){wrap.classList.remove('updating','slide-enter');void wrap.offsetWidth;wrap.classList.add('slide-enter');clearTimeout(setShowcaseContent._animT);setShowcaseContent._animT=setTimeout(()=>wrap.classList.remove('slide-enter'),1100);}}
+  function getShowcaseTitleIcon(context=''){
+    const c=context||'';
+    if(contextHas(c,'الإعداد الأولي','Initial setup'))return'fa-list-check';
+    if(contextHas(c,'تأكيد إرسال','Alert confirmation'))return'fa-paper-plane';
+    if(contextHas(c,'نافذة منبثقة','Modal action'))return'fa-window-maximize';
+    if(contextHas(c,'الرئيسية','Home'))return'fa-house';
+    if(contextHas(c,'البلاغ','Incident'))return'fa-file-waveform';
+    if(contextHas(c,'لغة الإشارة','Sign language'))return'fa-hands-asl-interpreting';
+    if(contextHas(c,'حسابي','Profile'))return'fa-user-shield';
+    if(contextHas(c,'تعبئة بيانات','Emergency data'))return'fa-clipboard-list';
+    if(contextHas(c,'مركز الأمان','Safety Center'))return'fa-shield-heart';
+    if(contextHas(c,'مركز العمليات','Operations Center'))return'fa-tower-broadcast';
+    if(contextHas(c,'SOS الذكي','Smart SOS'))return'fa-hand-fist';
+    return'fa-bolt';
+  }
+  function getShowcaseMeta(context=''){
+    const c=context||'', en=state.language==='en';
+    if(contextHas(c,'الإعداد الأولي','Initial setup'))return{n:1,kicker:en?'INITIAL SETUP':'الإعداد الأولي',metric:`${state.onboardingStep+1}/6`,label:en?'current setup step':'خطوة الإعداد الحالية',icon:'fa-list-check'};
+    if(contextHas(c,'تأكيد إرسال','Alert confirmation'))return{n:3,kicker:en?'INSTANT ALERT':'الإرسال الفوري',metric:'<2s',label:en?'to start tracking':'للانتقال إلى التتبع',icon:'fa-paper-plane'};
+    if(contextHas(c,'نافذة منبثقة','Modal action'))return{n:7,kicker:en?'CONTEXT ACTION':'إجراء سياقي',metric:'1',label:en?'task in context':'مهمة في نفس السياق',icon:'fa-layer-group'};
+    if(contextHas(c,'الرئيسية','Home'))return{n:2,kicker:en?'HOME':'الرئيسية',metric:'1–2',label:en?'interactions to send an alert':'تفاعل لإرسال البلاغ',icon:'fa-bolt'};
+    if(contextHas(c,'البلاغ','Incident'))return{n:4,kicker:en?'INCIDENT TRACKING':'تتبع البلاغ',metric:state.activeIncident?(state.eta===0?(en?'Arrived':'وصل'):`${state.eta} ${en?'min':'د'}`):'—',label:state.activeIncident?(en?'estimated arrival time':'الوقت المتوقع للوصول'):(en?'no active incident':'لا يوجد بلاغ نشط'),icon:'fa-route'};
+    if(contextHas(c,'لغة الإشارة','Sign language'))return{n:5,kicker:en?'SIGN LANGUAGE':'لغة الإشارة',metric:'LIVE',label:en?'visual call + live text':'اتصال مرئي ونص مباشر',icon:'fa-hands-asl-interpreting'};
+    if(contextHas(c,'تعبئة بيانات','Emergency data'))return{n:6,kicker:en?'EMERGENCY DATA':'بيانات الطوارئ',metric:'✓',label:en?'editable emergency profile':'بيانات قابلة للتعديل',icon:'fa-pen-to-square'};
+    if(contextHas(c,'حسابي','Profile'))return{n:6,kicker:en?'PROFILE':'الملف الشخصي',metric:String(state.contacts.length),label:en?'saved emergency contacts':'جهات اتصال محفوظة',icon:'fa-user-shield'};
+    if(contextHas(c,'مركز الأمان','Safety Center'))return{n:7,kicker:en?'SAFETY CENTER':'مركز الأمان',metric:calculateReadiness()+'%',label:en?'emergency readiness':'جاهزية الحساب',icon:'fa-shield-heart'};
+    if(contextHas(c,'مركز العمليات','Operations Center'))return{n:8,kicker:en?'OPERATIONS CENTER':'مركز العمليات',metric:state.activeIncident?'LIVE':'READY',label:en?'response room':'غرفة الاستجابة',icon:'fa-tower-broadcast'};
+    if(contextHas(c,'SOS الذكي','Smart SOS'))return{n:8,kicker:en?'SMART SOS':'زر SOS الذكي',metric:state.deviceConnected?state.deviceBattery+'%':'OFF',label:state.deviceConnected?(en?'device battery':'بطارية الجهاز'):(en?'device disconnected':'الجهاز غير متصل'),icon:'fa-hand-fist'};
+    return{n:1,kicker:en?'PRODUCT EXPERIENCE':'تجربة المنتج',metric:'01',label:en?'connected user journey':'رحلة استخدام مترابطة',icon:'fa-mobile-screen-button'};
+  }
+  function getShowcaseIconStrip(context=''){
+    const c=context||'', en=state.language==='en';let items;
+    if(contextHas(c,'الإعداد الأولي','Initial setup'))items=[['fa-list-check',en?'Steps':'خطوات'],['fa-comments',en?'Comms':'تواصل'],['fa-notes-medical',en?'Medical':'طبي'],['fa-user-group',en?'Contacts':'جهات']];
+    else if(contextHas(c,'تأكيد إرسال','Alert confirmation'))items=[['fa-paper-plane',en?'Send':'إرسال'],['fa-location-dot',en?'Location':'موقع'],['fa-tower-broadcast',en?'Network':'اتصال'],['fa-shield',en?'Secure':'آمن']];
+    else if(contextHas(c,'البلاغ','Incident'))items=[['fa-route',en?'Track':'تتبع'],['fa-clock','ETA'],['fa-location-dot','GPS'],['fa-list-check',en?'Details':'تفاصيل']];
+    else if(contextHas(c,'لغة الإشارة','Sign language'))items=[['fa-video',en?'Video':'فيديو'],['fa-hands-asl-interpreting',en?'Interpreter':'مترجم'],['fa-closed-captioning',en?'Live text':'نص حي'],['fa-signal',en?'Signal':'اتصال']];
+    else if(contextHas(c,'حسابي','Profile','تعبئة بيانات','Emergency data'))items=[['fa-user-shield',en?'Profile':'ملف'],['fa-droplet',en?'Medical':'طبي'],['fa-user-group',en?'Contacts':'جهات'],['fa-lock',en?'Privacy':'خصوصية']];
+    else if(contextHas(c,'مركز الأمان','Safety Center'))items=[['fa-shield-heart',en?'Ready':'جاهزية'],['fa-location-dot','GPS'],['fa-user-group',en?'Contacts':'جهات'],['fa-notes-medical',en?'Medical':'طبي']];
+    else if(contextHas(c,'مركز العمليات','Operations Center'))items=[['fa-tower-broadcast',en?'Dispatch':'عمليات'],['fa-truck-fast',en?'Unit':'فريق'],['fa-headset',en?'Interpreter':'مترجم'],['fa-route',en?'Track':'تتبع']];
+    else if(contextHas(c,'SOS الذكي','Smart SOS'))items=[['fa-bluetooth-b','Bluetooth'],['fa-battery-three-quarters',en?'Battery':'بطارية'],['fa-hand-fist','SOS'],['fa-vial',en?'Test':'اختبار']];
+    else items=[['fa-bolt',en?'Fast':'سريع'],['fa-location-dot','GPS'],['fa-message','SMS'],['fa-hands-asl-interpreting',en?'Sign':'إشارة']];
+    return items.map(([i,l])=>`<div class="slide-icon-stat"><i class="fa-solid ${i}"></i><span>${l}</span></div>`).join('');
+  }
+  function setShowcaseContent({context,title,desc,points=[]}){
+    const wrap=document.querySelector('.showcase');const meta=getShowcaseMeta(context);showcaseFeatureIcons=getShowcaseFeatureIcons(context);
+    if($('showcase-context'))$('showcase-context').textContent=context|| (state.language==='en'?'Current view':'الواجهة الحالية');
+    if($('showcase-title'))$('showcase-title').innerHTML=title||(state.language==='en'?'Ishara':'إشارة');
+    if($('slide-title-badge'))$('slide-title-badge').innerHTML=`<i class="fa-solid ${getShowcaseTitleIcon(context)}"></i>`;
+    if($('showcase-desc'))$('showcase-desc').textContent=desc||'';
+    if($('showcase-points'))$('showcase-points').innerHTML=(points||[]).slice(0,3).map(showcasePoint).join('');
+    if($('slide-icon-strip'))$('slide-icon-strip').innerHTML=getShowcaseIconStrip(context);
+    if($('slide-number'))$('slide-number').innerHTML=`<strong>${String(meta.n).padStart(2,'0')}</strong> / 08`;
+    if($('slide-kicker'))$('slide-kicker').textContent=meta.kicker;
+    if($('slide-stage-pill'))$('slide-stage-pill').innerHTML=`<i class="fa-solid ${meta.icon}"></i><span>${String(meta.n).padStart(2,'0')} · ${meta.kicker}</span>`;
+    if($('slide-metric-value'))$('slide-metric-value').innerHTML=meta.metric;
+    if($('slide-metric-label'))$('slide-metric-label').textContent=meta.label;
+    if($('slide-metric-icon'))$('slide-metric-icon').innerHTML=`<i class="fa-solid ${meta.icon}"></i>`;
+    if($('slide-progress-fill'))$('slide-progress-fill').style.width=`${Math.max(12.5,Math.min(100,meta.n*12.5))}%`;
+    if($('slide-proof')){
+      const en=state.language==='en';
+      const proofs=contextHas(context,'لغة الإشارة','Sign language')?[['fa-video',en?'Visual communication':'تواصل بصري'],['fa-closed-captioning',en?'Live text':'نص مباشر']]:contextHas(context,'البلاغ','Incident')?[['fa-route',en?'Live status':'حالة مباشرة'],['fa-location-dot',en?'Location aware':'موقع مباشر']]:contextHas(context,'حسابي','Profile','تعبئة','Emergency data')?[['fa-lock',en?'Privacy controls':'تحكم بالخصوصية'],['fa-pen',en?'Editable data':'بيانات قابلة للتعديل']]:[['fa-eye',en?'Visual-first':'بصري أولاً'],['fa-universal-access',en?'Accessible':'وصول شامل']];
+      $('slide-proof').innerHTML=proofs.map(p=>`<span class="proof-chip"><i class="fa-solid ${p[0]}"></i>${p[1]}</span>`).join('');
+    }
+    const metricEl=$('slide-metric-value');if(metricEl){metricEl.classList.remove('live-kpi');void metricEl.offsetWidth;metricEl.classList.add('live-kpi');}
+    if(wrap){wrap.classList.remove('updating','slide-enter');void wrap.offsetWidth;wrap.classList.add('slide-enter');clearTimeout(setShowcaseContent._animT);setShowcaseContent._animT=setTimeout(()=>wrap.classList.remove('slide-enter'),1100);}
+  }
 
   function showLivePresentation(){ const intro=$('presentation-intro'),outro=$('presentation-outro'); if(intro)intro.classList.remove('show'); if(outro)outro.classList.remove('show'); updateShowcase(); }
   function showIntroPresentation(){ const intro=$('presentation-intro'),outro=$('presentation-outro'); if(outro)outro.classList.remove('show'); if(intro)intro.classList.add('show'); }
   function showOutroPresentation(){ const intro=$('presentation-intro'),outro=$('presentation-outro'); if(intro)intro.classList.remove('show'); if(outro)outro.classList.add('show'); }
 
   function updateShowcase(){
-    const currentLabelMap = {
-      'screen-home':'الواجهة الحالية: الرئيسية',
-      'screen-incident':'الواجهة الحالية: البلاغ',
-      'screen-interpreter':'الواجهة الحالية: لغة الإشارة',
-      'screen-profile':'الواجهة الحالية: حسابي',
-      'screen-profile-edit':'الواجهة الحالية: تعبئة بيانات الطوارئ',
-      'screen-device':'الواجهة الحالية: زر SOS الذكي',
-      'screen-safety':'الواجهة الحالية: مركز الأمان',
-      'screen-control':'الواجهة الحالية: مركز العمليات'
+    const en=state.language==='en';
+    const currentLabelMap = en ? {
+      'screen-home':'Current view: Home','screen-incident':'Current view: Incident','screen-interpreter':'Current view: Sign language','screen-profile':'Current view: Profile','screen-profile-edit':'Current view: Emergency data','screen-device':'Current view: Smart SOS','screen-safety':'Current view: Safety Center','screen-control':'Current view: Operations Center'
+    } : {
+      'screen-home':'الواجهة الحالية: الرئيسية','screen-incident':'الواجهة الحالية: البلاغ','screen-interpreter':'الواجهة الحالية: لغة الإشارة','screen-profile':'الواجهة الحالية: حسابي','screen-profile-edit':'الواجهة الحالية: تعبئة بيانات الطوارئ','screen-device':'الواجهة الحالية: زر SOS الذكي','screen-safety':'الواجهة الحالية: مركز الأمان','screen-control':'الواجهة الحالية: مركز العمليات'
     };
 
     if($('onboard-layer')?.classList.contains('show')){
-      const item = onboarding[state.onboardingStep] || onboarding[0];
+      const step=state.onboardingStep;
+      const arTitles=['مرحباً بك في إشارة','اختيار طريقة التواصل','الملف الطبي للطوارئ','جهات اتصال الطوارئ','الموقع والإشعارات','ربط زر SOS'];
+      const enTitles=['Welcome to Ishara','Choose communication method','Emergency medical profile','Emergency contacts','Location & notifications','Connect SOS button'];
+      const arDesc=['منصة بصرية تساعدك على إرسال طلب طوارئ بسرعة دون الحاجة إلى مكالمة صوتية.','اختر الطريقة الأساسية التي تفضّل استخدامها أثناء التواصل مع فريق الطوارئ.','أضف فقط المعلومات التي قد تساعد فريق الاستجابة في حالة طبية.','أضف شخصاً واحداً يمكن تنبيهه تلقائياً. يمكنك إضافة حتى 5 لاحقاً.','هذه الصلاحيات تساعد التطبيق على مشاركة موقعك وإظهار التنبيهات المرئية.','يمكن ربط زر خارجي اختياري لإرسال SOS دون فتح الهاتف.'];
+      const enDesc=['A visual platform for sending an emergency request quickly without a voice call.','Choose the primary communication method you prefer during an emergency.','Add only information that may help responders during a medical emergency.','Add one trusted person who can be alerted automatically. You can add up to five later.','These permissions help the app share your location and display visual alerts.','Optionally connect an external SOS button to send an alert without opening the phone.'];
       setShowcaseContent({
-        context:`الإعداد الأولي: خطوة ${state.onboardingStep + 1} من ${onboarding.length}` ,
-        title:`<span style="color:#7dd3fc">${item.title}</span>`,
-        desc:item.text,
-        points:[
+        context:en?`Initial setup: step ${step+1} of 6`:`الإعداد الأولي: خطوة ${step+1} من 6`,
+        title:`<span style="color:#7dd3fc">${en?enTitles[step]:arTitles[step]}</span>`,
+        desc:en?enDesc[step]:arDesc[step],
+        points:en?[
+          'A short, guided setup designed to reduce friction.',
+          step>=2?'Real information is entered here — not just explained.':'Back and Next navigation behaves like a normal app.',
+          'The user can skip setup and continue to the demo.'
+        ]:[
           'الإعداد قصير وواضح حتى لا يرهق المستخدم.',
-          state.onboardingStep >= 2 ? 'في هذه المرحلة تظهر تعبئة بيانات حقيقية وليست شاشة شرح فقط.' : 'يتنقل المستخدم بين الخطوات بزر التالي والسابق بشكل طبيعي.',
+          step>=2?'في هذه المرحلة تظهر تعبئة بيانات حقيقية وليست شاشة شرح فقط.':'يتنقل المستخدم بين الخطوات بزر التالي والسابق بشكل طبيعي.',
           'يمكن تخطي الإعداد والدخول مباشرة إلى النموذج التجريبي.'
         ]
-      });
-      return;
+      });return;
     }
 
     if($('dispatch-layer')?.classList.contains('show')){
-      const cfg = incidentConfig[state.category] || incidentConfig.other;
-      setShowcaseContent({
-        context:'الواجهة الحالية: تأكيد إرسال البلاغ',
-        title:`تم إرسال البلاغ<br><span style="color:#7dd3fc">${cfg.label}</span>`,
-        desc:'هذه الواجهة تؤكد أن البلاغ أُرسل فورًا، ثم ينقلك النموذج تلقائيًا إلى شاشة التتبع بعد لحظات قصيرة.',
-        points:[
-          `نوع الطوارئ الحالي: ${cfg.label}.`,
-          `حالة الإرسال: ${state.connectivity === 'online' ? 'عبر الإنترنت' : 'سيتم تجهيز مسار SMS احتياطي'}.`,
-          'زر الرجوع يبقى ظاهرًا أعلى الهاتف حتى أثناء شاشة التأكيد.'
-        ]
-      });
-      return;
+      const label=incidentLabelLocalized(state.category||'other');
+      setShowcaseContent({context:en?'Current view: Alert confirmation':'الواجهة الحالية: تأكيد إرسال البلاغ',title:en?`Alert sent<br><span style="color:#7dd3fc">${label}</span>`:`تم إرسال البلاغ<br><span style="color:#7dd3fc">${label}</span>`,desc:en?'This confirmation appears immediately, then moves the user into live tracking within moments.':'هذه الواجهة تؤكد أن البلاغ أُرسل فورًا، ثم ينقلك النموذج تلقائيًا إلى شاشة التتبع بعد لحظات قصيرة.',points:en?[`Emergency type: ${label}.`,`Delivery channel: ${state.connectivity==='online'?'internet':'SMS fallback'}.`,'Back remains available while the alert stays active.']:[`نوع الطوارئ الحالي: ${label}.`,`حالة الإرسال: ${state.connectivity==='online'?'عبر الإنترنت':'سيتم تجهيز مسار SMS احتياطي'}.`,'زر الرجوع يبقى ظاهرًا أعلى الهاتف حتى أثناء شاشة التأكيد.']});return;
     }
 
     if($('modal-layer')?.classList.contains('show')){
-      setShowcaseContent({
-        context:'الواجهة الحالية: نافذة منبثقة',
-        title:'إجراء إضافي داخل التطبيق',
-        desc:'النافذة المنبثقة تُستخدم للمهام السريعة مثل إضافة جهة اتصال، إعدادات العرض التجريبي، أو تأكيد إلغاء البلاغ.',
-        points:[
-          'يمكن إغلاق النافذة من الخلفية أو بزر الرجوع.',
-          'لا يتم إعادة تحميل الصفحة؛ كل شيء يحدث داخل نفس النموذج.',
-          'هذه النافذة تتغير حسب الإجراء الذي اختاره المستخدم.'
-        ]
-      });
-      return;
+      setShowcaseContent({context:en?'Current view: Modal action':'الواجهة الحالية: نافذة منبثقة',title:en?'Quick action inside the app':'إجراء إضافي داخل التطبيق',desc:en?'Contextual sheets handle focused tasks such as contacts, demo settings, or incident confirmation without leaving the current flow.':'النافذة المنبثقة تُستخدم للمهام السريعة مثل إضافة جهة اتصال، إعدادات العرض التجريبي، أو تأكيد إلغاء البلاغ.',points:en?['Close with Back or by dismissing the sheet.','The current app state is preserved.','Each sheet adapts to the selected action.']:['يمكن إغلاق النافذة من الخلفية أو بزر الرجوع.','لا يتم إعادة تحميل الصفحة؛ كل شيء يحدث داخل نفس النموذج.','هذه النافذة تتغير حسب الإجراء الذي اختاره المستخدم.']});return;
     }
 
-    const screen = state.currentScreen;
-    if(screen === 'screen-home'){
-      setShowcaseContent({
-        context: currentLabelMap[screen],
-        title:'إشارة<br><span style="color:#7dd3fc">طوارئ بصرية بلا عوائق</span>',
-        desc:'من الشاشة الرئيسية يبدأ المستخدم البلاغ فورًا بنقرة واحدة أو عبر زر SOS، مع إبقاء حالة الاتصال والموقع واضحة طوال الوقت.',
-        points:[
-          'خمسة أزرار كبيرة للطوارئ بتمييز بصري واضح.',
-          `حالة الاتصال الآن: ${state.connectivity === 'online' ? 'متصل' : state.connectivity === 'weak' ? 'ضعيف' : 'بدون إنترنت'}.`,
-          `حالة الموقع الآن: ${state.gps.status === 'ready' ? `محدد بدقة تقريبية ± ${state.gps.accuracy} م` : state.gps.status === 'locating' ? 'جارٍ تحديد الموقع' : 'تعذر تحديد الموقع'}.`
-        ]
-      });
-      return;
+    const screen=state.currentScreen;
+    if(screen==='screen-home'){
+      const conn=en?(state.connectivity==='online'?'Connected':state.connectivity==='weak'?'Weak':'Offline'):(state.connectivity==='online'?'متصل':state.connectivity==='weak'?'ضعيف':'بدون إنترنت');
+      const gps=en?(state.gps.status==='ready'?`Approx. accuracy ± ${state.gps.accuracy} m`:state.gps.status==='locating'?'Locating…':'Location unavailable'):(state.gps.status==='ready'?`محدد بدقة تقريبية ± ${state.gps.accuracy} م`:state.gps.status==='locating'?'جارٍ تحديد الموقع':'تعذر تحديد الموقع');
+      setShowcaseContent({context:currentLabelMap[screen],title:en?'Ishara<br><span style="color:#7dd3fc">Visual emergency access without barriers</span>':'إشارة<br><span style="color:#7dd3fc">طوارئ بصرية بلا عوائق</span>',desc:en?'From Home, the user can send an alert in one tap or with SOS while connection and location remain visible at all times.':'من الشاشة الرئيسية يبدأ المستخدم البلاغ فورًا بنقرة واحدة أو عبر زر SOS، مع إبقاء حالة الاتصال والموقع واضحة طوال الوقت.',points:en?['Five large emergency actions with clear visual differentiation.',`Connection status now: ${conn}.`,`Location status now: ${gps}.`]:['خمسة أزرار كبيرة للطوارئ بتمييز بصري واضح.',`حالة الاتصال الآن: ${conn}.`,`حالة الموقع الآن: ${gps}.`]});return;
     }
 
-    if(screen === 'screen-incident'){
+    if(screen==='screen-incident'){
       if(!state.activeIncident){
-        setShowcaseContent({
-          context: currentLabelMap[screen],
-          title:'البلاغ<br><span style="color:#7dd3fc">لا يوجد بلاغ نشط</span>',
-          desc:'قبل إنشاء الطوارئ لا يعرض التطبيق حالة وهمية. تظهر هنا شاشة فارغة توضّح للمستخدم أين سيظهر التتبع بعد الإرسال.',
-          points:[
-            'الواجهة توضّح أن النظام ينتظر إنشاء بلاغ جديد.',
-            'يمكن بدء بلاغ سريع مباشرة من هذا المكان.',
-            'هذا يمنع الالتباس ويجعل الحالة الحالية صادقة وواقعية.'
-          ]
-        });
-      } else {
-        const cfg = incidentConfig[state.category] || incidentConfig.other;
-        const stageText = ['تم إنشاء البلاغ','تم إرسال الموقع','تم استلام البلاغ','تم تحديد أقرب فريق','الفريق في الطريق','وصل الفريق'][state.dispatchStage] || 'متابعة البلاغ';
-        setShowcaseContent({
-          context: currentLabelMap[screen],
-          title:`تتبع البلاغ<br><span style="color:#7dd3fc">${cfg.label}</span>`,
-          desc:'هذه الشاشة تعرض حالة البلاغ بشكل مرئي كامل: خط زمني، وقت متوقع للوصول، خريطة محاكاة، وأزرار سريعة لإضافة التفاصيل أو طلب مترجم.',
-          points:[
-            `مرحلة الاستجابة الحالية: ${stageText}.`,
-            `الوقت المتوقع للوصول الآن: ${state.eta === 0 ? 'وصل الفريق' : `${state.eta} دقائق`}.`,
-            'يمكن إضافة تفاصيل بعد بدء الإرسال دون تعطيل تحرك فريق الاستجابة.'
-          ]
-        });
-      }
-      return;
+        setShowcaseContent({context:currentLabelMap[screen],title:en?'Incident<br><span style="color:#7dd3fc">No active incident</span>':'البلاغ<br><span style="color:#7dd3fc">لا يوجد بلاغ نشط</span>',desc:en?'Before an emergency is created, the app shows a truthful empty state instead of a fake active status.':'قبل إنشاء الطوارئ لا يعرض التطبيق حالة وهمية. تظهر هنا شاشة فارغة توضّح للمستخدم أين سيظهر التتبع بعد الإرسال.',points:en?['The system clearly shows that it is waiting for a new incident.','A new alert can be started directly from this screen.','The current state remains honest and easy to understand.']:['الواجهة توضّح أن النظام ينتظر إنشاء بلاغ جديد.','يمكن بدء بلاغ سريع مباشرة من هذا المكان.','هذا يمنع الالتباس ويجعل الحالة الحالية صادقة وواقعية.']});
+      }else{
+        const label=incidentLabelLocalized(state.category||'other');
+        const stagesEn=['Incident created','Location shared','Incident received','Nearest unit assigned','Responder en route','Responder arrived'];
+        const stagesAr=['تم إنشاء البلاغ','تم إرسال الموقع','تم استلام البلاغ','تم تحديد أقرب فريق','الفريق في الطريق','وصل الفريق'];
+        const stage=(en?stagesEn:stagesAr)[state.dispatchStage] || (en?'Incident tracking':'متابعة البلاغ');
+        setShowcaseContent({context:currentLabelMap[screen],title:en?`Live incident<br><span style="color:#7dd3fc">${label}</span>`:`تتبع البلاغ<br><span style="color:#7dd3fc">${label}</span>`,desc:en?'A visual timeline, ETA, simulated map and quick actions keep the user informed without relying on voice.':'هذه الشاشة تعرض حالة البلاغ بشكل مرئي كامل: خط زمني، وقت متوقع للوصول، خريطة محاكاة، وأزرار سريعة لإضافة التفاصيل أو طلب مترجم.',points:en?[`Current response stage: ${stage}.`,`Estimated arrival: ${state.eta===0?'Responder arrived':state.eta+' min'}.`,'Extra details can be added after dispatch without delaying the responder.']:[`مرحلة الاستجابة الحالية: ${stage}.`,`الوقت المتوقع للوصول الآن: ${state.eta===0?'وصل الفريق':state.eta+' دقائق'}.`,'يمكن إضافة تفاصيل بعد بدء الإرسال دون تعطيل تحرك فريق الاستجابة.']});
+      }return;
     }
 
-    if(screen === 'screen-interpreter'){
-      const statesMap = {idle:'غير متصل',requesting:'جارٍ طلب مترجم',assigned:'تم تعيين مترجم',connecting:'جارٍ الاتصال',live:'جلسة مباشرة',lost:'انقطع الاتصال',reconnecting:'إعادة الاتصال'};
-      setShowcaseContent({
-        context: currentLabelMap[screen],
-        title:'لغة الإشارة<br><span style="color:#7dd3fc">تواصل بصري مباشر</span>',
-        desc:'هذه الواجهة مخصصة للاتصال المرئي مع مترجم لغة الإشارة، مع نص مباشر ومعلومات مختصرة عن البلاغ دون الاعتماد على الصوت.',
-        points:[
-          `حالة الجلسة الحالية: ${statesMap[state.interpreter] || 'غير متصل'}.`,
-          'عند بدء الجلسة تظهر مساحة المترجم وكاميرا المستخدم والنص المباشر.',
-          'يمكن الرجوع فورًا إلى شاشة التتبع دون فقدان حالة البلاغ.'
-        ]
-      });
-      return;
+    if(screen==='screen-interpreter'){
+      const statesEn={idle:'Disconnected',requesting:'Requesting interpreter',assigned:'Interpreter assigned',connecting:'Connecting',live:'Live session',lost:'Connection lost',reconnecting:'Reconnecting'};
+      const statesAr={idle:'غير متصل',requesting:'جارٍ طلب مترجم',assigned:'تم تعيين مترجم',connecting:'جارٍ الاتصال',live:'جلسة مباشرة',lost:'انقطع الاتصال',reconnecting:'إعادة الاتصال'};
+      const st=(en?statesEn:statesAr)[state.interpreter] || (en?'Disconnected':'غير متصل');
+      setShowcaseContent({context:currentLabelMap[screen],title:en?'Sign language<br><span style="color:#7dd3fc">Direct visual communication</span>':'لغة الإشارة<br><span style="color:#7dd3fc">تواصل بصري مباشر</span>',desc:en?'A dedicated visual channel connects the user with a sign-language interpreter, live text and incident context without relying on voice.':'هذه الواجهة مخصصة للاتصال المرئي مع مترجم لغة الإشارة، مع نص مباشر ومعلومات مختصرة عن البلاغ دون الاعتماد على الصوت.',points:en?[`Current session status: ${st}.`,'The live session includes interpreter video, self preview and captions.','The user can return to incident tracking without losing state.']:[`حالة الجلسة الحالية: ${st}.`,'عند بدء الجلسة تظهر مساحة المترجم وكاميرا المستخدم والنص المباشر.','يمكن الرجوع فورًا إلى شاشة التتبع دون فقدان حالة البلاغ.']});return;
     }
 
-    if(screen === 'screen-profile'){
-      setShowcaseContent({
-        context: currentLabelMap[screen],
-        title:'حسابي<br><span style="color:#7dd3fc">بيانات الطوارئ والمساعدة</span>',
-        desc:'هنا تظهر البيانات الأساسية والملف الطبي وجهات الاتصال، مع إمكانية تشغيل أو إيقاف مشاركة البيانات الطبية أثناء البلاغ.',
-        points:[
-          `اسم المستخدم الحالي: ${state.profile.name || 'غير محدد'}.`,
-          `عدد جهات الاتصال المحفوظة: ${state.contacts.length}.`,
-          `مشاركة البيانات الطبية: ${state.medicalShare ? 'مفعلة' : 'متوقفة'}.`
-        ]
-      });
-      return;
+    if(screen==='screen-profile'){
+      setShowcaseContent({context:currentLabelMap[screen],title:en?'Profile<br><span style="color:#7dd3fc">Emergency data & assistance</span>':'حسابي<br><span style="color:#7dd3fc">بيانات الطوارئ والمساعدة</span>',desc:en?'Basic information, medical data, trusted contacts and privacy controls are prepared before an emergency happens.':'هنا تظهر البيانات الأساسية والملف الطبي وجهات الاتصال، مع إمكانية تشغيل أو إيقاف مشاركة البيانات الطبية أثناء البلاغ.',points:en?[`Current user: ${state.profile.name||'Not specified'}.`,`Saved emergency contacts: ${state.contacts.length}.`,`Medical data sharing: ${state.medicalShare?'On':'Off'}.`]:[`اسم المستخدم الحالي: ${state.profile.name||'غير محدد'}.`,`عدد جهات الاتصال المحفوظة: ${state.contacts.length}.`,`مشاركة البيانات الطبية: ${state.medicalShare?'مفعلة':'متوقفة'}.`]});return;
     }
 
-    if(screen === 'screen-profile-edit'){
-      setShowcaseContent({
-        context: currentLabelMap[screen],
-        title:'بيانات الطوارئ<br><span style="color:#7dd3fc">جاهزة قبل الحاجة</span>',
-        desc:'في هذه الصفحة يرى المستخدم كيف يعبّئ البيانات بشكل فعلي داخل النموذج، وليس فقط قراءة شرح نظري. يمكن الحفظ والرجوع مثل أي تطبيق طبيعي.',
-        points:[
-          'الاسم مطلوب لتجربة أكثر واقعية.',
-          'يمكن تعديل طريقة التواصل، فصيلة الدم، والحالة الطبية.',
-          'بعد الحفظ تنعكس القيم مباشرة في صفحة حسابي.'
-        ]
-      });
-      return;
+    if(screen==='screen-profile-edit'){
+      setShowcaseContent({context:currentLabelMap[screen],title:en?'Emergency data<br><span style="color:#7dd3fc">Ready before it is needed</span>':'بيانات الطوارئ<br><span style="color:#7dd3fc">جاهزة قبل الحاجة</span>',desc:en?'This screen lets the user enter and edit real emergency information, then immediately reflects it in the profile.':'في هذه الصفحة يرى المستخدم كيف يعبّئ البيانات بشكل فعلي داخل النموذج، وليس فقط قراءة شرح نظري. يمكن الحفظ والرجوع مثل أي تطبيق طبيعي.',points:en?['A name is required for a realistic profile.','Communication preference, blood type and medical information can be edited.','Saved values immediately appear in Profile.']:['الاسم مطلوب لتجربة أكثر واقعية.','يمكن تعديل طريقة التواصل، فصيلة الدم، والحالة الطبية.','بعد الحفظ تنعكس القيم مباشرة في صفحة حسابي.']});return;
     }
 
-    if(screen === 'screen-device'){
-      setShowcaseContent({
-        context: currentLabelMap[screen],
-        title:'زر SOS الذكي<br><span style="color:#7dd3fc">Bluetooth تجريبي</span>',
-        desc:'هذه الواجهة تشرح فكرة زر SOS الخارجي الذي يسمح بإرسال الاستغاثة دون فتح الهاتف، مع محاكاة ربط الجهاز والبطارية واختبار الزر.',
-        points:[
-          `حالة الجهاز الحالية: ${state.deviceConnected ? 'متصل' : 'غير متصل'}.`,
-          `البطارية الحالية: ${state.deviceConnected ? state.deviceBattery + '%' : 'غير متاحة'}.`,
-          'الربط والاختبار هنا محاكاة فقط ضمن نسخة استعراضية.'
-        ]
-      });
-      return;
+    if(screen==='screen-device'){
+      setShowcaseContent({context:currentLabelMap[screen],title:en?'Smart SOS<br><span style="color:#7dd3fc">Optional Bluetooth trigger</span>':'زر SOS الذكي<br><span style="color:#7dd3fc">Bluetooth تجريبي</span>',desc:en?'An optional external SOS button can trigger an emergency alert without opening the phone, with connection and battery status shown clearly.':'هذه الواجهة تشرح فكرة زر SOS الخارجي الذي يسمح بإرسال الاستغاثة دون فتح الهاتف، مع محاكاة ربط الجهاز والبطارية واختبار الزر.',points:en?[`Device status: ${state.deviceConnected?'Connected':'Disconnected'}.`,`Battery: ${state.deviceConnected?state.deviceBattery+'%':'Unavailable'}.`,'Pairing and testing are simulated in this product demo.']:[`حالة الجهاز الحالية: ${state.deviceConnected?'متصل':'غير متصل'}.`,`البطارية الحالية: ${state.deviceConnected?state.deviceBattery+'%':'غير متاحة'}.`,'الربط والاختبار هنا محاكاة فقط ضمن نسخة استعراضية.']});return;
     }
 
-
-    if(screen === 'screen-safety'){
+    if(screen==='screen-safety'){
       const score=calculateReadiness();
-      setShowcaseContent({context:currentLabelMap[screen],title:'مركز الأمان<br><span style="color:#7dd3fc">الاستعداد قبل الطوارئ</span>',desc:'لوحة جاهزية تجمع الموقع، الملف الطبي، جهات الاتصال، طريقة التواصل، وزر SOS في مكان واحد.',points:[`جاهزية الحساب الحالية: ${score}%`,'كل عنصر ناقص يظهر كإجراء واضح للمستخدم.','الهدف: تقليل القرارات المطلوبة وقت الطوارئ.']});return;
+      setShowcaseContent({context:currentLabelMap[screen],title:en?'Safety Center<br><span style="color:#7dd3fc">Prepare before the emergency</span>':'مركز الأمان<br><span style="color:#7dd3fc">الاستعداد قبل الطوارئ</span>',desc:en?'A readiness hub brings together location, medical data, trusted contacts, communication preferences and Smart SOS.':'لوحة جاهزية تجمع الموقع، الملف الطبي، جهات الاتصال، طريقة التواصل، وزر SOS في مكان واحد.',points:en?[`Current readiness score: ${score}%.`,'Missing readiness items become clear actions.','The goal is to reduce decisions during a real emergency.']:[`جاهزية الحساب الحالية: ${score}%`,'كل عنصر ناقص يظهر كإجراء واضح للمستخدم.','الهدف: تقليل القرارات المطلوبة وقت الطوارئ.']});return;
     }
-    if(screen === 'screen-control'){
-      setShowcaseContent({context:currentLabelMap[screen],title:'مركز العمليات<br><span style="color:#7dd3fc">الوجه الآخر من إشارة</span>',desc:'محاكاة لما يراه مشغل الطوارئ عند وصول البلاغ: الموقع، الوصول، البيانات المهمة، وتعيين الاستجابة.',points:['استقبال بلاغ موحّد مع احتياجات الوصول.','تعيين فريق أو مترجم من نفس السياق.','حالة البلاغ تتحدث بين المستخدم وغرفة العمليات.']});return;
+    if(screen==='screen-control'){
+      setShowcaseContent({context:currentLabelMap[screen],title:en?'Operations Center<br><span style="color:#7dd3fc">The responder side of Ishara</span>':'مركز العمليات<br><span style="color:#7dd3fc">الوجه الآخر من إشارة</span>',desc:en?'A responder-side simulation showing location, accessibility needs, critical data and dispatch actions in one operational view.':'محاكاة لما يراه مشغل الطوارئ عند وصول البلاغ: الموقع، الوصول، البيانات المهمة، وتعيين الاستجابة.',points:en?['Receive one structured alert with accessibility needs.','Assign a responder or interpreter from the same context.','Incident status stays synchronized with the user side.']:['استقبال بلاغ موحّد مع احتياجات الوصول.','تعيين فريق أو مترجم من نفس السياق.','حالة البلاغ تتحدث بين المستخدم وغرفة العمليات.']});return;
     }
-    setShowcaseContent({
-      context:'الواجهة الحالية',
-      title:'إشارة',
-      desc:'نموذج تفاعلي للطوارئ البصرية.',
-      points:['واجهة تفاعلية','تنقل طبيعي','شرح يتغير حسب الشاشة']
-    });
+    setShowcaseContent({context:en?'Current view':'الواجهة الحالية',title:en?'Ishara':'إشارة',desc:en?'An interactive visual emergency experience.':'نموذج تفاعلي للطوارئ البصرية.',points:en?['Interactive interface','Natural navigation','Context-aware explanation']:['واجهة تفاعلية','تنقل طبيعي','شرح يتغير حسب الشاشة']});
   }
 
   function showScreen(id,direction='forward'){
@@ -867,44 +947,80 @@
     }
   });
 
+  function l(ar,en){ return state.language==='en'?en:ar; }
+  function localizedCommunication(value=''){
+    const map={
+      'لغة الإشارة + نص':'Sign language + text','لغة الإشارة':'Sign language','رسائل نصية':'Text messages','نص فقط':'Text only',
+      'Sign language + text':'Sign language + text','Sign language':'Sign language','Text messages':'Text messages','Text only':'Text only'
+    };
+    return state.language==='en'?(map[value]||value):({'Sign language + text':'لغة الإشارة + نص','Sign language':'لغة الإشارة','Text messages':'رسائل نصية','Text only':'نص فقط'}[value]||value);
+  }
   function renderOnboarding(){
     const item=onboarding[state.onboardingStep];
     const step=state.onboardingStep;
     const pct=((step+1)/onboarding.length)*100;
+    const title=state.language==='en'?[
+      'Welcome to Ishara','Choose communication method','Emergency medical profile','Emergency contacts','Location & notifications','Connect SOS button'
+    ][step]:item.title;
+    const intro=state.language==='en'?[
+      'A visual platform that helps you send an emergency request quickly without needing a voice call.',
+      'Choose the primary communication method you prefer when interacting with the emergency team.',
+      'Add only the information that may help responders in a medical emergency.',
+      'Add one person who can be alerted automatically. You can add up to 5 later.',
+      'These permissions help the app share your location and display visual alerts.',
+      'An optional external button can be connected to send an SOS without opening the phone.'
+    ][step]:[
+      item.text,
+      'اختر الطريقة الأساسية التي تفضّل استخدامها أثناء التواصل مع فريق الطوارئ.',
+      'أضف فقط المعلومات التي قد تساعد فريق الاستجابة في حالة طبية.',
+      'أضف شخصاً واحداً يمكن تنبيهه تلقائياً. يمكنك إضافة حتى 5 لاحقاً.',
+      'هذه الصلاحيات تساعد التطبيق على مشاركة موقعك وإظهار التنبيهات المرئية.',
+      'يمكن ربط زر خارجي اختياري لإرسال SOS دون فتح الهاتف.'
+    ][step];
     let body='';
     if(step===0){
-      body=`<div class="onboard-welcome"><div class="onboard-visual"><i class="fa-solid ${item.icon}"></i></div><h2>${item.title}</h2><p>${item.text}</p><div class="onboard-note" style="margin-top:18px;text-align:right"><i class="fa-solid fa-shield-heart"></i><div><b style="display:block;color:#dbeafe;margin-bottom:2px">إعداد سريع وآمن</b>تُجهّز هذه المعلومات مسبقاً لتقليل الخطوات وقت الطوارئ، ولن تمنعك من إرسال البلاغ لاحقاً.</div></div></div>`;
+      body=`<div class="onboard-welcome"><div class="onboard-visual"><i class="fa-solid ${item.icon}"></i></div><h2>${title}</h2><p>${intro}</p><div class="onboard-note" style="margin-top:18px;text-align:${state.language==='en'?'left':'right'}"><i class="fa-solid fa-shield-heart"></i><div><b style="display:block;color:#dbeafe;margin-bottom:2px">${l('إعداد سريع وآمن','Fast, safe setup')}</b>${l('تُجهّز هذه المعلومات مسبقاً لتقليل الخطوات وقت الطوارئ، ولن تمنعك من إرسال البلاغ لاحقاً.','These details are prepared in advance to reduce steps during an emergency, and they never prevent you from sending an alert later.')}</div></div></div>`;
     }else if(step===1){
-      const choices=[['لغة الإشارة + نص','fa-hands-asl-interpreting'],['لغة الإشارة','fa-hands'],['رسائل نصية','fa-message'],['نص فقط','fa-keyboard']];
-      body=`<div class="onboard-heading"><div class="onboard-visual"><i class="fa-solid ${item.icon}"></i></div><div class="onboard-title-group"><h2>${item.title}</h2><p>اختر الطريقة الأساسية التي تفضّل استخدامها أثناء التواصل مع فريق الطوارئ.</p></div></div><div class="onboard-form"><div class="choice-grid">${choices.map(([c,icon])=>`<button type="button" class="choice ${state.setup.communication===c?'selected':''}" onclick="selectSetupCommunication('${c}')"><i class="fa-solid ${icon}"></i>${c}</button>`).join('')}</div><div class="onboard-note" style="margin-top:10px"><i class="fa-solid fa-circle-info"></i><div>يمكن تغيير طريقة التواصل لاحقاً من <b>حسابي</b>.</div></div></div>`;
+      const choices=[
+        ['لغة الإشارة + نص','Sign language + text','fa-hands-asl-interpreting'],
+        ['لغة الإشارة','Sign language','fa-hands'],
+        ['رسائل نصية','Text messages','fa-message'],
+        ['نص فقط','Text only','fa-keyboard']
+      ];
+      body=`<div class="onboard-heading"><div class="onboard-visual"><i class="fa-solid ${item.icon}"></i></div><div class="onboard-title-group"><h2>${title}</h2><p>${intro}</p></div></div><div class="onboard-form"><div class="choice-grid">${choices.map(([ar,en,icon])=>`<button type="button" class="choice ${[''+state.setup.communication,localizedCommunication(state.setup.communication)].includes(state.language==='en'?en:ar)?'selected':''}" onclick="selectSetupCommunication('${ar}')"><i class="fa-solid ${icon}"></i>${state.language==='en'?en:ar}</button>`).join('')}</div><div class="onboard-note" style="margin-top:10px"><i class="fa-solid fa-circle-info"></i><div>${l('يمكن تغيير طريقة التواصل لاحقاً من','You can change your communication method later from')} <b>${l('حسابي','Profile')}</b>.</div></div></div>`;
     }else if(step===2){
-      body=`<div class="onboard-heading"><div class="onboard-visual"><i class="fa-solid ${item.icon}"></i></div><div class="onboard-title-group"><h2>${item.title}</h2><p>أضف فقط المعلومات التي قد تساعد فريق الاستجابة في حالة طبية.</p></div></div><div class="onboard-form"><div class="onboard-card">
-        <div class="field" id="field-ob-name"><label for="ob-name"><span><i class="fa-solid fa-user"></i> الاسم الكامل <span class="required">*</span></span><span class="optional">مطلوب</span></label><input id="ob-name" autocomplete="name" value="${escapeHtml(state.profile.name)}" placeholder="مثال: أحمد محمد"><div class="field-error">أدخل الاسم الكامل للمتابعة</div></div>
-        <div class="form-grid"><div class="field"><label for="ob-blood"><span><i class="fa-solid fa-droplet"></i> فصيلة الدم</span><span class="optional">اختياري</span></label><div class="select-wrap"><select id="ob-blood">${bloodOptions(state.profile.blood)}</select></div></div><div class="field"><label for="ob-allergies"><span><i class="fa-solid fa-triangle-exclamation"></i> الحساسية</span><span class="optional">اختياري</span></label><input id="ob-allergies" value="${escapeHtml(state.profile.allergies==='غير محدد'?'':state.profile.allergies)}" placeholder="مثال: البنسلين"></div></div>
-        <div class="field"><label for="ob-chronic"><span><i class="fa-solid fa-heart-pulse"></i> الحالات المزمنة</span><span class="optional">اختياري</span></label><input id="ob-chronic" value="${escapeHtml(state.profile.chronic==='غير محدد'?'':state.profile.chronic)}" placeholder="مثال: السكري أو الربو"></div>
-        <div class="field" style="margin-bottom:0"><label for="ob-medication"><span><i class="fa-solid fa-capsules"></i> دواء مهم وقت الطوارئ</span><span class="optional">اختياري</span></label><input id="ob-medication" value="${escapeHtml(state.profile.medication==='غير محدد'?'':state.profile.medication)}" placeholder="مثال: بخاخ ربو"></div>
-      </div><div class="onboard-note" style="margin-top:9px"><i class="fa-solid fa-lock"></i><div>يمكن تعطيل مشاركة البيانات الطبية بالكامل من صفحة <b>حسابي</b>.</div></div></div>`;
+      body=`<div class="onboard-heading"><div class="onboard-visual"><i class="fa-solid ${item.icon}"></i></div><div class="onboard-title-group"><h2>${title}</h2><p>${intro}</p></div></div><div class="onboard-form"><div class="onboard-card">
+        <div class="field" id="field-ob-name"><label for="ob-name"><span><i class="fa-solid fa-user"></i> ${l('الاسم الكامل','Full name')} <span class="required">*</span></span><span class="optional">${l('مطلوب','Required')}</span></label><input id="ob-name" autocomplete="name" value="${escapeHtml(state.profile.name)}" placeholder="${l('مثال: أحمد محمد','Example: Ahmad Mohammad')}"><div class="field-error">${l('أدخل الاسم الكامل للمتابعة','Enter your full name to continue')}</div></div>
+        <div class="form-grid"><div class="field"><label for="ob-blood"><span><i class="fa-solid fa-droplet"></i> ${l('فصيلة الدم','Blood type')}</span><span class="optional">${l('اختياري','Optional')}</span></label><div class="select-wrap"><select id="ob-blood">${bloodOptions(state.profile.blood)}</select></div></div><div class="field"><label for="ob-allergies"><span><i class="fa-solid fa-triangle-exclamation"></i> ${l('الحساسية','Allergies')}</span><span class="optional">${l('اختياري','Optional')}</span></label><input id="ob-allergies" value="${escapeHtml(state.profile.allergies==='غير محدد'?'':state.profile.allergies)}" placeholder="${l('مثال: البنسلين','Example: Penicillin')}"></div></div>
+        <div class="field"><label for="ob-chronic"><span><i class="fa-solid fa-heart-pulse"></i> ${l('الحالات المزمنة','Chronic conditions')}</span><span class="optional">${l('اختياري','Optional')}</span></label><input id="ob-chronic" value="${escapeHtml(state.profile.chronic==='غير محدد'?'':state.profile.chronic)}" placeholder="${l('مثال: السكري أو الربو','Example: Diabetes or asthma')}"></div>
+        <div class="field" style="margin-bottom:0"><label for="ob-medication"><span><i class="fa-solid fa-capsules"></i> ${l('دواء مهم وقت الطوارئ','Important emergency medication')}</span><span class="optional">${l('اختياري','Optional')}</span></label><input id="ob-medication" value="${escapeHtml(state.profile.medication==='غير محدد'?'':state.profile.medication)}" placeholder="${l('مثال: بخاخ ربو','Example: Asthma inhaler')}"></div>
+      </div><div class="onboard-note" style="margin-top:9px"><i class="fa-solid fa-lock"></i><div>${l('يمكن تعطيل مشاركة البيانات الطبية بالكامل من صفحة','Medical-data sharing can be disabled completely from')} <b>${l('حسابي','Profile')}</b>.</div></div></div>`;
     }else if(step===3){
-      body=`<div class="onboard-heading"><div class="onboard-visual"><i class="fa-solid ${item.icon}"></i></div><div class="onboard-title-group"><h2>${item.title}</h2><p>أضف شخصاً واحداً يمكن تنبيهه تلقائياً. يمكنك إضافة حتى 5 لاحقاً.</p></div></div><div class="onboard-form"><div class="onboard-card">
-        <div class="field" id="field-ob-contact-name"><label for="ob-contact-name"><span><i class="fa-solid fa-user"></i> اسم جهة الاتصال</span><span class="optional">اختياري</span></label><input id="ob-contact-name" autocomplete="name" placeholder="مثال: خالد محمد"><div class="field-error">أدخل اسم جهة الاتصال</div></div>
-        <div class="field" id="field-ob-contact-relation"><label for="ob-contact-relation"><span><i class="fa-solid fa-people-arrows"></i> صلة القرابة</span><span class="optional">اختر من القائمة</span></label><div class="select-wrap"><select id="ob-contact-relation"><option value="">اختر صلة القرابة</option>${relationOptions('')}</select></div><div class="field-error">اختر صلة القرابة</div></div>
-        <div class="field" id="field-ob-contact-phone"><label for="ob-contact-phone"><span><i class="fa-solid fa-phone"></i> رقم الهاتف</span><span class="optional">مع رمز الدولة إن أمكن</span></label><input id="ob-contact-phone" autocomplete="tel" inputmode="tel" dir="ltr" placeholder="+970 59 123 4567"><div class="field-error">أدخل رقم هاتف صالحاً</div></div>
-        <button type="button" class="permission-card active" style="margin-top:2px" onclick="toggleDraftAutoNotify(this)"><span class="p-icon"><i class="fa-solid fa-bell"></i></span><span><b>التنبيه التلقائي</b><small>إرسال إشعار لهذه الجهة عند بدء بلاغ</small></span><span id="draft-auto-state" class="state-chip">مفعّل</span></button>
-      </div><div class="form-hint" style="margin-top:8px">لا تريد إضافة جهة اتصال الآن؟ اترك الحقول فارغة واضغط “التالي”.</div></div>`;
+      body=`<div class="onboard-heading"><div class="onboard-visual"><i class="fa-solid ${item.icon}"></i></div><div class="onboard-title-group"><h2>${title}</h2><p>${intro}</p></div></div><div class="onboard-form"><div class="onboard-card">
+        <div class="field" id="field-ob-contact-name"><label for="ob-contact-name"><span><i class="fa-solid fa-user"></i> ${l('اسم جهة الاتصال','Contact name')}</span><span class="optional">${l('اختياري','Optional')}</span></label><input id="ob-contact-name" autocomplete="name" placeholder="${l('مثال: خالد محمد','Example: Khaled Mohammad')}"><div class="field-error">${l('أدخل اسم جهة الاتصال','Enter the contact name')}</div></div>
+        <div class="field" id="field-ob-contact-relation"><label for="ob-contact-relation"><span><i class="fa-solid fa-people-arrows"></i> ${l('صلة القرابة','Relationship')}</span><span class="optional">${l('اختر من القائمة','Choose from the list')}</span></label><div class="select-wrap"><select id="ob-contact-relation"><option value="">${l('اختر صلة القرابة','Choose relationship')}</option>${relationOptions('')}</select></div><div class="field-error">${l('اختر صلة القرابة','Choose a relationship')}</div></div>
+        <div class="field" id="field-ob-contact-phone"><label for="ob-contact-phone"><span><i class="fa-solid fa-phone"></i> ${l('رقم الهاتف','Phone number')}</span><span class="optional">${l('مع رمز الدولة إن أمكن','Include country code if possible')}</span></label><input id="ob-contact-phone" autocomplete="tel" inputmode="tel" dir="ltr" placeholder="+970 59 123 4567"><div class="field-error">${l('أدخل رقم هاتف صالحاً','Enter a valid phone number')}</div></div>
+        <button type="button" class="permission-card active" style="margin-top:2px" onclick="toggleDraftAutoNotify(this)"><span class="p-icon"><i class="fa-solid fa-bell"></i></span><span><b>${l('التنبيه التلقائي','Automatic alert')}</b><small>${l('إرسال إشعار لهذه الجهة عند بدء بلاغ','Notify this contact when an incident starts')}</small></span><span id="draft-auto-state" class="state-chip">${l('مفعّل','Enabled')}</span></button>
+      </div><div class="form-hint" style="margin-top:8px">${l('لا تريد إضافة جهة اتصال الآن؟ اترك الحقول فارغة واضغط “التالي”.','Do not want to add a contact now? Leave the fields empty and press “Next”.')}</div></div>`;
     }else if(step===4){
-      body=`<div class="onboard-heading"><div class="onboard-visual"><i class="fa-solid ${item.icon}"></i></div><div class="onboard-title-group"><h2>${item.title}</h2><p>هذه الصلاحيات تساعد التطبيق على مشاركة موقعك وإظهار التنبيهات المرئية.</p></div></div><div class="onboard-form"><div class="permission-list"><button type="button" class="permission-card ${state.setup.locationAllowed?'active':''}" onclick="toggleSetupPermission('location')"><span class="p-icon"><i class="fa-solid fa-location-crosshairs"></i></span><span><b>الوصول إلى الموقع</b><small>لمشاركة موقعك تلقائياً عند إنشاء البلاغ</small></span><span class="state-chip">${state.setup.locationAllowed?'مسموح':'غير مفعّل'}</span></button><button type="button" class="permission-card ${state.setup.notificationsAllowed?'active':''}" onclick="toggleSetupPermission('notifications')"><span class="p-icon"><i class="fa-solid fa-bell"></i></span><span><b>التنبيهات المرئية</b><small>لعرض تحديثات حالة البلاغ بوضوح</small></span><span class="state-chip">${state.setup.notificationsAllowed?'مفعّلة':'متوقفة'}</span></button></div><div class="onboard-note" style="margin-top:10px"><i class="fa-solid fa-location-dot"></i><div>لن يطلب النموذج إذن الموقع من المتصفح إلا عند الضغط على <b>تحديث الموقع</b>.</div></div></div>`;
+      body=`<div class="onboard-heading"><div class="onboard-visual"><i class="fa-solid ${item.icon}"></i></div><div class="onboard-title-group"><h2>${title}</h2><p>${intro}</p></div></div><div class="onboard-form"><div class="permission-list"><button type="button" class="permission-card ${state.setup.locationAllowed?'active':''}" onclick="toggleSetupPermission('location')"><span class="p-icon"><i class="fa-solid fa-location-crosshairs"></i></span><span><b>${l('الوصول إلى الموقع','Location access')}</b><small>${l('لمشاركة موقعك تلقائياً عند إنشاء البلاغ','Share your location automatically when an incident is created')}</small></span><span class="state-chip">${state.setup.locationAllowed?l('مسموح','Enabled'):l('غير مفعّل','Disabled')}</span></button><button type="button" class="permission-card ${state.setup.notificationsAllowed?'active':''}" onclick="toggleSetupPermission('notifications')"><span class="p-icon"><i class="fa-solid fa-bell"></i></span><span><b>${l('التنبيهات المرئية','Visual notifications')}</b><small>${l('لعرض تحديثات حالة البلاغ بوضوح','Display incident-status updates clearly')}</small></span><span class="state-chip">${state.setup.notificationsAllowed?l('مفعّلة','Enabled'):l('متوقفة','Disabled')}</span></button></div><div class="onboard-note" style="margin-top:10px"><i class="fa-solid fa-location-dot"></i><div>${l('لن يطلب النموذج إذن الموقع من المتصفح إلا عند الضغط على','Browser location permission is requested only when you press')} <b>${l('تحديث الموقع','Update location')}</b>.</div></div></div>`;
     }else{
-      body=`<div class="onboard-heading"><div class="onboard-visual"><i class="fa-solid ${item.icon}"></i></div><div class="onboard-title-group"><h2>${item.title}</h2><p>يمكن ربط زر خارجي اختياري لإرسال SOS دون فتح الهاتف.</p></div></div><div class="onboard-form"><div class="card device-hero" style="margin:0 0 10px"><div class="device-icon"><i class="fa-solid fa-hand-fist"></i></div><h3 style="font-size:14px;margin:0 0 5px">زر SOS</h3><span class="tiny-pill ${state.deviceConnected?'success':''}">${state.deviceConnected?'متصل':'غير متصل'}</span><div style="font-size:9px;color:#94a3b8;margin-top:7px">${state.deviceConnected?`البطارية ${state.deviceBattery}%`:'يمكن ربطه لاحقاً من حسابي'}</div></div><button type="button" class="${state.deviceConnected?'ghost-btn':'primary-btn'} wide" onclick="toggleDeviceConnection();renderOnboarding()"><i class="fa-brands fa-bluetooth-b"></i>${state.deviceConnected?'فصل الجهاز التجريبي':'ربط زر SOS تجريبياً'}</button><div class="setup-summary"><div><span><i class="fa-solid fa-comments"></i> طريقة التواصل</span><b>${escapeHtml(state.setup.communication)}</b></div><div><span><i class="fa-solid fa-notes-medical"></i> الملف الطبي</span><b>${escapeHtml(state.profile.blood||'غير محدد')}</b></div><div><span><i class="fa-solid fa-user-group"></i> جهات الاتصال</span><b>${state.contacts.length}</b></div><div><span><i class="fa-solid fa-location-dot"></i> الموقع</span><b>${state.setup.locationAllowed?'مسموح':'لاحقاً'}</b></div></div></div>`;
+      body=`<div class="onboard-heading"><div class="onboard-visual"><i class="fa-solid ${item.icon}"></i></div><div class="onboard-title-group"><h2>${title}</h2><p>${intro}</p></div></div><div class="onboard-form"><div class="card device-hero" style="margin:0 0 10px"><div class="device-icon"><i class="fa-solid fa-hand-fist"></i></div><h3 style="font-size:14px;margin:0 0 5px">${l('زر SOS','SOS button')}</h3><span class="tiny-pill ${state.deviceConnected?'success':''}">${state.deviceConnected?l('متصل','Connected'):l('غير متصل','Disconnected')}</span><div style="font-size:9px;color:#94a3b8;margin-top:7px">${state.deviceConnected?`${l('البطارية','Battery')} ${state.deviceBattery}%`:l('يمكن ربطه لاحقاً من حسابي','You can connect it later from Profile')}</div></div><button type="button" class="${state.deviceConnected?'ghost-btn':'primary-btn'} wide" onclick="toggleDeviceConnection();renderOnboarding()"><i class="fa-brands fa-bluetooth-b"></i>${state.deviceConnected?l('فصل الجهاز','Disconnect SOS button'):l('ربط زر SOS','Connect SOS button')}</button><div class="setup-summary"><div><span><i class="fa-solid fa-comments"></i> ${l('طريقة التواصل','Communication method')}</span><b>${escapeHtml(localizedCommunication(state.setup.communication))}</b></div><div><span><i class="fa-solid fa-notes-medical"></i> ${l('الملف الطبي','Medical profile')}</span><b>${escapeHtml(state.profile.blood||l('غير محدد','Not specified'))}</b></div><div><span><i class="fa-solid fa-user-group"></i> ${l('جهات الاتصال','Contacts')}</span><b>${state.contacts.length}</b></div><div><span><i class="fa-solid fa-location-dot"></i> ${l('الموقع','Location')}</span><b>${state.setup.locationAllowed?l('مسموح','Enabled'):l('لاحقاً','Later')}</b></div></div></div>`;
     }
-    $('onboard-layer').innerHTML=`<div class="onboard-top"><div><div class="onboard-step-copy"><b>إعداد إشارة</b><span>الخطوة ${step+1} من ${onboarding.length}</span></div><div class="onboard-progress"><div class="onboard-progress-bar" style="width:${pct}%"></div></div></div><button class="skip" type="button" onclick="finishOnboarding()">تخطي الآن</button></div><div class="onboard-content">${body}</div><div class="onboard-actions">${step>0?'<button class="ghost-btn" type="button" style="flex:1" onclick="prevOnboarding()"><i class="fa-solid fa-arrow-right"></i> رجوع</button>':''}<button class="primary-btn" type="button" style="flex:2" onclick="nextOnboarding()">${step===onboarding.length-1?'إنهاء الإعداد':'التالي'} <i class="fa-solid ${step===onboarding.length-1?'fa-check':'fa-arrow-left'}"></i></button></div>`;
+    const backIcon=state.language==='en'?'fa-arrow-left':'fa-arrow-right';
+    const nextIcon=state.language==='en'?'fa-arrow-right':'fa-arrow-left';
+    $('onboard-layer').innerHTML=`<div class="onboard-top"><div><div class="onboard-step-copy"><b>${l('إعداد إشارة','Ishara setup')}</b><span>${l(`الخطوة ${step+1} من ${onboarding.length}`,`Step ${step+1} of ${onboarding.length}`)}</span></div><div class="onboard-progress"><div class="onboard-progress-bar" style="width:${pct}%"></div></div></div><button class="skip" type="button" onclick="finishOnboarding()">${l('تخطي الآن','Skip now')}</button></div><div class="onboard-content">${body}</div><div class="onboard-actions">${step>0?`<button class="ghost-btn" type="button" style="flex:1" onclick="prevOnboarding()"><i class="fa-solid ${backIcon}"></i> ${l('رجوع','Back')}</button>`:''}<button class="primary-btn" type="button" style="flex:2" onclick="nextOnboarding()">${step===onboarding.length-1?l('إنهاء الإعداد','Finish setup'):l('التالي','Next')} <i class="fa-solid ${step===onboarding.length-1?'fa-check':nextIcon}"></i></button></div>`;
     updateShowcase();
   }
   function escapeHtml(v=''){return String(v).replace(/[&<>'"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));}
-  function bloodOptions(selected=''){return ['','A+','A-','B+','B-','AB+','AB-','O+','O-'].map(v=>`<option value="${v}" ${v===selected?'selected':''}>${v||'غير محدد'}</option>`).join('');}
-  function relationOptions(selected=''){const opts=['أب','أم','زوج','زوجة','أخ','أخت','ابن','ابنة','قريب / قريبة','صديق / صديقة','جار / جارة','مقدم رعاية','أخرى'];return opts.map(v=>`<option value="${v}" ${v===selected?'selected':''}>${v}</option>`).join('');}
+  function bloodOptions(selected=''){return ['','A+','A-','B+','B-','AB+','AB-','O+','O-'].map(v=>`<option value="${v}" ${v===selected?'selected':''}>${v||l('غير محدد','Not specified')}</option>`).join('');}
+  function relationOptions(selected=''){
+    const opts=[['أب','Father'],['أم','Mother'],['زوج','Husband'],['زوجة','Wife'],['أخ','Brother'],['أخت','Sister'],['ابن','Son'],['ابنة','Daughter'],['قريب / قريبة','Relative'],['صديق / صديقة','Friend'],['جار / جارة','Neighbor'],['مقدم رعاية','Caregiver'],['أخرى','Other']];
+    return opts.map(([ar,en])=>`<option value="${ar}" ${ar===selected?'selected':''}>${state.language==='en'?en:ar}</option>`).join('');
+  }
   function selectSetupCommunication(value){state.setup.communication=value;state.profile.communication=value;vibrate(18);renderOnboarding();}
   function toggleSetupPermission(type){if(type==='location')state.setup.locationAllowed=!state.setup.locationAllowed;else state.setup.notificationsAllowed=!state.setup.notificationsAllowed;vibrate(16);renderOnboarding();}
-  function toggleDraftAutoNotify(btn){btn.classList.toggle('active');const label=$('draft-auto-state');if(label)label.textContent=btn.classList.contains('active')?'مفعّل':'متوقف';}
+  function toggleDraftAutoNotify(btn){btn.classList.toggle('active');const label=$('draft-auto-state');if(label)label.textContent=btn.classList.contains('active')?l('مفعّل','Enabled'):l('متوقف','Disabled');}
   function setFieldInvalid(fieldId,invalid=true){const field=$(fieldId);if(field)field.classList.toggle('invalid',invalid);}
   function validPhone(value){const digits=String(value||'').replace(/\D/g,'');return digits.length>=7&&digits.length<=15;}
   function saveOnboardingStep(){
@@ -1206,7 +1322,7 @@
   try{history.replaceState({ishara:true,screen:'screen-home',index:0},'',location.href.split('#')[0]+'#screen-home');}catch(e){}
   window.setTimeout(()=>{$('splash')?.classList.add('hide');},1250);
   try{state.language=localStorage.getItem('ishara-language')||'ar';state.theme=localStorage.getItem('ishara-theme')||'dark';}catch(e){}
-  applyTheme(state.theme);applyLanguage();i18nObserver.observe(document.body,{subtree:true,childList:true,characterData:true});
+  applyTheme(state.theme);rerenderLocalizedViews();applyLanguage();i18nObserver.observe(document.body,{subtree:true,childList:true,characterData:true});
   updateConnectivityUI();updateLocationUI();renderProfile();renderContacts();renderDevice();renderInterpreter();renderIncident();updateHistoryButtons();renderHomeIdentity();updateShowcase();applyLanguage();
 </script>
 </body>
